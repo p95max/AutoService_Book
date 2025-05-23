@@ -51,6 +51,5 @@ class ServiceRecord(models.Model):
     service_type = models.CharField(max_length=50, choices=SERVICE_ACTIONS)
     description = models.TextField()
 
-
     def __str__(self):
         return f"{self.car} - {self.get_service_type_display()}"
