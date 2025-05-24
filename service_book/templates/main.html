@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
-{% block title %} {% endblock %}
+{% block title %} Home {% endblock %}
 
 {% block content %}
 <div class="container mt-3">
-  <h2>Servie Table Example</h2>
-
+    <p>{{ intro_text|safe }}</p>
+  <h4>Service Table Example</h4>
   <table class="table" data-bs-theme="dark">
     <thead>
       <tr>
@@ -15,6 +15,7 @@
         <th>Service type</th>
         <th>Price</th>
         <th>Description</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody>
@@ -23,9 +24,40 @@
         <td>VW Tuareg</td>
         <td>VW Europe</td>
         <td>Oil change</td>
-         <td>1000$</td>
+        <td>1000$</td>
         <td>Oil change + filters</td>
+        <td>
+          <a href="#" class="btn btn-sm btn-warning">Edit</a>
+          <a href="#" class="btn btn-sm btn-danger">Delete</a>
+        </td>
 
+      </tr>
+    </tbody>
+  </table>
+
+  <h4>User current autos table example</h4>
+    <table class="table" data-bs-theme="dark">
+    <thead>
+      <tr>
+        <th>Brand</th>
+        <th>Model</th>
+        <th>Production year</th>
+        <th>Miliage(km)</th>
+        <th>VIN</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>BMW</td>
+        <td>X6M</td>
+        <td>2020</td>
+        <td>22800</td>
+        <td>AMFFKKKV00987</td>
+        <td>
+          <a href="#" class="btn btn-sm btn-warning">Edit</a>
+          <a href="#" class="btn btn-sm btn-danger">Delete</a>
+        </td>
       </tr>
     </tbody>
   </table>

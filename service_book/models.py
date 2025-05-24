@@ -5,7 +5,7 @@ User = get_user_model()
 
 class Brand(models.Model):
     name = models.CharField(max_length=100)
-    country = models.CharField(max_length=100)
+    country = models.CharField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return f"{self.name}"
@@ -26,7 +26,8 @@ class Car(models.Model):
     )
 
     def __str__(self):
-        return f"{self.model} - {self.owner}"
+        brands = ", ".join([brand.name for brand in self.brand.all()])
+        return f"{brands} - {self.model}"
 
 
 class ServiceRecord(models.Model):

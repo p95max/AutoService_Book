@@ -17,6 +17,7 @@ ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS","127.0.0.1").split(",")
 # APPLICATIONS
 INSTALLED_APPS = [
     # Django core
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -85,9 +86,9 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_REQUIRED = True
+
+ACCOUNT_LOGIN_METHODS = {'email'}
+ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
 
 LOGIN_REDIRECT_URL = '/main'
 ACCOUNT_LOGOUT_REDIRECT_URL = '/main'

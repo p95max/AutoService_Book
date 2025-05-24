@@ -1,16 +1,26 @@
+import os.path
+
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from service_book.forms import AddNewAuto, AddNewServiceRecord
 from service_book.models import ServiceRecord, Car
+import os
+from django.conf import settings
 
 
 def main(request):
-    user = request.user
+    intro_text = ""
+    file_path = os.path.join(settings.BASE_DIR, 'static', 'text', 'home_intro.txt')
 
+    try:
+        with open(file_path) as file:
+            intro_text = file.read()
+    except FileNotFoundError:
+        intro_text = "Error: File not found."
 
     context = {
-        'user': user,
+        'intro_text': intro_text,
     }
 
     return render(request, 'main.html', context=context)
