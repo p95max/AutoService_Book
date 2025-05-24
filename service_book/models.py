@@ -16,7 +16,7 @@ class Car(models.Model):
     model = models.CharField(max_length=100)
     prod_year = models.IntegerField()
     miliage = models.IntegerField()
-    vin = models.CharField(max_length=20, unique=True)
+    vin = models.CharField(max_length=20, unique=True, null=True)
     owner = models.ForeignKey(
         User,
         on_delete=models.SET_NULL,

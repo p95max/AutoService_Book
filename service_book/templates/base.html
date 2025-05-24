@@ -10,10 +10,37 @@
 </head>
 <body>
 
-<button id="theme-toggle" class="btn btn-outline-info">🌙</button>
-<div class="container p-5 my-5">
-{% block content %}{% endblock %}
-</div>
+{#Welcome/auth + theme switcher#}
+  <div class="container-fluid d-flex ms-0 mt-0 align-items-start">
+    <button id="theme-toggle" class="btn btn-outline-info me-5">🌙</button>
+    {% if user.is_authenticated %}
+        <p class="mb-0 mt-2 fs-5"> Hello, {{ user.username }}</p>
+    {% else %}
+        <a class="mb-0 mt-2 fs-5" href="{% url 'account_signup' %}">Sign up</a>
+        <span class="mb-0 mt-2 fs-5"> / </span>
+        <a class="mb-0 mt-2 fs-5" href="{% url 'account_login' %}">Login</a>
+    {% endif %}
+  </div>
+
+  <div class="d-flex">
+
+{# Nav menu #}
+    <nav class="vh-100 p-3" style="width: 250px; text-align: center; ">
+      <ul class="navbar-nav flex-column">
+       <li class="nav-item">
+          <a class="nav-link mt-5" href="{% url 'main' %}">Main</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link mt-3" href="#">Link</a>
+        </li>
+      </ul>
+    </nav>
+
+{# Content#}
+    <div class="container p-5 my-5 flex-grow-1">
+      {% block content %}{% endblock %}
+    </div>
+    </div>
 
 {% block extra_scripts %}
     {# Bootstrap #}
@@ -53,6 +80,5 @@
         });
         </script>
 {% endblock %}
-
 </body>
 </html>

@@ -1,13 +1,17 @@
+from decouple import config, Config, RepositoryEnv
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+DOTENV_FILE = BASE_DIR / '.env'
+config = Config(RepositoryEnv(DOTENV_FILE))
 
 
 # SECURITY SETTINGS
-SECRET_KEY = 'django-insecure-(k&6mh&i=(13+%ti460nndeif*%+!^defyp87$9#ksn87x7u$@'
-DEBUG = True
-ALLOWED_HOSTS = []
+SECRET_KEY = config('SECRET_KEY')
+DEBUG = config('DEBUG', default=False, cast=bool)
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS","127.0.0.1").split(",")
 
 
 # APPLICATIONS
@@ -81,12 +85,12 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 
-ACCOUNT_USER_MODEL_USERNAME_FIELD = None
-ACCOUNT_LOGIN_METHODS = {'email'}
-ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
 
-LOGIN_REDIRECT_URL = '/'
-ACCOUNT_LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/main'
+ACCOUNT_LOGOUT_REDIRECT_URL = '/main'
 
 
 
@@ -138,6 +142,6 @@ else:
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER='maxpetrikin@gmail.com'
-EMAIL_HOST_PASSWORD='vahn-irxa-rlon-qjoi'
-DEFAULT_FROM_EMAIL='maxpetrikin@gmail.com'
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
