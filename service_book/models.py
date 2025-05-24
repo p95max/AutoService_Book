@@ -8,7 +8,7 @@ class Brand(models.Model):
     country = models.CharField(max_length=100)
 
     def __str__(self):
-        return f"{self.name} - {self.country}"
+        return f"{self.name}"
 
 
 class Car(models.Model):

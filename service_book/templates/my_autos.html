@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %} Add new auto {% endblock %}
+
+{% block content %}
+    <h3>Your current autos</h3>
+    {% if cars %}
+        {% for car in cars %}
+    <table class="table" data-bs-theme="dark">
+    <thead>
+      <tr>
+        <th>Brand</th>
+        <th>Model</th>
+        <th>Production year</th>
+        <th>Miliage</th>
+        <th>VIN</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ car.brand.all|join:", " }}</td>
+        <td>{{ car.model }}</td>
+        <td>{{ car.prod_year }}</td>
+        <td>{{ car.miliage }}</td>
+        <td>{{ car.vin }}</td>
+        <td>
+          <a href="{% url 'edit_auto' car.pk %}" class="btn btn-sm btn-warning">Edit</a>
+          <a href="{% url 'delete_auto' car.pk %}" class="btn btn-sm btn-danger"
+             onclick="return confirm('Are you sure you want to delete this car?');">Delete</a>
+        </td>
+
+
+      </tr>
+    </tbody>
+  </table>
+        {% endfor %}
+    {% else %}
+        <p> You haven't added autos</p>
+    {% endif %}
+    <a href="{% url 'add_auto' %}">+ Add another car</a>
+{% endblock %}

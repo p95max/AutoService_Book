@@ -91,6 +91,7 @@ ACCOUNT_EMAIL_REQUIRED = True
 
 LOGIN_REDIRECT_URL = '/main'
 ACCOUNT_LOGOUT_REDIRECT_URL = '/main'
+LOGIN_URL = 'account:login'
 
 
 

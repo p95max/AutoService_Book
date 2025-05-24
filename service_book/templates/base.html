@@ -15,6 +15,10 @@
     <button id="theme-toggle" class="btn btn-outline-info me-5">🌙</button>
     {% if user.is_authenticated %}
         <p class="mb-0 mt-2 fs-5"> Hello, {{ user.username }}</p>
+        <form method="post" action="{% url 'account_logout' %}" class="d-inline">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline-secondary btn-sm">Logout</button>
+        </form>
     {% else %}
         <a class="mb-0 mt-2 fs-5" href="{% url 'account_signup' %}">Sign up</a>
         <span class="mb-0 mt-2 fs-5"> / </span>
@@ -31,7 +35,10 @@
           <a class="nav-link mt-5" href="{% url 'main' %}">Main</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link mt-3" href="#">Link</a>
+          <a class="nav-link mt-3" href="{% url 'autos' %}">My cars</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link mt-3" href="{% url 'service_history' %}">Service history</a>
         </li>
       </ul>
     </nav>
