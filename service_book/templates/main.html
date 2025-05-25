@@ -5,105 +5,132 @@
 {% block content %}
 <div class="container mt-3">
     <p>{{ intro_text|safe }}</p>
-  <h4>Service Table Example</h4>
-  <table class="table" data-bs-theme="dark">
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Car</th>
-        <th>Miliage</th>
-        <th>Place</th>
-        <th>Service type</th>
-        <th>Price</th>
-        <th>Description</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>20/05/2025</td>
-        <td>VW Tuareg</td>
-        <td>10500</td>
-        <td>VW Europe</td>
-        <td>Oil change</td>
-        <td>1000$</td>
-        <td>Oil change + filters</td>
-        <td>
-          <a href="#" class="btn btn-sm btn-warning">Edit</a>
-          <a href="#" class="btn btn-sm btn-danger">Delete</a>
-        </td>
 
-      </tr>
-    </tbody>
-  </table>
-        <a href="#">+ Add a new service record</a>
+  <h4>Service Table Example</h4>
+<table class="table table-dark table-striped align-middle text-center">
+  <thead>
+    <tr>
+      <th style="width: 12%;">Date</th>
+      <th style="width: 15%;">Car</th>
+      <th style="width: 12%;">Mileage (km)</th>
+      <th style="width: 15%;">Type</th>
+      <th style="width: 12%;">Amount</th>
+      <th style="width: 20%;">Description</th>
+      <th style="width: 14%;">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>20/05/2025</td>
+      <td>VW Tuareg</td>
+      <td>10500</td>
+      <td>Oil change</td>
+      <td>1000$</td>
+      <td>Oil change + filters</td>
+      <td>
+        <a href="#" class="btn btn-sm btn-warning">Edit</a>
+        <a href="#" class="btn btn-sm btn-danger">Delete</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<a href="#" class="btn btn-primary btn-sm my-2">+ Add a new service record</a>
 
   <h4>User current autos table example</h4>
-    <table class="table" data-bs-theme="dark">
-    <thead>
-      <tr>
-        <th>Brand</th>
-        <th>Model</th>
-        <th>Production year</th>
-        <th>Miliage(km)</th>
-        <th>VIN</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>BMW</td>
-        <td>X6M</td>
-        <td>2020</td>
-        <td>22800</td>
-        <td>AMFFKKKV00987</td>
-        <td>
-          <a href="#" class="btn btn-sm btn-warning">Edit</a>
-          <a href="#" class="btn btn-sm btn-danger">Delete</a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-      <a href="#">+ Add a new auto</a>
+<table class="table table-dark table-striped align-middle text-center">
+  <thead>
+    <tr>
+      <th style="width: 12%;">Date</th>
+      <th style="width: 15%;">Car</th>
+      <th style="width: 12%;">Mileage (km)</th>
+      <th style="width: 15%;">Type</th>
+      <th style="width: 12%;">Amount</th>
+      <th style="width: 20%;">Description</th>
+      <th style="width: 14%;">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>20.05.2021</td>
+      <td>VW Passat</td>
+      <td>99999</td>
+      <td>Diesel Premium</td>
+      <td>55</td>
+      <td>Full tank + coffee</td>
+      <td>
+        <a href="#" class="btn btn-sm btn-warning">Edit</a>
+        <a href="#" class="btn btn-sm btn-danger">Delete</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<a href="#" class="btn btn-primary btn-sm my-2">+ Add fuel expense</a>
 
   <h3>User current fuel expense example</h3>
-    <table class="table" data-bs-theme="dark">
+<table class="table table-dark table-striped align-middle text-center">
+<thead>
+  <tr>
+    <th>Date</th>
+    <th>Car</th>
+    <td>Miliage(km)</td>
+    <th>Fuel type</th>
+    <th>Fuel_amount(l)</th>
+    <th>Price($)</th>
+    <th>Description</th>
+    <th>Actions</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>20.05.2021</td>
+    <td>VW Passat</td>
+    <td>99999</td>
+    <td>Diesel Premium</td>
+    <td>55</td>
+    <td>100</td>
+    <td>full tank + coffee</td>
+    <td>
+      <a href="#" class="btn btn-sm btn-warning">Edit</a>
+       <form action="#" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-sm btn-danger">
+            Delete
+            </button>
+            </form>
+    </td>
+
+
+  </tr>
+</tbody>
+</table>
+<a href="#" class="btn btn-primary btn-sm my-2">+ Add fuel expense</a>
+
+  <h3>Fuel left in tank and average consumption example</h3>
+<table class="table table-dark table-striped align-middle text-center">
     <thead>
       <tr>
-        <th>Date</th>
         <th>Car</th>
-        <td>Miliage(km)</td>
-        <th>Fuel type</th>
-        <th>Fuel_amount(l)</th>
-        <th>Price($)</th>
-        <th>Description</th>
-        <th>Actions</th>
+        <th>Fuel left(l)</th>
+        <th>Current average consumption(l/100km)</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td>20.05.2021</td>
-        <td>VW Passat</td>
-        <td>99999</td>
-        <td>Diesel Premium</td>
-        <td>55</td>
-        <td>100</td>
-        <td>full tank + coffee</td>
-        <td>
-          <a href="#" class="btn btn-sm btn-warning">Edit</a>
-           <form action="#" method="post" style="display:inline;">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-sm btn-danger">
-                Delete
-                </button>
-                </form>
-        </td>
-
-
+        <td>BMW E60</td>
+        <td>20</td>
+        <td>12.05</td>
       </tr>
     </tbody>
-  </table>
-    <a href="#">+ Add fuel expense</a>
+        <tbody>
+      <tr>
+        <td>Nissan Micra</td>
+        <td>30</td>
+        <td>4.05</td>
+      </tr>
+    </tbody>
+</table>
+
+
 </div>
 
 {% endblock %}

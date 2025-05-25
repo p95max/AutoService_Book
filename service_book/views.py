@@ -103,27 +103,47 @@ def delete_service_record(request, pk):
     return redirect('service_history')
 
 # Fuel expense
+from itertools import chain
+
 @login_required
 def fuel_expense(request):
     fuel = FuelExpense.objects.filter(owner=request.user)
     cars = Car.objects.filter(owner=request.user)
 
     for car in cars:
+
         fuel_records = FuelExpense.objects.filter(owner=request.user, car=car)
-        total_fuel = sum(float(f.fuel_amount) for f in fuel_records if f.distance)
-        total_distance = sum(f.distance for f in fuel_records if f.distance)
+        service_records = ServiceRecord.objects.filter(car=car)
+
+        all_events = sorted(
+            chain(fuel_records, service_records),
+            key=lambda x: x.date
+        )
+
+        total_fuel = sum(float(f.fuel_amount) for f in fuel_records if getattr(f, 'distance', None))
+        total_distance = sum(getattr(f, 'distance', 0) for f in fuel_records if getattr(f, 'distance', None))
         if total_distance > 0:
-            car.avg_cons = (total_fuel / total_distance) * 100
+            avg_cons = (total_fuel / total_distance) * 100
+            car.avg_cons = avg_cons
         else:
+            avg_cons = None
             car.avg_cons = None
 
-        last_fuel = fuel_records.order_by('-date').first()
-        if last_fuel and last_fuel.miliage is not None:
+        fuel_left = 0
+        prev_miliage = None
+        for event in all_events:
+            if hasattr(event, 'fuel_amount'):
+                # Это заправка
+                fuel_left += float(event.fuel_amount)
+            if prev_miliage is not None and avg_cons and event.miliage is not None:
 
-            fuel_after_last = fuel_records.filter(miliage__gte=last_fuel.miliage)
-            car.fuel_left = sum(float(f.fuel_amount) for f in fuel_after_last)
-        else:
-            car.fuel_left = 0
+                distance = event.miliage - prev_miliage
+                if distance > 0:
+                    fuel_left -= (distance / 100) * avg_cons
+                    if fuel_left < 0:
+                        fuel_left = 0
+            prev_miliage = event.miliage
+        car.fuel_left = round(fuel_left, 2)
 
     context = {
         'fuel': fuel,

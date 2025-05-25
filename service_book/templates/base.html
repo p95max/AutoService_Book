@@ -11,50 +11,68 @@
 <body>
 
 {#theme switcher#}
-  <div class="container-fluid d-flex ms-0 mt-0 align-items-start">
-    <button id="theme-toggle" class="btn btn-outline-info me-5">🌙</button>
-  </div>
+<div style="position: fixed; bottom: 24px; right: 24px; z-index: 1050;">
+  <button id="theme-toggle" class="btn btn-outline-info shadow">
+    🌙
+  </button>
+</div>
 
   <div class="d-flex">
 {# Nav menu #}
-    <nav class="vh-100 p-3" style="width: 250px; text-align: center; ">
+<nav class="vh-100 p-3 d-flex flex-column align-items-center justify-content-start text-white"
+       style="
+          width: 250px;
+          min-width: 180px;
+          max-width: 100vw;
+          text-align: center;
+          position: fixed;
+          top: 0;
+          left: 0;
+          background: #23272b;
+          border-right: 2px solid #444;
+          box-shadow: 2px 0 8px rgba(0,0,0,0.08);
+          overflow-y: auto;
+          height: 100vh;
+       ">
 
-    <div class="ml-1">
-    {% if user.is_authenticated %}
-    <div class="d-flex align-items-center gap-3 fs-5">
-        <p class="mb-0">Hello, {{ user.username }}</p>
-        <form method="post" action="{% url 'account_logout' %}" class="mb-0">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-primary btn-sm">Logout</button>
-        </form>
-    </div>
-    {% else %}
-        <a class="mb-0 mt-2 fs-5" href="{% url 'account_signup' %}">Sign up</a>
-        <span class="mb-0 mt-2 fs-5"> / </span>
-        <a class="mb-0 mt-2 fs-5" href="{% url 'account_login' %}">Login</a>
-    {% endif %}
+    <div class="w-100 mb-4">
+        {% if user.is_authenticated %}
+        <div class="d-flex flex-column align-items-center gap-2 fs-5">
+            <p class="mb-1">Hello, {{ user.username }}</p>
+            <form method="post" action="{% url 'account_logout' %}" class="mb-0">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary btn-sm">Logout</button>
+            </form>
+        </div>
+        {% else %}
+        <div class="d-flex flex-row align-items-center justify-content-center gap-2 fs-5">
+            <a class="btn btn-primary btn-sm" href="{% url 'account_signup' %}">Sign up</a>
+            <span class="mb-0 mt-2">|</span>
+            <a class="btn btn-primary btn-sm" href="{% url 'account_login' %}">Login</a>
+        </div>
+        {% endif %}
     </div>
 
-      <ul class="navbar-nav flex-column">
-       <li class="nav-item">
-          <a class="nav-link mt-5" href="{% url 'main' %}">Home</a>
+    <ul class="navbar-nav flex-column w-100 align-items-center">
+        <li class="nav-item w-100">
+            <a class="nav-link mt-5" href="{% url 'main' %}">Home</a>
         </li>
-          {% if user.is_authenticated %}
-        <li class="nav-item">
-          <a class="nav-link mt-3" href="{% url 'autos' %}">My garage</a>
+        {% if user.is_authenticated %}
+        <li class="nav-item w-100">
+            <a class="nav-link mt-3" href="{% url 'autos' %}">My garage</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link mt-3" href="{% url 'service_history' %}">My Service history</a>
+        <li class="nav-item w-100">
+            <a class="nav-link mt-3" href="{% url 'service_history' %}">My Service history</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link mt-3" href="{% url 'fuel_expense' %}">My Fuel Expense</a>
+        <li class="nav-item w-100">
+            <a class="nav-link mt-3" href="{% url 'fuel_expense' %}">My Fuel Expense</a>
         </li>
-          {% endif %}
-      </ul>
-    </nav>
+        {% endif %}
+    </ul>
+</nav>
 
 {# Content#}
-    <div class="container p-5 my-5 flex-grow-1">
+    <div class="container p-5 my-5 flex-grow-1" style="margin-left: 250px;">
       {% block content %}{% endblock %}
     </div>
     </div>

@@ -5,12 +5,12 @@
 {% block content %}
     <h3>Your current fuel expenses</h3>
     {% if fuel %}
-    <table class="table" data-bs-theme="dark">
+    <table class="table table-dark table-striped align-middle text-center">
         <thead>
           <tr>
             <th>Date</th>
             <th>Car</th>
-            <th>Miliage(km)</th>
+            <th>Mileage(km)</th>
             <th>Fuel type</th>
             <th>Fuel_amount(l)</th>
 
@@ -46,26 +46,32 @@
     {% else %}
         <p>You haven't fuel expenses yet</p>
     {% endif %}
-    <a href="{% url 'add_fuel_expense' %}">+ Add fuel expense</a>
+    <a href="{% url 'add_fuel_expense' %}" class="btn btn-primary btn-sm my-2">+ Add fuel expense</a>
 
-    <h4>Fuel in your autos:</h4>
-    <ul>
+
+    <h3>Fuel left in tank and average consumption </h3>
+        {% if cars %}
+    <table class="table table-dark table-striped align-middle text-center">
+        <thead>
+          <tr>
+            <th>Car</th>
+            <th>Fuel left(l)</th>
+            <th>Current average consumption(l/100km)</th>
+          </tr>
+        </thead>
+        <tbody>
         {% for car in cars %}
-            {% if car.avg_cons %}
-    <li>{{ car.model }} has fuel in tank: {{ car.fuel_left|default:"0.00" }} Liters / </li>
-            {% else %}
-                <p> no data </p>
-            {% endif %}
+          <tr>
+            <td>{{ car }}</td>
+            <td>{{ car.fuel_left|default:"0.00" }}</td>
+            <td>{{ car.avg_cons|floatformat:2 }}</td>
+          </tr>
         {% endfor %}
-    </ul>
-
-{% for car in cars %}
-    <h3>{{ car }}</h3>
-    {% if car.avg_cons %}
-        <p>Avarag cons: {{ car.avg_cons|floatformat:2 }} l/100km</p>
+        </tbody>
+    </table>
     {% else %}
-        <p>No data for calculating</p>
+        <p>You haven't fuel expenses yet</p>
     {% endif %}
-{% endfor %}
+
 
 {% endblock %}
