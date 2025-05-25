@@ -51,7 +51,21 @@
     <h4>Fuel in your autos:</h4>
     <ul>
         {% for car in cars %}
-    <li>{{ car.model }} has fuel in tank: {{ car.fuel_left|default:"0.00" }} Liters</li>
+            {% if car.avg_cons %}
+    <li>{{ car.model }} has fuel in tank: {{ car.fuel_left|default:"0.00" }} Liters / </li>
+            {% else %}
+                <p> no data </p>
+            {% endif %}
         {% endfor %}
     </ul>
+
+{% for car in cars %}
+    <h3>{{ car }}</h3>
+    {% if car.avg_cons %}
+        <p>Avarag cons: {{ car.avg_cons|floatformat:2 }} l/100km</p>
+    {% else %}
+        <p>No data for calculating</p>
+    {% endif %}
+{% endfor %}
+
 {% endblock %}

@@ -107,6 +107,24 @@ def delete_service_record(request, pk):
 def fuel_expense(request):
     fuel = FuelExpense.objects.filter(owner=request.user)
     cars = Car.objects.filter(owner=request.user)
+
+    for car in cars:
+        fuel_records = FuelExpense.objects.filter(owner=request.user, car=car)
+        total_fuel = sum(float(f.fuel_amount) for f in fuel_records if f.distance)
+        total_distance = sum(f.distance for f in fuel_records if f.distance)
+        if total_distance > 0:
+            car.avg_cons = (total_fuel / total_distance) * 100
+        else:
+            car.avg_cons = None
+
+        last_fuel = fuel_records.order_by('-date').first()
+        if last_fuel and last_fuel.miliage is not None:
+
+            fuel_after_last = fuel_records.filter(miliage__gte=last_fuel.miliage)
+            car.fuel_left = sum(float(f.fuel_amount) for f in fuel_after_last)
+        else:
+            car.fuel_left = 0
+
     context = {
         'fuel': fuel,
         'cars': cars,

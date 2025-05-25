@@ -70,6 +70,7 @@ class FuelExpense(models.Model):
     miliage = models.IntegerField(null=True, blank=True)
     fuel_type = models.CharField(max_length=50, choices=FUEL_TYPES)
     fuel_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    distance = models.FloatField(null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     owner = models.ForeignKey(
         User,

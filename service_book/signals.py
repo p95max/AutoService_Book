@@ -1,4 +1,4 @@
-from django.db.models.signals import post_save, post_delete
+from django.db.models.signals import post_save, post_delete, pre_save
 from django.dispatch import receiver
 from .models import FuelExpense, ServiceRecord, Car
 from django.db.models import Max
@@ -34,3 +34,16 @@ def update_fuel_left_delete(sender, instance, **kwargs):
     if instance.car:
         instance.car.fuel_left -= instance.fuel_amount
         instance.car.save(update_fields=['fuel_left'])
+
+@receiver(pre_save, sender=FuelExpense)
+def set_distance_on_save(sender, instance, **kwargs):
+    if (instance.distance is None or instance.distance == 0) and instance.miliage and instance.car and instance.owner:
+        prev = FuelExpense.objects.filter(
+            car=instance.car,
+            owner=instance.owner,
+            date__lt=instance.date
+        ).order_by('-date').first()
+        if prev and prev.miliage:
+            instance.distance = instance.miliage - prev.miliage
+        else:
+            instance.distance = None
