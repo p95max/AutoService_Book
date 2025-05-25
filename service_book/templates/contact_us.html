@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contact Us{% endblock %}
+
+{% block content %}
+<section class="contact p-3" data-aos="fade-in" style="max-width: 700px; margin: 0 auto;">
+    <h3>Contact Us</h3>
+    {% if success %}
+        <div class="alert alert-success">
+            🤝 Thank you for your message! We will get back to you soon.
+        </div>
+    {% else %}
+        <form method="post" class="contact-form">
+            {% csrf_token %}
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    {% for field, errors in form.errors.items %}
+                        {{ errors|join:", " }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary mt-3">💬 Send Message</button>
+        </form>
+    {% endif %}
+</section>
+{% endblock %}

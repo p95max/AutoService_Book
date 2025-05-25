@@ -1,5 +1,6 @@
 from django import forms
-from .models import Car, ServiceRecord, FuelExpense
+from .models import Car, ServiceRecord, FuelExpense, ContactRequest
+
 
 class AddNewAuto(forms.ModelForm):
     class Meta:
@@ -84,3 +85,13 @@ class AddNewFuelExpense(forms.ModelForm):
             self.fields['car'].queryset = Car.objects.filter(owner=user)
         else:
             self.fields['car'].queryset = Car.objects.none()
+
+class ContactRequestForm(forms.ModelForm):
+    class Meta:
+        model = ContactRequest
+        fields = ['name', 'email', 'message']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Your Name'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Your Email'}),
+            'message': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Your Message', 'rows': 5}),
+        }

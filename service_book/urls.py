@@ -1,10 +1,12 @@
 from django.urls import path, include
 from .views import (main, add_auto, add_service_record, user_autos, user_service_history,
                     edit_service_record, delete_service_record, edit_auto, delete_auto,
-                    fuel_expense, add_fuel_expense, edit_fuel_expense, delete_fuel_expense)
+                    fuel_expense, add_fuel_expense, edit_fuel_expense, delete_fuel_expense,
+                    contact_us)
 
 urlpatterns = [
     path('main/', main, name='main'),
+    path('contact_us/', contact_us, name='contact_us'),
 # User autos
     path('autos/', user_autos, name='autos'),
     path('add_auto/', add_auto, name='add_auto'),

@@ -1,9 +1,10 @@
 import os
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
+from itertools import chain
 from django.shortcuts import render, get_object_or_404, redirect
 from django.conf import settings
-from service_book.forms import AddNewAuto, AddNewServiceRecord, AddNewFuelExpense
+from service_book.forms import AddNewAuto, AddNewServiceRecord, AddNewFuelExpense, ContactRequestForm
 from service_book.models import ServiceRecord, Car, FuelExpense
 
 def main(request):
@@ -20,6 +21,26 @@ def main(request):
         'intro_text': intro_text,
     }
     return render(request, 'main.html', context=context)
+
+def contact_us(request):
+    success = False
+
+    if request.method == 'POST':
+        form = ContactRequestForm(request.POST)
+        if form.is_valid():
+            form.save()
+            success = True
+            form = ContactRequestForm()
+        else:
+            success = False
+    else:
+        form = ContactRequestForm()
+
+    context = {
+        'form': form,
+        'success': success,
+    }
+    return render(request, 'contact_us.html', context)
 
 # User autos
 @login_required
@@ -103,8 +124,6 @@ def delete_service_record(request, pk):
     return redirect('service_history')
 
 # Fuel expense
-from itertools import chain
-
 @login_required
 def fuel_expense(request):
     fuel = FuelExpense.objects.filter(owner=request.user)

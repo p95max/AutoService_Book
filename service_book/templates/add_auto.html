@@ -4,13 +4,13 @@
 {% block title %} Add a new car {% endblock %}
 
 {% block content %}
-    <h3> Add a new car </h3>
+    <h3>Add a new car </h3>
 
 <div class="container d-flex justify-content-center mt-5">
   <form method="post" class="w-50">
     {% csrf_token %}
     {{ form|crispy }}
-    <button type="submit" class="btn btn-primary">Add</button>
+    <button type="submit" class="btn btn-primary">➕ Add</button>
 
       {{ form.non_field_errors }}
       {{ form.username.errors }}
