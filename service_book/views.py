@@ -1,10 +1,9 @@
 import os.path
-
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
-from service_book.forms import AddNewAuto, AddNewServiceRecord
-from service_book.models import ServiceRecord, Car
+from service_book.forms import AddNewAuto, AddNewServiceRecord, AddNewFuelExpense
+from service_book.models import ServiceRecord, Car, FuelExpense
 import os
 from django.conf import settings
 
@@ -125,3 +124,50 @@ def delete_service_record(request, pk):
         return redirect('service_history')
 
     return redirect('service_history')
+
+@login_required
+def fuel_expense(request):
+    fuel = FuelExpense.objects.filter(owner=request.user)
+
+    return render(request, 'fuel_expense.html', context={'fuel': fuel})
+
+@login_required
+def add_fuel_expense(request):
+    if request.method == 'POST':
+        form = AddNewFuelExpense(request.POST, user=request.user)
+        if form.is_valid():
+            record = form.save(commit=False)
+            record.owner = request.user
+            record.save()
+            return HttpResponseRedirect('/fuel_expense/')
+    else:
+        form = AddNewFuelExpense(user=request.user)
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'add_fuel_expense.html', context=context)
+
+@login_required
+def edit_fuel_expense(request, pk):
+    record = get_object_or_404(FuelExpense, pk=pk, owner=request.user)
+    if request.method == 'POST':
+        form = AddNewFuelExpense(request.POST, user=request.user, instance=record)
+        if form.is_valid():
+            record = form.save(commit=False)
+            record.owner = request.user
+            record.save()
+            return HttpResponseRedirect('/fuel_expense/')
+    else:
+        form = AddNewFuelExpense(user=request.user, instance=record)
+
+    return render(request, 'edit_fuel_expense.html', {'form': form})
+
+@login_required
+def delete_fuel_expense(request, pk):
+    record = get_object_or_404(FuelExpense, pk=pk, owner=request.user)
+    if request.method == 'POST':
+        record.delete()
+        return redirect('fuel_expense')
+
+    return redirect('fuel_expense')

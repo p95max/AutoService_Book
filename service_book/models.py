@@ -10,7 +10,6 @@ class Brand(models.Model):
     def __str__(self):
         return f"{self.name}"
 
-
 class Car(models.Model):
     brand = models.ManyToManyField(Brand)
     model = models.CharField(max_length=100)
@@ -28,7 +27,6 @@ class Car(models.Model):
     def __str__(self):
         brands = ", ".join([brand.name for brand in self.brand.all()])
         return f"{brands} - {self.model}"
-
 
 class ServiceRecord(models.Model):
     SERVICE_ACTIONS = [
@@ -53,4 +51,31 @@ class ServiceRecord(models.Model):
     description = models.TextField()
 
     def __str__(self):
-        return f"{self.car} - {self.get_service_type_display()}"
+        return f"{self.car} - {self.get_service_type_display()} - {self.date} - {self.price}$"
+
+class FuelExpense(models.Model):
+    FUEL_TYPES = [
+        ('diesel', 'Regular diesel'),
+        ('premium_diesel', 'Premium diesel'),
+        ('petrol_e5', 'Petrol E5'),
+        ('petrol_e10', 'Petrol E10'),
+        ('lpg', 'LPG'),
+        ('electric_charge', 'Electric charge'),
+        ('other', 'Other'),
+    ]
+    date = models.DateField()
+    car = models.ForeignKey(Car, on_delete=models.SET_NULL, null=True)
+    fuel_type = models.CharField(max_length=50, choices=FUEL_TYPES)
+    fuel_amount = models.IntegerField()
+    price = models.IntegerField()
+    owner = models.ForeignKey(
+        User,
+        on_delete=models.SET_NULL,
+        null=True,
+        verbose_name='User'
+    )
+    gas_station = models.CharField(max_length=100)
+    description = models.TextField()
+
+    def __str__(self):
+        return f"{self.car} - {self.get_fuel_type_display()} - {self.fuel_amount} - {self.date} - {self.price}$"

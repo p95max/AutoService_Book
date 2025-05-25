@@ -1,4 +1,4 @@
-<h3>Welcome to AutoService Book!</h4>
+<h2>Welcome to AutoService Book!</h2>
 
 <p><strong>AutoService Book is your reliable assistant for tracking and managing your car’s service history.
 Our platform is designed for car owners who want to:</strong></p>
