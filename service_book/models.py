@@ -37,9 +37,9 @@ class ServiceRecord(models.Model):
         ('other_service', 'Other'),
     ]
 
-    date = models.DateField()
+    date = models.DateTimeField(null=False, blank=False)
     car = models.ForeignKey(Car, on_delete=models.SET_NULL, null=True)
-    price = models.IntegerField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     owner = models.ForeignKey(
         User,
         on_delete=models.SET_NULL,
@@ -48,6 +48,7 @@ class ServiceRecord(models.Model):
     )
     place = models.CharField(max_length=100)
     service_type = models.CharField(max_length=50, choices=SERVICE_ACTIONS)
+    miliage = models.IntegerField(null=True, blank=True)
     description = models.TextField()
 
     def __str__(self):
@@ -63,11 +64,12 @@ class FuelExpense(models.Model):
         ('electric_charge', 'Electric charge'),
         ('other', 'Other'),
     ]
-    date = models.DateField()
+    date = models.DateTimeField(null=False, blank=False)
     car = models.ForeignKey(Car, on_delete=models.SET_NULL, null=True)
+    miliage = models.IntegerField(null=True, blank=True)
     fuel_type = models.CharField(max_length=50, choices=FUEL_TYPES)
-    fuel_amount = models.IntegerField()
-    price = models.IntegerField()
+    fuel_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
     owner = models.ForeignKey(
         User,
         on_delete=models.SET_NULL,

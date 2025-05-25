@@ -10,9 +10,10 @@
       <tr>
         <th>Date</th>
         <th>Car</th>
+        <th>Miliage(km)</th>
         <th>Place</th>
         <th>Service type</th>
-        <th>Price</th>
+        <th>Price($)</th>
         <th>Description</th>
         <th>Actions</th>
       </tr>
@@ -20,8 +21,15 @@
     <tbody>
       {% for record in service_history %}
         <tr>
-          <td>{{ record.date }}</td>
+          <td>
+      {% if record.date %}
+        {{ record.date|date:"d.m.Y H:i" }}
+      {% else %}
+        <span class="text-danger">Нет даты</span>
+      {% endif %}
+    </td>
           <td>{{ record.car }}</td>
+          <td>{{ record.miliage }}</td>
           <td>{{ record.place }}</td>
           <td>{{ record.get_service_type_display }}</td>
           <td>{{ record.price }}</td>
