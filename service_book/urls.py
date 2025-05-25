@@ -1,6 +1,4 @@
 from django.urls import path, include
-from django.views.generic import edit
-
 from .views import (main, add_auto, add_service_record, user_autos, user_service_history,
                     edit_service_record, delete_service_record, edit_auto, delete_auto,
                     fuel_expense, add_fuel_expense, edit_fuel_expense, delete_fuel_expense)

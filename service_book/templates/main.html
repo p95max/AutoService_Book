@@ -34,6 +34,7 @@
       </tr>
     </tbody>
   </table>
+        <a href="#">+ Add a new service record</a>
 
   <h4>User current autos table example</h4>
     <table class="table" data-bs-theme="dark">
@@ -61,6 +62,44 @@
       </tr>
     </tbody>
   </table>
+      <a href="#">+ Add a new auto</a>
+
+  <h3>User current fuel expense example</h3>
+    <table class="table" data-bs-theme="dark">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Car</th>
+        <th>Fuel type</th>
+        <th>Fuel_amount</th>
+        <th>Price</th>
+        <th>Description</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>20.05.2021</td>
+        <td>VW Passat</td>
+        <td>Diesel Premium</td>
+        <td>55</td>
+        <td>100</td>
+        <td>full tank + coffee</td>
+        <td>
+          <a href="#" class="btn btn-sm btn-warning">Edit</a>
+           <form action="#" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-danger">
+                Delete
+                </button>
+                </form>
+        </td>
+
+
+      </tr>
+    </tbody>
+  </table>
+    <a href="#">+ Add fuel expense</a>
 </div>
 
 {% endblock %}
