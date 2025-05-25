@@ -15,6 +15,7 @@ class Car(models.Model):
     model = models.CharField(max_length=100)
     prod_year = models.IntegerField()
     miliage = models.IntegerField()
+    fuel_left = models.DecimalField(max_digits=7, decimal_places=2, default=0)
     vin = models.CharField(max_length=20, unique=True, null=True)
     owner = models.ForeignKey(
         User,

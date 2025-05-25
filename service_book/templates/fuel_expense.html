@@ -3,7 +3,7 @@
 {% block title %} Fuel expense {% endblock %}
 
 {% block content %}
-    <h3>Your current fuel expense</h3>
+    <h3>Your current fuel expenses</h3>
     {% if fuel %}
     <table class="table" data-bs-theme="dark">
         <thead>
@@ -13,6 +13,7 @@
             <th>Miliage(km)</th>
             <th>Fuel type</th>
             <th>Fuel_amount(l)</th>
+
             <th>Price($)</th>
             <th>Description</th>
             <th>Actions</th>
@@ -46,4 +47,11 @@
         <p>You haven't fuel expenses yet</p>
     {% endif %}
     <a href="{% url 'add_fuel_expense' %}">+ Add fuel expense</a>
+
+    <h4>Fuel in your autos:</h4>
+    <ul>
+        {% for car in cars %}
+    <li>{{ car.model }} has fuel in tank: {{ car.fuel_left|default:"0.00" }} Liters</li>
+        {% endfor %}
+    </ul>
 {% endblock %}

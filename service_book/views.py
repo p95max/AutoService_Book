@@ -3,7 +3,6 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.conf import settings
-
 from service_book.forms import AddNewAuto, AddNewServiceRecord, AddNewFuelExpense
 from service_book.models import ServiceRecord, Car, FuelExpense
 
@@ -22,11 +21,7 @@ def main(request):
     }
     return render(request, 'main.html', context=context)
 
-@login_required
-def user_service_history(request):
-    service_history = ServiceRecord.objects.filter(owner=request.user)
-    return render(request, 'service_history.html', context={'service_history': service_history})
-
+# User autos
 @login_required
 def user_autos(request):
     cars = Car.objects.filter(owner=request.user)
@@ -67,6 +62,12 @@ def delete_auto(request, pk):
         return redirect('autos')
     return redirect('autos')
 
+# Service records
+@login_required
+def user_service_history(request):
+    service_history = ServiceRecord.objects.filter(owner=request.user)
+    return render(request, 'service_history.html', context={'service_history': service_history})
+
 @login_required
 def add_service_record(request):
     if request.method == 'POST':
@@ -101,10 +102,16 @@ def delete_service_record(request, pk):
         return redirect('service_history')
     return redirect('service_history')
 
+# Fuel expense
 @login_required
 def fuel_expense(request):
     fuel = FuelExpense.objects.filter(owner=request.user)
-    return render(request, 'fuel_expense.html', context={'fuel': fuel})
+    cars = Car.objects.filter(owner=request.user)
+    context = {
+        'fuel': fuel,
+        'cars': cars,
+    }
+    return render(request, 'fuel_expense.html', context=context)
 
 @login_required
 def add_fuel_expense(request):

@@ -6,7 +6,7 @@ Our platform is designed for car owners who want to:</strong></p>
 <ul>
 <li>Keep a detailed record of all maintenance and repair work</li>
 <li>Save information about oil changes, inspections, repairs, and services</li>
-<li>View the full service history in one convenient place</li>
+<li>View the full service and fuel expenses history in one convenient place</li>
 <li>Stay on top of upcoming services and monitor expenses</li>
 </ul>
 <p><strong>
@@ -14,6 +14,7 @@ With a clean and user-friendly interface, you can easily:
 </strong></p>
 <ul>
 <li>Add and edit service records</li>
+<li>Add and edit fuel expense records</li>
 <li>View service history for each vehicle</li>
 <li>Manage multiple cars from your personal dashboard</li>
 </ul>
