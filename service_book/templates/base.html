@@ -61,6 +61,7 @@
             <a class="nav-link mt-3" href="{% url 'contact_us' %}">💬 Contact us</a>
         </li>
         {% if user.is_authenticated %}
+            <span class="mb-0 mt-2"> ------------------------------------ </span>
         <li class="nav-item w-100">
             <a class="nav-link mt-3" href="{% url 'autos' %}">🅿️ My garage</a>
         </li>

@@ -15,6 +15,7 @@ With a clean and user-friendly interface, you can easily:
 
 - Add and edit service records
 - Add and edit fuel expense records
+- Add and edit car parts
 - View service history for each vehicle
 - Analyze your current average fuel consumption and control how much fuel is left in your cars
 - Manage multiple cars from your personal dashboard
@@ -25,7 +26,7 @@ AutoService Book brings organization, transparency, and peace of mind to your ca
 
 ## Features
 
-- 🛠️ **Control your service history**
+- 🛠️ **Control your service history and car parts**
 - 🚗 **Add and manage your autos**
 - 🔋 **Manage your fuel expenses**
 - ⛽ **Check your fuel left in tank and average consumption**
