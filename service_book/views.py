@@ -86,10 +86,26 @@ def delete_auto(request, pk):
     return redirect('autos')
 
 # Service records
+
 @login_required
 def user_service_history(request):
+    cars = Car.objects.filter(owner=request.user)
     service_history = ServiceRecord.objects.filter(owner=request.user)
-    return render(request, 'service_records/service_history.html', context={'service_history': service_history})
+    total_costs_per_car = (
+        ServiceRecord.objects
+        .filter(owner=request.user)
+        .values('car__id', 'car__brand', 'car__model')
+        .annotate(total_cost=Sum('price'))
+    )
+    costs_dict = {item['car__id']: item['total_cost'] for item in total_costs_per_car}
+
+    context = {
+        'cars': cars,
+        'service_history': service_history,
+        'costs_dict': costs_dict,
+        'total_costs_per_car': total_costs_per_car,
+    }
+    return render(request, 'service_records/service_history.html', context=context)
 
 @login_required
 def add_service_record(request):
@@ -134,17 +150,14 @@ def fuel_expense(request):
     total_fuel = FuelExpense.objects.filter(owner=request.user).aggregate(Sum('fuel_amount'))['fuel_amount__sum'] or 0
     total_costs = FuelExpense.objects.filter(owner=request.user).aggregate(Sum('price'))['price__sum'] or 0
     total_costs = round(total_costs, 1)
-
+# Avag cons. and fuel left calculation
     for car in cars:
-
         fuel_records = FuelExpense.objects.filter(owner=request.user, car=car)
         service_records = ServiceRecord.objects.filter(car=car)
-
         all_events = sorted(
             chain(fuel_records, service_records),
             key=lambda x: x.date
         )
-
         total_fuel = sum(float(f.fuel_amount) for f in fuel_records if getattr(f, 'distance', None))
         total_distance = sum(getattr(f, 'distance', 0) for f in fuel_records if getattr(f, 'distance', None))
         if total_distance > 0:
@@ -153,12 +166,10 @@ def fuel_expense(request):
         else:
             avg_cons = None
             car.avg_cons = None
-
         fuel_left = 0
         prev_miliage = None
         for event in all_events:
             if hasattr(event, 'fuel_amount'):
-                # Это заправка
                 fuel_left += float(event.fuel_amount)
             if prev_miliage is not None and avg_cons and event.miliage is not None:
 
@@ -169,6 +180,13 @@ def fuel_expense(request):
                         fuel_left = 0
             prev_miliage = event.miliage
         car.fuel_left = round(fuel_left, 2)
+# Fuel costs per car
+    total_costs_per_car = (FuelExpense.objects.filter(owner=request.user)
+                     .values('car__id', 'car__brand', 'car__model')
+                     .annotate(total_cost=Sum('price'))
+                     )
+    costs_dict = {item['car__id']: item['total_cost']
+                  for item in total_costs_per_car}
 
     context = {
         'fuel': fuel,
@@ -176,6 +194,8 @@ def fuel_expense(request):
         'total_refuels': total_refuels,
         'total_fuel': total_fuel,
         'total_costs': total_costs,
+        'total_costs_per_car': total_costs_per_car,
+        'costs_dict': costs_dict,
     }
     return render(request, 'fuel_expense/fuel_expense.html', context=context)
 
