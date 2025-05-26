@@ -1,5 +1,6 @@
 import os
 from django.contrib.auth.decorators import login_required
+from django.db.models import Sum, Count
 from django.http import HttpResponseRedirect
 from itertools import chain
 from django.shortcuts import render, get_object_or_404, redirect
@@ -129,6 +130,10 @@ def delete_service_record(request, pk):
 def fuel_expense(request):
     fuel = FuelExpense.objects.filter(owner=request.user)
     cars = Car.objects.filter(owner=request.user)
+    total_refuels = FuelExpense.objects.filter(owner=request.user).aggregate(Count('id'))['id__count'] or 0
+    total_fuel = FuelExpense.objects.filter(owner=request.user).aggregate(Sum('fuel_amount'))['fuel_amount__sum'] or 0
+    total_costs = FuelExpense.objects.filter(owner=request.user).aggregate(Sum('price'))['price__sum'] or 0
+    total_costs = round(total_costs, 1)
 
     for car in cars:
 
@@ -168,6 +173,9 @@ def fuel_expense(request):
     context = {
         'fuel': fuel,
         'cars': cars,
+        'total_refuels': total_refuels,
+        'total_fuel': total_fuel,
+        'total_costs': total_costs,
     }
     return render(request, 'fuel_expense/fuel_expense.html', context=context)
 

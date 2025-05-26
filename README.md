@@ -31,3 +31,4 @@ AutoService Book brings organization, transparency, and peace of mind to your ca
 - 🔋 **Manage your fuel expenses**
 - ⛽ **Check your fuel left in tank and average consumption**
 - 📊 **View all your expenses and service history in one place**
+-    **Dark/Light theme switcher**

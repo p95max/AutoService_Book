@@ -8,9 +8,13 @@
     <table class="table table-dark table-striped align-middle text-center">
         <thead>
           <tr>
+
             <th>Car</th>
             <th>Fuel left(l)</th>
-            <th>Current average consumption(l/100km)</th>
+            <th>Current average cons.(l/100km)</th>
+            <th>Total refuels(alltime)</th>
+            <th>Total refueled(alltime)</th>
+            <th>Total costs(alltime)</th>
           </tr>
         </thead>
         <tbody>
@@ -19,6 +23,9 @@
             <td>{{ car }}</td>
             <td>{{ car.fuel_left|default:"0.00" }}</td>
             <td>{{ car.avg_cons|floatformat:2 }}</td>
+            <td>{{ total_refuels }}</td>
+            <td>{{ total_fuel }}</td>
+            <td>{{ total_costs }}</td>
           </tr>
         {% endfor %}
         </tbody>
