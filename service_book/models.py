@@ -48,7 +48,7 @@ class ServiceRecord(models.Model):
         verbose_name='User'
     )
     place = models.CharField(max_length=100)
-    service_type = models.CharField(max_length=50, choices=SERVICE_ACTIONS)
+    service_type = models.CharField(max_length=50, choices=SERVICE_ACTIONS, default='other_service')
     miliage = models.IntegerField(null=True, blank=True)
     description = models.TextField()
 
@@ -68,7 +68,7 @@ class FuelExpense(models.Model):
     date = models.DateTimeField(null=False, blank=False)
     car = models.ForeignKey(Car, on_delete=models.SET_NULL, null=True)
     miliage = models.IntegerField(null=True, blank=True)
-    fuel_type = models.CharField(max_length=50, choices=FUEL_TYPES)
+    fuel_type = models.CharField(max_length=50, choices=FUEL_TYPES, default='other')
     fuel_amount = models.DecimalField(max_digits=10, decimal_places=2)
     distance = models.FloatField(null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
@@ -93,3 +93,33 @@ class ContactRequest(models.Model):
 
     def __str__(self):
         return f"Contact from {self.name} ({self.email})"
+
+class Carpart(models.Model):
+    CARPART_TYPES = [
+        ('body', 'Car body part'),
+        ('engine', 'Car engine part'),
+        ('transmission', 'Car transmission part'),
+        ('tyre', 'Car tyre'),
+        ('tuning', 'Car tuning part'),
+        ('service', 'Car service part'),
+        ('break', 'Car break part'),
+        ('electric', 'Car electric part'),
+        ('care', 'Car care'),
+        ('other', 'Other'),
+    ]
+
+    date_purchase = models.DateTimeField(null=False, blank=False)
+    name = models.CharField(max_length=200)
+    car = models.ForeignKey(Car, on_delete=models.SET_NULL, null=True, blank=True)
+    carpart_type = models.CharField(max_length=50, choices=CARPART_TYPES, default='other')
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    place_purchase = models.CharField(max_length=100)
+    date_installation = models.DateField(null=True, blank=True)
+    place_installation = models.CharField(max_length=100, null=True, blank=True)
+    description = models.TextField()
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
+
+    def __str__(self):
+        return f"{self.car} - {self.name} - {self.get_carpart_type_display()}"
+
+

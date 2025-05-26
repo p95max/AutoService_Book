@@ -4,8 +4,9 @@ from django.http import HttpResponseRedirect
 from itertools import chain
 from django.shortcuts import render, get_object_or_404, redirect
 from django.conf import settings
-from service_book.forms import AddNewAuto, AddNewServiceRecord, AddNewFuelExpense, ContactRequestForm
-from service_book.models import ServiceRecord, Car, FuelExpense
+from service_book.forms import (AddNewAuto, AddNewServiceRecord, AddNewFuelExpense,
+                                ContactRequestForm, AddNewCarPart)
+from service_book.models import ServiceRecord, Car, FuelExpense, Carpart
 
 def main(request):
     intro_text = ""
@@ -42,11 +43,11 @@ def contact_us(request):
     }
     return render(request, 'contact_us.html', context)
 
-# User autos
+# Autos list
 @login_required
 def user_autos(request):
     cars = Car.objects.filter(owner=request.user)
-    return render(request, 'my_autos.html', context={'cars': cars})
+    return render(request, 'autos/my_autos.html', context={'cars': cars})
 
 @login_required
 def add_auto(request):
@@ -61,7 +62,7 @@ def add_auto(request):
     else:
         form = AddNewAuto()
     context = {'form': form}
-    return render(request, 'add_auto.html', context=context)
+    return render(request, 'autos/add_auto.html', context=context)
 
 @login_required
 def edit_auto(request, pk):
@@ -73,7 +74,7 @@ def edit_auto(request, pk):
             return redirect('autos')
     else:
         form = AddNewAuto(instance=auto)
-    return render(request, 'edit_auto.html', {'form': form})
+    return render(request, 'autos/edit_auto.html', {'form': form})
 
 @login_required
 def delete_auto(request, pk):
@@ -87,7 +88,7 @@ def delete_auto(request, pk):
 @login_required
 def user_service_history(request):
     service_history = ServiceRecord.objects.filter(owner=request.user)
-    return render(request, 'service_history.html', context={'service_history': service_history})
+    return render(request, 'service_records/service_history.html', context={'service_history': service_history})
 
 @login_required
 def add_service_record(request):
@@ -101,7 +102,7 @@ def add_service_record(request):
     else:
         form = AddNewServiceRecord(user=request.user)
     context = {'form': form}
-    return render(request, 'add_service.html', context=context)
+    return render(request, 'service_records/add_service.html', context=context)
 
 @login_required
 def edit_service_record(request, pk):
@@ -113,7 +114,7 @@ def edit_service_record(request, pk):
             return redirect('service_history')
     else:
         form = AddNewServiceRecord(user=request.user, instance=record)
-    return render(request, 'edit_service.html', {'form': form})
+    return render(request, 'service_records/edit_service.html', {'form': form})
 
 @login_required
 def delete_service_record(request, pk):
@@ -168,7 +169,7 @@ def fuel_expense(request):
         'fuel': fuel,
         'cars': cars,
     }
-    return render(request, 'fuel_expense.html', context=context)
+    return render(request, 'fuel_expense/fuel_expense.html', context=context)
 
 @login_required
 def add_fuel_expense(request):
@@ -182,7 +183,7 @@ def add_fuel_expense(request):
     else:
         form = AddNewFuelExpense(user=request.user)
     context = {'form': form}
-    return render(request, 'add_fuel_expense.html', context=context)
+    return render(request, 'fuel_expense/add_fuel_expense.html', context=context)
 
 @login_required
 def edit_fuel_expense(request, pk):
@@ -196,7 +197,7 @@ def edit_fuel_expense(request, pk):
             return redirect('fuel_expense')
     else:
         form = AddNewFuelExpense(user=request.user, instance=record)
-    return render(request, 'edit_fuel_expense.html', {'form': form})
+    return render(request, 'fuel_expense/edit_fuel_expense.html', {'form': form})
 
 @login_required
 def delete_fuel_expense(request, pk):
@@ -205,3 +206,49 @@ def delete_fuel_expense(request, pk):
         record.delete()
         return redirect('fuel_expense')
     return redirect('fuel_expense')
+
+# Car parts
+@login_required
+def car_parts(request):
+    parts = Carpart.objects.filter(owner=request.user)
+    owner = request.user
+
+    return render(request, 'carparts/my_carparts.html', context={'parts': parts, 'owner': owner})
+
+@login_required
+def add_carpart(request):
+    if request.method == 'POST':
+        form = AddNewCarPart(request.POST, user=request.user)
+        if form.is_valid():
+            part = form.save(commit=False)
+            part.owner = request.user
+            part.save()
+            return redirect('my_carparts')
+    else:
+        form = AddNewCarPart(user=request.user)
+    context = {'form': form}
+
+    return render(request, 'carparts/add_carpart.html', context=context)
+
+@login_required
+def edit_carpart(request, pk):
+    part = get_object_or_404(Carpart, pk=pk, owner=request.user)
+    if request.method == 'POST':
+        form = AddNewCarPart(request.POST, user=request.user, instance=part)
+        if form.is_valid():
+            part = form.save(commit=False)
+            part.owner = request.user
+            part.save()
+            return redirect('my_carparts')
+    else:
+        form = AddNewCarPart(user=request.user, instance=part)
+
+    return render(request, 'carparts/edit_carpart.html', {'form': form})
+
+@login_required
+def delete_car_part(request, pk):
+    part = get_object_or_404(Carpart, pk=pk, owner=request.user)
+    if request.method == 'POST':
+        part.delete()
+        return redirect('my_carparts')
+    return redirect('my_carparts')

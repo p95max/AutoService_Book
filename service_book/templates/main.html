@@ -6,38 +6,6 @@
 <div class="container mt-3">
     <p>{{ intro_text|safe }}</p>
 
-  <h4>🛠️ Control your service history</h4>
-<table class="table table-dark table-striped align-middle text-center">
-  <thead>
-    <tr>
-      <th style="width: 12%;">Date</th>
-      <th style="width: 15%;">Car</th>
-      <th style="width: 12%;">Mileage(km)</th>
-        <th>Service station</th>
-      <th style="width: 15%;">Type</th>
-      <th style="width: 12%;">Amount</th>
-      <th style="width: 20%;">Description</th>
-      <th style="width: 14%;">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>20/05/2025</td>
-      <td>VW Tuareg</td>
-      <td>10500</td>
-        <td>vw</td>
-      <td>Oil change</td>
-      <td>1000$</td>
-      <td>Oil change + filters</td>
-      <td>
-        <a href="#" class="btn btn-sm btn-warning">✏️Edit</a>
-        <a href="#" class="btn btn-sm btn-danger">🗑️Delete</a>
-      </td>
-    </tr>
-  </tbody>
-</table>
-<a href="#" class="btn btn-primary btn-sm my-2">✏️ Add a new service record</a>
-
   <h4>🚗 Add and manage your autos</h4>
 <table class="table table-dark table-striped align-middle text-center">
   <thead>
@@ -66,6 +34,38 @@
 </table>
 <a href="#" class="btn btn-primary btn-sm my-2">✏️ Add fuel expense</a>
 
+  <h4>🛠️ Control your service history</h4>
+<table class="table table-dark table-striped align-middle text-center">
+  <thead>
+    <tr>
+      <th style="width: 12%;">Date</th>
+      <th style="width: 15%;">Car</th>
+      <th style="width: 12%;">Mileage(km)</th>
+        <th>Service station</th>
+      <th style="width: 15%;">Type</th>
+      <th style="width: 12%;">Amount</th>
+      <th style="width: 20%;">Description</th>
+      <th style="width: 14%;">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>20.05.2025 13:00</td>
+      <td>VW Tuareg</td>
+      <td>10500</td>
+        <td>vw</td>
+      <td>Oil change</td>
+      <td>1000$</td>
+      <td>Oil change + filters</td>
+      <td>
+        <a href="#" class="btn btn-sm btn-warning">✏️Edit</a>
+        <a href="#" class="btn btn-sm btn-danger">🗑️Delete</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<a href="#" class="btn btn-primary btn-sm my-2">✏️ Add a new service record</a>
+
   <h4>🔋 Manage your fuel expenses</h4>
 <table class="table table-dark table-striped align-middle text-center">
 <thead>
@@ -82,7 +82,7 @@
 </thead>
 <tbody>
   <tr>
-    <td>20.05.2021</td>
+    <td>20.05.2021 13:00</td>
     <td>VW Passat</td>
     <td>99999</td>
     <td>Diesel Premium</td>
@@ -104,6 +104,47 @@
 </tbody>
 </table>
 <a href="#" class="btn btn-primary btn-sm my-2">✏️ Add fuel expense</a>
+
+  <h4>⚙️ Manage your car parts </h4>
+<table class="table table-dark table-striped align-middle text-center">
+        <thead>
+          <tr>
+            <th>Date purchase</th>
+            <th>Name</th>
+            <th>Car</th>
+            <th>Car part type</th>
+            <th>Price($)</th>
+            <th>Place purchase</th>
+            <th>Date installation</th>
+            <th>Place installation</th>
+            <th>Description</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>20.03.2025 13:00</td>
+            <td>Turbo</td>
+            <td>Toyota Avensis</td>
+            <td>Engine part</td>
+            <td>1000</td>
+            <td>CarPartsShop</td>
+            <td>21.03.205 14:00</td>
+            <td>not installed</td>
+            <td>not installed</td>
+            <td>
+              <a href="#" class="btn btn-sm btn-warning">✏️Edit</a>
+              <form action="#" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-danger">
+                🗑️Delete
+                </button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+    </table>
+<a href="{% url 'add_carpart' %}" class="btn btn-primary btn-sm my-2">✏️ Add car part</a>
 
   <h4>Check your ⛽fuel left in tank and 📉 average consumption</h4>
 <table class="table table-dark table-striped align-middle text-center">
@@ -129,7 +170,6 @@
       </tr>
     </tbody>
 </table>
-
 
 </div>
 

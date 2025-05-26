@@ -1,5 +1,5 @@
 from django import forms
-from .models import Car, ServiceRecord, FuelExpense, ContactRequest
+from .models import Car, ServiceRecord, FuelExpense, ContactRequest, Carpart
 
 
 class AddNewAuto(forms.ModelForm):
@@ -95,3 +95,39 @@ class ContactRequestForm(forms.ModelForm):
             'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Your Email'}),
             'message': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Your Message', 'rows': 5}),
         }
+
+class AddNewCarPart(forms.ModelForm):
+    class Meta:
+        model = Carpart
+        fields = ['date_purchase', 'name', 'car', 'carpart_type', 'price', 'place_purchase',
+                  'date_installation', 'place_installation', 'description',]
+        widgets = {
+            'date_purchase': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'car': forms.Select(attrs={'class': 'form-control'}),
+            'carpart_type': forms.Select(attrs={'class': 'form-control'}),
+            'price': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'}),
+            'place_purchase': forms.TextInput(attrs={'class': 'form-control'}),
+            'date_installation': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'place_installation': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
+        }
+        labels = {
+            'date_purchase': 'Date',
+            'name': 'Name',
+            'car': 'Car',
+            'carpart_type': 'Carpart Type',
+            'price': 'Price',
+            'place_purchase': 'Place',
+            'date_installation': 'Installation date',
+            'place_installation': 'Installation place',
+            'description': 'Description',
+        }
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        if user is not None:
+            self.fields['car'].queryset = Car.objects.filter(owner=user)
+        else:
+            self.fields['car'].queryset = Car.objects.none()
