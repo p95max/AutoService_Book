@@ -37,6 +37,20 @@
 
   <h4>🛠️ Control your service history</h4>
 <table class="table table-dark table-striped align-middle text-center">
+        <thead>
+          <tr>
+            <th>Car</th>
+            <th>Total costs($)</th>
+          </tr>
+        </thead>
+        <tbody>
+  <tr>
+    <td>VW Tuareg</td>
+    <td>1000</td>
+  </tr>
+        </tbody>
+    </table>
+<table class="table table-dark table-striped align-middle text-center">
   <thead>
     <tr>
       <th style="width: 12%;">Date</th>
@@ -68,6 +82,24 @@
 <a href="#" class="btn btn-primary btn-sm my-2">✏️ Add a new service record</a>
 
   <h4>🔋 Manage your fuel expenses</h4>
+<table class="table table-dark table-striped align-middle text-center">
+        <thead>
+          <tr>
+            <th>Car</th>
+            <th>Fuel left(l)</th>
+            <th>Current average cons.(l/100km)</th>
+            <th>Total costs($)</th>
+          </tr>
+        </thead>
+        <tbody>
+  <tr>
+    <td>VW Passat</td>
+    <td>35</td>
+    <td>7.4</td>
+    <td>2500</td>
+  </tr>
+        </tbody>
+    </table>
 <table class="table table-dark table-striped align-middle text-center">
 <thead>
   <tr>
@@ -110,6 +142,20 @@
 <table class="table table-dark table-striped align-middle text-center">
         <thead>
           <tr>
+            <th>Car</th>
+            <th>Total costs($)</th>
+          </tr>
+        </thead>
+        <tbody>
+  <tr>
+    <td>Toyota Avensis</td>
+    <td>1000</td>
+  </tr>
+        </tbody>
+    </table>
+<table class="table table-dark table-striped align-middle text-center">
+        <thead>
+          <tr>
             <th>Date purchase</th>
             <th>Name</th>
             <th>Car</th>
@@ -145,7 +191,7 @@
           </tr>
         </tbody>
     </table>
-<a href="{% url 'add_carpart' %}" class="btn btn-primary btn-sm my-2">✏️ Add car part</a>
+<a href="#" class="btn btn-primary btn-sm my-2">✏️ Add car part</a>
 
   <h4>Check your ⛽fuel left in tank and 📉 average consumption</h4>
 <table class="table table-dark table-striped align-middle text-center">
@@ -171,6 +217,60 @@
       </tr>
     </tbody>
 </table>
+    <table class="table table-dark table-striped align-middle text-center">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Car</th>
+            <th>Mileage(km)</th>
+            <th>Fuel type</th>
+            <th>Fuel_amount(l)</th>
+            <th>Price($)</th>
+            <th>Description</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>22.05.2025 19:00</td>
+            <td>BMW E60</td>
+            <td>99999</td>
+            <td>Premium Diesel</td>
+            <td>50</td>
+            <td>100</td>
+            <td>Not again:(</td>
+            <td>
+              <a href="#" class="btn btn-sm btn-warning">✏️Edit</a>
+              <form action="#" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-danger">
+                🗑️Delete
+                </button>
+              </form>
+            </td>
+          </tr>
+          <tr>
+            <td>24.05.2025 19:00</td>
+            <td>Nissan Micra</td>
+            <td>9999</td>
+            <td>E10</td>
+            <td>15</td>
+            <td>35</td>
+            <td>^^</td>
+            <td>
+              <a href="#" class="btn btn-sm btn-warning">✏️Edit</a>
+              <form action="#" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-danger">
+                🗑️Delete
+                </button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+    </table>
+<a href="#" class="btn btn-primary btn-sm my-2">✏️ Add fuel expense</a>
+
 
 </div>
 

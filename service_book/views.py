@@ -86,7 +86,6 @@ def delete_auto(request, pk):
     return redirect('autos')
 
 # Service records
-
 @login_required
 def user_service_history(request):
     cars = Car.objects.filter(owner=request.user)
@@ -238,10 +237,26 @@ def delete_fuel_expense(request, pk):
 # Car parts
 @login_required
 def car_parts(request):
+    cars = Car.objects.filter(owner=request.user)
     parts = Carpart.objects.filter(owner=request.user)
     owner = request.user
+    total_costs_per_car = (
+        Carpart.objects
+        .filter(owner=request.user)
+        .values('car__id', 'car__brand', 'car__model')
+        .annotate(total_cost=Sum('price'))
+    )
+    costs_dict = {item['car__id']: item['total_cost'] for item in total_costs_per_car}
 
-    return render(request, 'carparts/my_carparts.html', context={'parts': parts, 'owner': owner})
+    context = {
+        'cars': cars,
+        'parts': parts,
+        'owner': owner,
+        'total_costs_per_car': total_costs_per_car,
+        'costs_dict': costs_dict,
+    }
+
+    return render(request, 'carparts/my_carparts.html', context=context)
 
 @login_required
 def add_carpart(request):
