@@ -5,6 +5,7 @@ from .views import (main, add_auto, add_service_record, user_autos, user_service
                     contact_us, add_carpart, car_parts, delete_car_part, edit_carpart,
                     other_expense, edit_other_expense, add_other_expense, delete_other_expense,
                     )
+from .export_csv_views import (export_csv_other, export_csv_service, export_csv_fuel, export_csv_carpart)
 
 urlpatterns = [
     path('main/', main, name='main'),
@@ -34,4 +35,9 @@ urlpatterns = [
     path('add_other_expense/', add_other_expense, name='add_other_expense'),
     path('other_expense/<int:pk>/edit/', edit_other_expense, name='edit_other_expense'),
     path('other_expense/<int:pk>/delete/', delete_other_expense, name='delete_other_expense'),
+# CSV export
+    path('export_other_csv/', export_csv_other, name='export_other_csv'),
+    path('export_fuel_csv/', export_csv_fuel, name='export_fuel_csv'),
+    path('export_carpart_csv/', export_csv_carpart, name='export_carpart_csv'),
+    path('export_service_csv/', export_csv_service, name='export_service_csv'),
 ]

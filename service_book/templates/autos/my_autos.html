@@ -3,7 +3,8 @@
 {% block title %} My garage {% endblock %}
 {% block content %}
     <h3>🚗🚙Your current autos</h3>
-                <a>You have: -{{ user_cars_count }}- car(s) in your garage</a>
+    <a>You have: <a style="color: maroon">{{ user_cars_count }}</a> car(s) in your garage</a><br>
+    <a>Your total expenses for all auto <a style="color: maroon">{{ total_sum }}</a>$</a>
 {% if cars %}
   <table class="table table-dark table-striped align-middle text-center">
     <thead>

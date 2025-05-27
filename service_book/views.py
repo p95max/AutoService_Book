@@ -10,9 +10,9 @@ from service_book.forms import (AddNewAuto, AddNewServiceRecord, AddNewFuelExpen
 from service_book.models import ServiceRecord, Car, FuelExpense, Carpart, OtherExpense
 
 def main(request):
+# Intro text
     intro_text = ""
     file_path = os.path.join(settings.BASE_DIR, 'static', 'text', 'home_intro.txt')
-
     try:
         with open(file_path) as file:
             intro_text = file.read()
@@ -48,7 +48,21 @@ def contact_us(request):
 @login_required
 def user_autos(request):
     cars = Car.objects.filter(owner=request.user)
-    return render(request, 'autos/my_autos.html', context={'cars': cars})
+
+#All user expenses
+    total_fuel = FuelExpense.objects.filter(owner=request.user).aggregate(Sum('price'))['price__sum'] or 0
+    total_service = ServiceRecord.objects.filter(owner=request.user).aggregate(Sum('price'))['price__sum'] or 0
+    total_carpart = Carpart.objects.filter(owner=request.user).aggregate(Sum('price'))['price__sum'] or 0
+    total_other = OtherExpense.objects.filter(owner=request.user).aggregate(Sum('price'))['price__sum'] or 0
+    total_sum = total_fuel + total_service + total_carpart + total_other
+    total_sum = round(total_sum, 1)
+
+    context = {
+        'cars': cars,
+        'total_sum': total_sum,
+    }
+
+    return render(request, 'autos/my_autos.html', context=context)
 
 @login_required
 def add_auto(request):
