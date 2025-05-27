@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.contrib.auth import get_user_model
 from django.db import models
 
@@ -24,6 +26,8 @@ class Car(models.Model):
         default=None,
         verbose_name='Owner'
     )
+    next_service_date = models.DateField(null=True, blank=True)
+    next_service_mileage = models.PositiveIntegerField(null=True, blank=True)
 
     def __str__(self):
         brands = ", ".join([brand.name for brand in self.brand.all()])
@@ -51,6 +55,14 @@ class ServiceRecord(models.Model):
     service_type = models.CharField(max_length=50, choices=SERVICE_ACTIONS, default='other_service')
     miliage = models.IntegerField(null=True, blank=True)
     description = models.TextField(blank=True)
+
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+        if self.service_type == 'interval_service':
+            self.car.next_service_mileage = self.miliage + 10000
+            self.car.next_service_date = self.date + timedelta(days=365)
+            self.car.save()
 
     def __str__(self):
         return f"{self.car} - {self.get_service_type_display()} - {self.date} - {self.price}$"
