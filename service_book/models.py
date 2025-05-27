@@ -13,7 +13,7 @@ class Brand(models.Model):
         return f"{self.name}"
 
 class Car(models.Model):
-    brand = models.ManyToManyField(Brand)
+    brand = models.ForeignKey(Brand, on_delete=models.CASCADE, default=1)
     model = models.CharField(max_length=100)
     prod_year = models.IntegerField()
     miliage = models.IntegerField()
@@ -30,8 +30,13 @@ class Car(models.Model):
     next_service_mileage = models.PositiveIntegerField(null=True, blank=True)
 
     def __str__(self):
-        brands = ", ".join([brand.name for brand in self.brand.all()])
-        return f"{brands} - {self.model}"
+        return f"{self.brand.name} - {self.model}"
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['miliage']),
+            models.Index(fields=['owner']),
+        ]
 
 class ServiceRecord(models.Model):
     SERVICE_ACTIONS = [
@@ -55,6 +60,11 @@ class ServiceRecord(models.Model):
     service_type = models.CharField(max_length=50, choices=SERVICE_ACTIONS, default='other_service')
     miliage = models.IntegerField(null=True, blank=True)
     description = models.TextField(blank=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['price']),
+        ]
 
 
     def save(self, *args, **kwargs):
@@ -92,6 +102,13 @@ class FuelExpense(models.Model):
     )
     gas_station = models.CharField(max_length=100)
     description = models.TextField(blank=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['price']),
+            models.Index(fields=['distance']),
+            models.Index(fields=['fuel_amount']),
+        ]
 
     def __str__(self):
         return f"{self.car} - {self.get_fuel_type_display()} - {self.fuel_amount} - {self.date} - {self.price}$"
@@ -134,6 +151,11 @@ class Carpart(models.Model):
     def __str__(self):
         return f"{self.car} - {self.name} - {self.get_carpart_type_display()}"
 
+    class Meta:
+        indexes = [
+            models.Index(fields=['price']),
+        ]
+
 class OtherExpense(models.Model):
     EXPENSE_TYPES = [
         ('other', 'Other'),
@@ -153,5 +175,10 @@ class OtherExpense(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.date} - {self.get_expense_type_display()}"
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['price']),
+        ]
 
 

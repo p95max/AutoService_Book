@@ -7,6 +7,8 @@ from .views import (main, add_auto, add_service_record, user_autos, user_service
                     )
 from .export_csv_views import (export_csv_other, export_csv_service, export_csv_fuel, export_csv_carpart)
 
+# app_name = 'service_book'
+
 urlpatterns = [
     path('main/', main, name='main'),
     path('contact_us/', contact_us, name='contact_us'),

@@ -4,7 +4,9 @@ from service_book.models import ServiceRecord, Car, ContactRequest, FuelExpense,
 
 @admin.register(Car)
 class CarAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['model', 'prod_year', 'miliage', 'owner']
+    search_fields = ['model', 'vin']
+    list_filter = ['prod_year', 'owner']
 
 @admin.register(Brand)
 class BrandAdmin(admin.ModelAdmin):

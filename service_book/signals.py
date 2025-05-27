@@ -7,12 +7,23 @@ from django.db.models import Max
 def update_car_miliage(car):
     if car is None:
         return
-    fuel_max = FuelExpense.objects.filter(car=car).aggregate(max_miliage=Max('miliage'))['max_miliage'] or 0
-    service_max = ServiceRecord.objects.filter(car=car).aggregate(max_miliage=Max('miliage'))['max_miliage'] or 0
-    max_miliage = max(fuel_max, service_max)
+    cache_key = f'car_{car.id}_max_miliage'
+    max_miliage = cache.get(cache_key)
+    if max_miliage is None:
+        fuel_max = FuelExpense.objects.filter(car=car).aggregate(max_miliage=Max('miliage'))['max_miliage'] or 0
+        service_max = ServiceRecord.objects.filter(car=car).aggregate(max_miliage=Max('miliage'))['max_miliage'] or 0
+        max_miliage = max(fuel_max, service_max)
+        cache.set(cache_key, max_miliage, 60 * 15)
     if car.miliage != max_miliage:
         car.miliage = max_miliage
         car.save(update_fields=['miliage'])
+
+def get_cached_value(cache_key, query, ttl=60*15):
+    value = cache.get(cache_key)
+    if value is None:
+        value = query() or 0
+        cache.set(cache_key, value, ttl)
+    return round(value, 1)
 
 @receiver(post_save, sender=FuelExpense)
 @receiver(post_delete, sender=FuelExpense)
@@ -55,3 +66,9 @@ def clear_user_cars_count_cache(sender, instance, **kwargs):
     if instance.owner:
         cache_key = f'user_{instance.owner.id}_cars_count'
         cache.delete(cache_key)
+
+@receiver([post_save, post_delete], sender=ServiceRecord)
+def clear_service_costs_cache(sender, instance, **kwargs):
+    if instance.owner:
+        cache.delete(f'user_{instance.owner.id}_total_service_costs')
+

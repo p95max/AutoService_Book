@@ -13,7 +13,7 @@ def export_csv_other(request):
 
     for item in OtherExpense.objects.filter(owner=request.user):
         writer.writerow([
-            item.date.strftime('%d.%m.%Y %H:%M'),
+            item.date.strftime('%d.%m.%Y %H:%M') if item.date else '',
             item.name,
             item.car,
             item.price,
@@ -33,7 +33,7 @@ def export_csv_service(request):
 
     for item in ServiceRecord.objects.filter(owner=request.user):
         writer.writerow([
-            item.date.strftime('%d.%m.%Y %H:%M'),
+            item.date.strftime('%d.%m.%Y %H:%M') if item.date else '',
             item.car,
             item.miliage,
             item.place,
@@ -54,7 +54,7 @@ def export_csv_fuel(request):
 
     for item in FuelExpense.objects.filter(owner=request.user):
         writer.writerow([
-            item.date.strftime('%d.%m.%Y %H:%M'),
+            item.date.strftime('%d.%m.%Y %H:%M') if item.date else '',
             item.car,
             item.miliage,
             item.get_fuel_type_display(),
@@ -77,13 +77,13 @@ def export_csv_carpart(request):
 
     for item in Carpart.objects.filter(owner=request.user):
         writer.writerow([
-            item.date_purchase,
+            item.date_purchase if item.date_purchase else '',
             item.name,
             item.car,
             item.get_carpart_type_display(),
             item.price,
             item.place_purchase,
-            item.date_installation,
+            item.date_installation if item.date_installation else '',
             item.place_installation,
             item.description,
 
