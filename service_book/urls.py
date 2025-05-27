@@ -14,7 +14,7 @@ urlpatterns = [
     path('autos/', user_autos, name='autos'),
     path('add_auto/', add_auto, name='add_auto'),
     path('autos/<int:pk>/edit/', edit_auto, name='edit_auto'),
-    path('autos/<int:pk>/delete', delete_auto, name='delete_auto'),
+    path('autos/<int:pk>/delete/', delete_auto, name='delete_auto'),
 # Service records
     path('service_history/', user_service_history, name='service_history'),
     path('add_service/', add_service_record, name='add_service'),
@@ -24,9 +24,9 @@ urlpatterns = [
     path('fuel_expense/', fuel_expense, name='fuel_expense'),
     path('add_fuel_expense/', add_fuel_expense, name='add_fuel_expense'),
     path('fuel_expense/<int:pk>/edit/', edit_fuel_expense, name='edit_fuel_expense'),
-    path('fuel_expense/<int:pk>/delete', delete_fuel_expense, name='delete_fuel_expense'),
+    path('fuel_expense/<int:pk>/delete/', delete_fuel_expense, name='delete_fuel_expense'),
 # Car parts
-    path('my_carparts', car_parts, name='my_carparts'),
+    path('my_carparts/', car_parts, name='my_carparts'),
     path('add_carpart/', add_carpart, name='add_carpart'),
     path('carparts/<int:pk>/edit/', edit_carpart, name='edit_carpart'),
     path('carparts/<int:pk>/delete/', delete_car_part, name='delete_carpart'),

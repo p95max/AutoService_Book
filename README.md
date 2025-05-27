@@ -19,6 +19,7 @@ With a clean and user-friendly interface, you can easily:
 - View service history for each vehicle
 - Analyze your current average fuel consumption and control how much fuel is left in your cars
 - Manage multiple cars from your personal dashboard
+- Download your data by csv table
 
 AutoService Book brings organization, transparency, and peace of mind to your car ownership experience.
 

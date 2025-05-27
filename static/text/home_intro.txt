@@ -8,6 +8,7 @@ Our platform is designed for car owners who want to:</strong></p>
 <li>Save information about oil changes, inspections, repairs, and services</li>
 <li>View the full service and fuel expenses history in one convenient place</li>
 <li>Stay on top of upcoming services and monitor expenses</li>
+<li>Download your data by csv table</li>
 </ul>
 <p><strong>
 With a clean and user-friendly interface, you can easily:
