@@ -4,13 +4,14 @@ from .views import (main, add_auto, add_service_record, user_autos, user_service
                     fuel_expense, add_fuel_expense, edit_fuel_expense, delete_fuel_expense,
                     contact_us, add_carpart, car_parts, delete_car_part, edit_carpart,
                     other_expense, edit_other_expense, add_other_expense, delete_other_expense,
-                    )
+                    profile)
 from .export_csv_views import (export_csv_other, export_csv_service, export_csv_fuel, export_csv_carpart)
 
 # app_name = 'service_book'
 
 urlpatterns = [
     path('main/', main, name='main'),
+    path('profile/', profile, name='profile'),
     path('contact_us/', contact_us, name='contact_us'),
 # Autos list
     path('autos/', user_autos, name='autos'),

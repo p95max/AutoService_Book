@@ -1,26 +1,23 @@
 <h2>Welcome to AutoService Book!</h2>
 
-<p><strong>AutoService Book is your reliable assistant for tracking and managing your car’s service history.
-Our platform is designed for car owners who want to:</strong></p>
+<p><strong>AutoService Book is your trusted companion for managing your car’s service history.</strong> Designed for car owners, this portfolio project helps you:</p>
 
 <ul>
-<li>Keep a detailed record of all maintenance and repair work</li>
-<li>Save information about oil changes, inspections, repairs, and services</li>
-<li>View the full service and fuel expenses history in one convenient place</li>
-<li>Stay on top of upcoming services and monitor expenses</li>
-<li>Download your data by csv table</li>
+    <li>Track all maintenance and repair work with detailed records.</li>
+    <li>Store data on oil changes, inspections, and services.</li>
+    <li>Access your complete service and fuel expense history in one place.</li>
+    <li>Stay informed about upcoming services and monitor costs.</li>
+    <li>Export your data to CSV for easy analysis.</li>
 </ul>
-<p><strong>
-With a clean and user-friendly interface, you can easily:
-</strong></p>
+
+<p><strong>With a clean, user-friendly interface, you can effortlessly:</strong></p>
+
 <ul>
-<li>Add and edit service records</li>
-<li>Add and edit fuel expense records</li>
-<li>View service history for each vehicle</li>
-<li>Analyze your current average consumption and control how many fuel in your cars
-<li>Manage multiple cars from your personal dashboard</li>
-<li>Manage your car parts for yours autos</li>
+    <li>Add and edit service and fuel expense records.</li>
+    <li>Manage car parts for your vehicles.</li>
+    <li>View detailed service history for each car.</li>
+    <li>Monitor average fuel consumption and remaining fuel levels.</li>
+    <li>Manage multiple cars from a personal dashboard.</li>
 </ul>
-<p><strong>
-AutoService Book brings organization, transparency, and peace of mind to your car ownership experience.
-</strong></p>
+
+<p><strong>AutoService Book delivers organization, clarity, and peace of mind to your car ownership journey.</strong></p>

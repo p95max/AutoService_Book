@@ -21,66 +21,68 @@
   <div class="d-flex">
 {# Nav menu #}
 <nav class="vh-100 p-3 d-flex flex-column align-items-center justify-content-start text-white"
-       style="
-          width: 250px;
-          min-width: 180px;
-          max-width: 100vw;
-          text-align: center;
-          position: fixed;
-          top: 0;
-          left: 0;
-          background: #23272b;
-          border-right: 2px solid #444;
-          box-shadow: 2px 0 8px rgba(0,0,0,0.08);
-          overflow-y: auto;
-          height: 100vh;
-       ">
+     style="
+        width: 250px;
+        min-width: 180px;
+        max-width: 100vw;
+        text-align: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: #23272b;
+        border-right: 2px solid #444;
+        box-shadow: 2px 0 8px rgba(0,0,0,0.08);
+        overflow-y: auto;
+        height: 100vh;
+     ">
 
-    <div class="w-100 mb-4">
+    <div class="w-100 mb-4 text-center">
         {% if user.is_authenticated %}
-        <div class="d-flex flex-column align-items-center gap-2 fs-5">
-            <p class="mb-1">👋 Hello, {{ user.username }}</p>
-            <form method="post" action="{% url 'account_logout' %}" class="mb-0">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-primary btn-sm">Logout</button>
-            </form>
-        </div>
+            <div class="d-flex flex-column align-items-center gap-1">
+                <p class="fw-semibold fs-5 mb-1">👋 Hello, <span class="text-primary">{{ user.username }}</span></p>
+                <a href="{% url 'profile' %}" class="text-decoration-none mb-1">🪪 Your Profile</a>
+                <form method="post" action="{% url 'account_logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-primary btn-sm">Logout</button>
+                </form>
+            </div>
         {% else %}
-        <div class="d-flex flex-row align-items-center justify-content-center gap-2 fs-5">
-            <a class="btn btn-primary btn-sm" href="{% url 'account_signup' %}">Sign up</a>
-            <span class="mb-0 mt-2">|</span>
-            <a class="btn btn-primary btn-sm" href="{% url 'account_login' %}">Login</a>
-        </div>
+            <div class="d-flex align-items-center justify-content-center gap-3">
+                <a href="{% url 'account_signup' %}" class="btn btn-outline-primary btn-sm">Sign up</a>
+                <span class="text-muted">or</span>
+                <a href="{% url 'account_login' %}" class="btn btn-primary btn-sm">Login</a>
+            </div>
         {% endif %}
     </div>
 
     <ul class="navbar-nav flex-column w-100 align-items-center">
         <li class="nav-item w-100">
-            <a class="nav-link mt-5" href="{% url 'main' %}">🏠 Home</a>
+            <a class="nav-link mt-4" href="{% url 'main' %}">🏠 Home</a>
         </li>
         <li class="nav-item w-100">
             <a class="nav-link mt-3" href="{% url 'contact_us' %}">💬 Contact us</a>
         </li>
         {% if user.is_authenticated %}
-            <span class="mb-0 mt-2"> ------------------------------------ </span>
         <li class="nav-item w-100">
-            <a class="nav-link mt-3" href="{% url 'autos' %}">🅿️ My garage({{ user_cars_count }})</a>
+            <a class="nav-link mt-4" href="{% url 'autos' %}">🅿️ My Garage ({{ user_cars_count }})</a>
         </li>
         <li class="nav-item w-100">
-            <a class="nav-link mt-3" href="{% url 'service_history' %}">🧾 My Service history</a>
+            <a class="nav-link mt-3" href="{% url 'service_history' %}">🧾 Service History</a>
         </li>
         <li class="nav-item w-100">
-            <a class="nav-link mt-3" href="{% url 'fuel_expense' %}">⛽ My Fuel Expense</a>
+            <a class="nav-link mt-3" href="{% url 'fuel_expense' %}">⛽ Fuel Expenses</a>
         </li>
         <li class="nav-item w-100">
-            <a class="nav-link mt-3" href="{% url 'my_carparts' %}">⚙️ My Car parts</a>
+            <a class="nav-link mt-3" href="{% url 'my_carparts' %}">⚙️ Car Parts</a>
         </li>
         <li class="nav-item w-100">
-            <a class="nav-link mt-3" href="{% url 'other_expense' %}">🪙 My Other expenses</a>
+            <a class="nav-link mt-3" href="{% url 'other_expense' %}">🪙 Other Expenses</a>
         </li>
         {% endif %}
     </ul>
 </nav>
+
+
 
 {# Content#}
     <div class="container p-5 my-1 flex-grow-1" style="margin-left: 250px;">

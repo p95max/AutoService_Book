@@ -44,6 +44,14 @@ def contact_us(request):
     }
     return render(request, 'contact_us.html', context)
 
+@login_required
+def profile(request):
+
+    context = {
+        'user': request.user,
+    }
+    return render(request, 'profile.html', context)
+
 # Autos list
 @login_required
 def user_autos(request):

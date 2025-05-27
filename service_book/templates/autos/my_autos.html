@@ -20,7 +20,7 @@
     <tbody>
       {% for car in cars %}
         <tr>
-          <td>{{ car.brand.all|join:", " }}</td>
+          <td>{{ car.brand}}</td>
           <td>{{ car.model }}</td>
           <td>{{ car.prod_year }}</td>
           <td>{{ car.miliage }}</td>
