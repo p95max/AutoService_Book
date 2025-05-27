@@ -1,5 +1,5 @@
 from django import forms
-from .models import Car, ServiceRecord, FuelExpense, ContactRequest, Carpart
+from .models import Car, ServiceRecord, FuelExpense, ContactRequest, Carpart, OtherExpense
 
 
 class AddNewAuto(forms.ModelForm):
@@ -123,6 +123,51 @@ class AddNewCarPart(forms.ModelForm):
             'place_installation': 'Installation place',
             'description': 'Description',
         }
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        if user is not None:
+            self.fields['car'].queryset = Car.objects.filter(owner=user)
+        else:
+            self.fields['car'].queryset = Car.objects.none()
+
+class AddNewOtherExpense(forms.ModelForm):
+    PAID_CHOICES = (
+    ('true', 'Paid'),
+        ('false', 'Not Paid'),
+    )
+    paid_status = forms.ChoiceField(
+        choices=PAID_CHOICES,
+        widget=forms.RadioSelect,
+        label='Payment status'
+    )
+
+    class Meta:
+        model = OtherExpense
+        fields = ['date', 'name', 'car', 'price', 'expense_type', 'paid_status', 'description']
+        widgets = {
+            'date': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'car': forms.Select(attrs={'class': 'form-control'}),
+            'price': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'}),
+            'expense_type': forms.Select(attrs={'class': 'form-control'}),
+            'paid_status': forms.RadioSelect(choices=[(True, 'Paid'), (False, 'Not Paid')]),
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
+        }
+        labels = {
+            'date': 'Date',
+            'name': 'Name',
+            'car': 'Car',
+            'price': 'Price',
+            'expense_type': 'Expense Type',
+            'paid_status': 'Paid Status',
+            'description': 'Description',
+        }
+
+    def clean_paid_status(self):
+        value = self.cleaned_data['paid_status']
+        return value == 'true'
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)

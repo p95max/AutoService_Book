@@ -16,7 +16,7 @@ class Car(models.Model):
     prod_year = models.IntegerField()
     miliage = models.IntegerField()
     fuel_left = models.DecimalField(max_digits=7, decimal_places=2, default=0)
-    vin = models.CharField(max_length=20, unique=True, null=True)
+    vin = models.CharField(max_length=20, unique=True, null=True, blank=True)
     owner = models.ForeignKey(
         User,
         on_delete=models.SET_NULL,
@@ -50,7 +50,7 @@ class ServiceRecord(models.Model):
     place = models.CharField(max_length=100)
     service_type = models.CharField(max_length=50, choices=SERVICE_ACTIONS, default='other_service')
     miliage = models.IntegerField(null=True, blank=True)
-    description = models.TextField()
+    description = models.TextField(blank=True)
 
     def __str__(self):
         return f"{self.car} - {self.get_service_type_display()} - {self.date} - {self.price}$"
@@ -79,7 +79,7 @@ class FuelExpense(models.Model):
         verbose_name='User'
     )
     gas_station = models.CharField(max_length=100)
-    description = models.TextField()
+    description = models.TextField(blank=True)
 
     def __str__(self):
         return f"{self.car} - {self.get_fuel_type_display()} - {self.fuel_amount} - {self.date} - {self.price}$"
@@ -116,10 +116,30 @@ class Carpart(models.Model):
     place_purchase = models.CharField(max_length=100)
     date_installation = models.DateField(null=True, blank=True)
     place_installation = models.CharField(max_length=100, null=True, blank=True)
-    description = models.TextField()
+    description = models.TextField(blank=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, null=False)
 
     def __str__(self):
         return f"{self.car} - {self.name} - {self.get_carpart_type_display()}"
+
+class OtherExpense(models.Model):
+    EXPENSE_TYPES = [
+        ('other', 'Other'),
+        ('tax', 'Tax'),
+        ('insurance', 'Insurance'),
+        ('fines', 'Fines'),
+
+    ]
+    date = models.DateTimeField(null=False, blank=False)
+    name = models.CharField(max_length=100)
+    car = models.ForeignKey(Car, on_delete=models.SET_NULL, null=True, blank=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    expense_type = models.CharField(max_length=50, choices=EXPENSE_TYPES, default='other')
+    paid_status = models.BooleanField(default=False)
+    description = models.TextField(blank=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.name} - {self.date} - {self.get_expense_type_display()}"
 
 

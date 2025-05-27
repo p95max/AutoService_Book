@@ -1,13 +1,11 @@
 {% extends 'base.html' %}
 
 {% block title %} My garage {% endblock %}
-
 {% block content %}
     <h3>🚗🚙Your current autos</h3>
-    {% if cars %}
-        {% for car in cars %}
-            <a>You have: -{{ user_cars_count }}- car(s) in your garage</a>
-    <table class="table table-dark table-striped align-middle text-center">
+                <a>You have: -{{ user_cars_count }}- car(s) in your garage</a>
+{% if cars %}
+  <table class="table table-dark table-striped align-middle text-center">
     <thead>
       <tr>
         <th>Brand</th>
@@ -19,26 +17,25 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>{{ car.brand.all|join:", " }}</td>
-        <td>{{ car.model }}</td>
-        <td>{{ car.prod_year }}</td>
-        <td>{{ car.miliage }}</td>
-        <td>{{ car.vin }}</td>
-        <td>
-          <a href="{% url 'edit_auto' car.pk %}" class="btn btn-sm btn-warning">✏️Edit</a>
-          <a href="{% url 'delete_auto' car.pk %}" class="btn btn-sm btn-danger"
-             onclick="return confirm('Are you sure you want to delete this car?');">🗑️Delete</a>
-        </td>
-
-
-      </tr>
+      {% for car in cars %}
+        <tr>
+          <td>{{ car.brand.all|join:", " }}</td>
+          <td>{{ car.model }}</td>
+          <td>{{ car.prod_year }}</td>
+          <td>{{ car.miliage }}</td>
+          <td>{{ car.vin }}</td>
+          <td>
+            <a href="{% url 'edit_auto' car.pk %}" class="btn btn-sm btn-warning">✏️Edit</a>
+            <a href="{% url 'delete_auto' car.pk %}" class="btn btn-sm btn-danger"
+               onclick="return confirm('Are you sure you want to delete this car?');">🗑️Delete</a>
+          </td>
+        </tr>
+      {% endfor %}
     </tbody>
   </table>
-        {% endfor %}
-    {% else %}
-        <p> You haven't added autos</p>
-    {% endif %}
-    <a href="{% url 'add_auto' %}" class="btn btn-primary btn-sm my-2">✏️ Add another car</a>
+{% else %}
+  <p>You haven't added autos</p>
+{% endif %}
+<a href="{% url 'add_auto' %}" class="btn btn-primary btn-sm my-2">✏️ Add another car</a>
 
 {% endblock %}

@@ -6,8 +6,8 @@ from itertools import chain
 from django.shortcuts import render, get_object_or_404, redirect
 from django.conf import settings
 from service_book.forms import (AddNewAuto, AddNewServiceRecord, AddNewFuelExpense,
-                                ContactRequestForm, AddNewCarPart)
-from service_book.models import ServiceRecord, Car, FuelExpense, Carpart
+                                ContactRequestForm, AddNewCarPart, AddNewOtherExpense)
+from service_book.models import ServiceRecord, Car, FuelExpense, Carpart, OtherExpense
 
 def main(request):
     intro_text = ""
@@ -295,3 +295,65 @@ def delete_car_part(request, pk):
         part.delete()
         return redirect('my_carparts')
     return redirect('my_carparts')
+
+# Other expenses
+@login_required
+def other_expense(request):
+    cars = Car.objects.filter(owner=request.user)
+    other_expenses = OtherExpense.objects.filter(owner=request.user)
+    owner = request.user
+    total_costs_per_car = (
+        OtherExpense.objects
+        .filter(owner=request.user)
+        .values('car__id', 'car__brand', 'car__model')
+        .annotate(total_cost=Sum('price'))
+    )
+    costs_dict = {item['car__id']: item['total_cost'] for item in total_costs_per_car}
+
+    context = {
+        'cars': cars,
+        'other_expenses': other_expenses,
+        'owner': owner,
+        'total_costs_per_car': total_costs_per_car,
+        'costs_dict': costs_dict,
+    }
+
+    return render(request, 'other_expenses/other_expenses.html', context=context)
+
+@login_required
+def add_other_expense(request):
+    if request.method == 'POST':
+        form = AddNewOtherExpense(request.POST, user=request.user)
+        if form.is_valid():
+            other_expense = form.save(commit=False)
+            other_expense.owner = request.user
+            other_expense.save()
+            return redirect('other_expense')
+    else:
+        form = AddNewOtherExpense(user=request.user)
+    context = {'form': form}
+
+    return render(request, 'other_expenses/add_other_expense.html', context=context)
+
+@login_required
+def edit_other_expense(request, pk):
+    other_expense = get_object_or_404(OtherExpense, pk=pk, owner=request.user)
+    if request.method == 'POST':
+        form = AddNewOtherExpense(request.POST, user=request.user, instance=other_expense)
+        if form.is_valid():
+            other_expense = form.save(commit=False)
+            other_expense.owner = request.user
+            other_expense.save()
+            return redirect('other_expense')
+    else:
+        form = AddNewOtherExpense(user=request.user, instance=other_expense)
+
+    return render(request, 'other_expenses/edit_other_expense.html', {'form': form})
+
+@login_required
+def delete_other_expense(request, pk):
+    other_expense = get_object_or_404(OtherExpense, pk=pk, owner=request.user)
+    if request.method == 'POST':
+        other_expense.delete()
+        return redirect('other_expense')
+    return redirect('other_expense')

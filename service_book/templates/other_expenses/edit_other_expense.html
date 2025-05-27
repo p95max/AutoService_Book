@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+
+{% block title %} Edit other expense {% endblock %}
+
+{% block content %}
+    <h3> Edit other expense </h3>
+
+<div class="container d-flex justify-content-center mt-5">
+  <form method="post" class="w-50">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-primary">✏️ Edit</button>
+
+      {{ form.non_field_errors }}
+  </form>
+
+
+</div>
+{% endblock %}

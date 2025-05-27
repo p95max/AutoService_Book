@@ -1,9 +1,13 @@
 from django.contrib import admin
 
-from service_book.models import ServiceRecord, Car, ContactRequest, FuelExpense, Carpart
+from service_book.models import ServiceRecord, Car, ContactRequest, FuelExpense, Carpart, Brand
 
 @admin.register(Car)
 class CarAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(Brand)
+class BrandAdmin(admin.ModelAdmin):
     pass
 
 @admin.register(ServiceRecord)
@@ -21,4 +25,5 @@ class FuelExpenseAdmin(admin.ModelAdmin):
 @admin.register(Carpart)
 class CarPartAdmin(admin.ModelAdmin):
     pass
+
 

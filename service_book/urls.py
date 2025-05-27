@@ -2,7 +2,9 @@ from django.urls import path, include
 from .views import (main, add_auto, add_service_record, user_autos, user_service_history,
                     edit_service_record, delete_service_record, edit_auto, delete_auto,
                     fuel_expense, add_fuel_expense, edit_fuel_expense, delete_fuel_expense,
-                    contact_us, add_carpart, car_parts, delete_car_part, edit_carpart)
+                    contact_us, add_carpart, car_parts, delete_car_part, edit_carpart,
+                    other_expense, edit_other_expense, add_other_expense, delete_other_expense,
+                    )
 
 urlpatterns = [
     path('main/', main, name='main'),
@@ -27,4 +29,9 @@ urlpatterns = [
     path('add_carpart/', add_carpart, name='add_carpart'),
     path('carparts/<int:pk>/edit/', edit_carpart, name='edit_carpart'),
     path('carparts/<int:pk>/delete/', delete_car_part, name='delete_carpart'),
+# Other expense
+    path('other_expense/', other_expense, name='other_expense'),
+    path('add_other_expense/', add_other_expense, name='add_other_expense'),
+    path('other_expense/<int:pk>/edit/', edit_other_expense, name='edit_other_expense'),
+    path('other_expense/<int:pk>/delete/', delete_other_expense, name='delete_other_expense'),
 ]

@@ -1,3 +1,4 @@
+from django.core.cache import cache
 from django.db.models.signals import post_save, post_delete, pre_save
 from django.dispatch import receiver
 from .models import FuelExpense, ServiceRecord, Car
@@ -47,3 +48,10 @@ def set_distance_on_save(sender, instance, **kwargs):
             instance.distance = instance.miliage - prev.miliage
         else:
             instance.distance = None
+
+
+@receiver([post_save, post_delete], sender=Car)
+def clear_user_cars_count_cache(sender, instance, **kwargs):
+    if instance.owner:
+        cache_key = f'user_{instance.owner.id}_cars_count'
+        cache.delete(cache_key)
