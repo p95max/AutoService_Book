@@ -1,7 +1,7 @@
 from django.core.cache import cache
 from django.db.models import Sum
 
-from service_book.models import Car, ServiceRecord, Carpart
+from service_book.models import Car, ServiceRecord, Carpart, OtherExpense
 
 
 def global_settings(request):
@@ -34,10 +34,21 @@ def global_settings(request):
             cache.set(user_total_parts_costs, user_total_parts_costs, 60 * 15)
         context['user_total_parts_costs'] = round(user_total_parts_costs, 1)
 
+# User total other expenses
+    if request.user.is_authenticated:
+        user_total_other_expenses= f'user_{request.user.id}_total_other_expenses'
+        user_total_other_expenses = cache.get(user_total_other_expenses)
+        if user_total_other_expenses is None:
+            user_total_other_expenses = OtherExpense.objects.filter(car__owner=request.user).aggregate(Sum('price'))[
+                                         'price__sum'] or 0
+            cache.set(user_total_other_expenses, user_total_other_expenses, 60 * 15)
+        context['user_total_other_expenses'] = round(user_total_other_expenses, 1)
+
     else:
         context['user_cars_count'] = 0
         context['user_total_service_costs'] = 0
         context['user_total_parts_costs'] = 0
+        context['user_total_other_expenses'] = 0
 
     return context
 
