@@ -1,12 +1,15 @@
 import csv
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from service_book.models import OtherExpense, ServiceRecord, FuelExpense, Carpart
+from django.shortcuts import get_object_or_404
+
+from service_book.models import OtherExpense, ServiceRecord, FuelExpense, Carpart, User
 
 @login_required
 def export_csv_other(request):
+    username = get_object_or_404(User, username=request.user.username)
     response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="other_expense.csv"'
+    response['Content-Disposition'] = f'attachment; filename="{username}_other_expense.csv"'
 
     writer = csv.writer(response)
     writer.writerow(["Date", 'Name', 'Car', 'Price', 'Expense type', 'Paid status', 'Description'])
@@ -25,8 +28,9 @@ def export_csv_other(request):
 
 @login_required
 def export_csv_service(request):
+    username = get_object_or_404(User, username=request.user.username)
     response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="service_expense.csv"'
+    response['Content-Disposition'] = f'attachment; filename="{username}_service_expense.csv"'
 
     writer = csv.writer(response)
     writer.writerow(["Date", 'Car', 'Mileage', 'Place', 'Service type', 'Price', 'Description'])
@@ -46,8 +50,9 @@ def export_csv_service(request):
 
 @login_required
 def export_csv_fuel(request):
+    username = get_object_or_404(User, username=request.user.username)
     response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="fuel_expense.csv"'
+    response['Content-Disposition'] = f'attachment; filename="{username}_fuel_expense.csv"'
 
     writer = csv.writer(response)
     writer.writerow(['Date', 'Car', 'Mileage', 'Fuel type', 'Fuel amount', 'Price', 'Gas station', 'Description'])
@@ -68,8 +73,9 @@ def export_csv_fuel(request):
 
 @login_required
 def export_csv_carpart(request):
+    username = get_object_or_404(User, username=request.user.username)
     response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="carpart_expense.csv"'
+    response['Content-Disposition'] = f'attachment; filename="{username}_carpart_expense.csv"'
 
     writer = csv.writer(response)
     writer.writerow(['Date purchase', 'Item name', 'Car', 'Carpart type', 'Price', 'Place purchase',

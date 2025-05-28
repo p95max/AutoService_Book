@@ -1,5 +1,5 @@
 from django import forms
-from .models import Car, ServiceRecord, FuelExpense, ContactRequest, Carpart, OtherExpense
+from .models import Car, ServiceRecord, FuelExpense, ContactRequest, Carpart, OtherExpense, User
 
 
 class AddNewAuto(forms.ModelForm):
@@ -176,3 +176,13 @@ class AddNewOtherExpense(forms.ModelForm):
             self.fields['car'].queryset = Car.objects.filter(owner=user)
         else:
             self.fields['car'].queryset = Car.objects.none()
+
+class UserUpdateForm(forms.ModelForm):
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name']
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+        }

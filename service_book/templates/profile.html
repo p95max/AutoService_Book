@@ -1,38 +1,55 @@
 {% extends 'base.html' %}
+{% load email_filters %}
 
-{% block title %} My profile {% endblock %}
+{% block title %}My Profile{% endblock %}
+
 {% block content %}
+<div class="container mt-4">
+  <h2 class="mb-4">👤 My Profile</h2>
 
-{#Tabs settings#}
-<ul class="nav nav-tabs" id="profile-tabs" role="tablist">
+  <ul class="nav nav-tabs border-bottom border-secondary-subtle" id="profile-tabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="general-tab" data-bs-toggle="tab" data-bs-target="#general" type="button" role="tab">
+        🧾 General
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="contacts-tab" data-bs-toggle="tab" data-bs-target="#contacts" type="button" role="tab">
+        📞 Contacts
+      </button>
+    </li>
+  </ul>
 
-  <li class="nav-item" role="presentation">
-    <button class="nav-link active" id="general-tab" data-bs-toggle="tab" data-bs-target="#general" type="button" role="tab">
-     General
-    </button>
-  </li>
+  <div class="tab-content border border-top-0 border-secondary-subtle p-4 rounded-bottom bg-body">
+    <!-- General tab -->
+    <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
+      <p><strong class="text-body">👤 Username:</strong> <span class="text-muted">{{ user.username }}</span></p>
+      <p><strong class="text-body">🕓 Last seen:</strong> <span class="text-muted">{{ user.last_login|date:"d M Y H:i" }}</span></p>
+      <p><strong class="text-body">📅 Joined:</strong> <span class="text-muted">{{ user.date_joined|date:"d M Y" }}</span></p>
 
-  <li class="nav-item" role="presentation">
-    <button class="nav-link" id="contacts-tab" data-bs-toggle="tab" data-bs-target="#contacts" type="button" role="tab">
-      Contacts
-    </button>
-  </li>
-</ul>
+      <hr class="my-4">
 
-<div class="tab-content mt-3">
+      <h5 class="text-body mb-3">✏️ Update your name</h5>
+      <form method="post" class="row g-3">
+        {% csrf_token %}
+        <div class="col-md-6">
+          <label for="id_first_name" class="text-body">First name</label>
+          {{ form.first_name }}
+        </div>
+        <div class="col-md-6">
+          <label for="id_last_name" class="text-body">Last name</label>
+          {{ form.last_name }}
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary">💾 Save changes</button>
+        </div>
+      </form>
+    </div>
 
-{#Tab manual#}
-<div class="tab-pane fade show active" id="manual" role="tabpanel">
-1
-
+    <!-- Contacts tab -->
+    <div class="tab-pane fade" id="contacts" role="tabpanel" aria-labelledby="contacts-tab">
+      <p><strong class="text-body">📧 Email:</strong> <span class="text-muted">{{ user.email|mask_email }}</span></p>
+    </div>
+  </div>
 </div>
-<br>
-{#json tab#}
-<div class="tab-pane fade" id="json" role="tabpanel">
-
-    2
-</div>
-
-</div>
-
 {% endblock %}

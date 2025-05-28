@@ -1,4 +1,7 @@
 import os
+from datetime import timezone
+
+from allauth.account.internal.userkit import user_email
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Sum, Count
@@ -7,8 +10,8 @@ from itertools import chain
 from django.shortcuts import render, get_object_or_404, redirect
 from django.conf import settings
 from service_book.forms import (AddNewAuto, AddNewServiceRecord, AddNewFuelExpense,
-                                ContactRequestForm, AddNewCarPart, AddNewOtherExpense)
-from service_book.models import ServiceRecord, Car, FuelExpense, Carpart, OtherExpense
+                                ContactRequestForm, AddNewCarPart, AddNewOtherExpense, UserUpdateForm)
+from service_book.models import ServiceRecord, Car, FuelExpense, Carpart, OtherExpense, User
 
 def main(request):
 # Intro text
@@ -47,9 +50,24 @@ def contact_us(request):
 
 @login_required
 def profile(request):
+    user = get_object_or_404(User, username=request.user.username)
+
+    if request.method == 'POST':
+        form = UserUpdateForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    else:
+        form = UserUpdateForm(instance=user)
 
     context = {
-        'user': request.user,
+        'username': user.username,
+        'user_lastlogin': user.last_login,
+        'date_joined': user.date_joined,
+        'user_firstname': user.first_name,
+        'user_lastname': user.last_name,
+        'user_email': user.email,
+        'form': form,
     }
     return render(request, 'profile.html', context)
 
