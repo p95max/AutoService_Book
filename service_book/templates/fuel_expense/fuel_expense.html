@@ -4,8 +4,10 @@
 {% block title %} Fuel expense {% endblock %}
 
 {% block content %}
-    <h3>📉Fuel left in tank and average consumption per car </h3>
-    {% if cars %}
+{#Tables#}
+<h3>📉Fuel left in tank and average consumption per car </h3>
+<a>Your total fuel amount: {{ total_fuel_all }}l || total fuel costs: {{ total_costs_all }}$ || Total refuels: {{ total_refuels_all }}</a>
+{% if cars %}
     <table class="table table-dark table-striped align-middle text-center">
         <thead>
           <tr>
@@ -30,24 +32,23 @@
         <p>You haven't fuel expenses yet</p>
     {% endif %}
 
-    <h3>⛽Your fuel expenses</h3>
-<a>Your total fuel amount: {{ total_fuel }}l || total fuel costs: {{ user_total_fuel_costs }}$ || Total refuels: {{ total_refuels }}</a>
-    {% if fuel %}
-    <table class="table table-dark table-striped align-middle text-center">
+<h3>⛽Your fuel expenses</h3>
+{% if page_obj %}
+<table class="table table-dark table-striped align-middle text-center">
         <thead>
           <tr>
-            <th>Date</th>
-            <th>Car</th>
+            <th> <a href="?sort=date">Date</a> </th>
+            <th> <a href="?sort=car">Car</a> </th>
             <th>Mileage(km)</th>
-            <th>Fuel type</th>
+            <th> <a href="?sort=fuel_type">Fuel type</a> </th>
             <th>Fuel_amount</th>
-            <th>Price($)</th>
+            <th> <a href="?sort=price">Price</a> </th>
             <th>Description</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-        {% for item in fuel %}
+        {% for item in page_obj %}
           <tr>
             <td>{{ item.date }}</td>
             <td>{{ item.car }}</td>
@@ -70,10 +71,31 @@
         {% endfor %}
         </tbody>
     </table>
-        <a href="{% url 'export_fuel_csv' %}" class="btn btn-outline-primary btn-sm">💾Download Fuel expenses (CSV)</a>
-    {% else %}
-        <p>You haven't fuel expenses yet</p>
-    {% endif %}
-    <a href="{% url 'add_fuel_expense' %}" class="btn btn-primary btn-sm my-2">✏️ Add fuel expense</a>
+
+{#Pagination#}
+<nav>
+    <ul class="pagination justify-content-center">
+      {% if page_obj.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.previous_page_number }}&sort={{ sort }}">Previous</a>
+        </li>
+      {% endif %}
+      <li class="page-item disabled">
+        <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+      </li>
+      {% if page_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.next_page_number }}&sort={{ sort }}">Next</a>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+
+{#Buttons#}
+<a href="{% url 'export_fuel_csv' %}" class="btn btn-outline-primary btn-sm">💾Download as CSV file</a>
+{% else %}
+<p>You haven't fuel expenses yet</p>
+{% endif %}
+<a href="{% url 'add_fuel_expense' %}" class="btn btn-primary btn-sm my-2">✏️ Add fuel expense</a>
 
 {% endblock %}

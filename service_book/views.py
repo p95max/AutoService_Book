@@ -1,5 +1,6 @@
 import os
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.db.models import Sum, Count
 from django.http import HttpResponseRedirect
 from itertools import chain
@@ -110,23 +111,40 @@ def delete_auto(request, pk):
 # Service records
 @login_required
 def user_service_history(request):
+# Pagination and table sorting
+    sort_by = request.GET.get('sort', 'date')
+    sort_options = {
+        'date': '-date',
+        'price': '-price',
+        'car': 'car__model',
+        'service_type': 'service_type',
+    }
+    sort_field = sort_options.get(sort_by, '-date')
+    service_history = ServiceRecord.objects.filter(owner=request.user).order_by(sort_field)
+    paginator = Paginator(service_history, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+# Costs per car
     cars = Car.objects.filter(owner=request.user)
-    service_history = ServiceRecord.objects.filter(owner=request.user)
     total_costs_per_car = (
         ServiceRecord.objects
         .filter(owner=request.user)
-        .values('car__id', 'car__brand', 'car__model')
+        .values('car__id', 'car__brand__name', 'car__model')
         .annotate(total_cost=Sum('price'))
     )
     costs_dict = {item['car__id']: item['total_cost'] for item in total_costs_per_car}
 
+    user_total_service_costs = ServiceRecord.objects.filter(owner=request.user).aggregate(Sum('price'))['price__sum'] or 0
+
     context = {
         'cars': cars,
-        'service_history': service_history,
+        'page_obj': page_obj,
+        'sort': sort_by,
         'costs_dict': costs_dict,
         'total_costs_per_car': total_costs_per_car,
+        'user_total_service_costs': user_total_service_costs,
     }
-    return render(request, 'service_records/service_history.html', context=context)
+    return render(request, 'service_records/service_history.html', context)
 
 @login_required
 def add_service_record(request):
@@ -167,10 +185,26 @@ def delete_service_record(request, pk):
 def fuel_expense(request):
     fuel = FuelExpense.objects.filter(owner=request.user)
     cars = Car.objects.filter(owner=request.user)
-    total_refuels = FuelExpense.objects.filter(owner=request.user).aggregate(Count('id'))['id__count'] or 0
-    total_fuel = FuelExpense.objects.filter(owner=request.user).aggregate(Sum('fuel_amount'))['fuel_amount__sum'] or 0
-    total_costs = FuelExpense.objects.filter(owner=request.user).aggregate(Sum('price'))['price__sum'] or 0
-    total_costs = round(total_costs, 1)
+# total string
+    total_refuels_all  = fuel.aggregate(Count('id'))['id__count'] or 0
+    total_fuel_all = fuel.aggregate(Sum('fuel_amount'))['fuel_amount__sum'] or 0
+    total_costs_all = fuel.aggregate(Sum('price'))['price__sum'] or 0
+    total_costs_all = round(total_costs_all, 1)
+
+# Pagination and table sorting
+    sort_by = request.GET.get('sort', 'date')
+    sort_options = {
+        'date': '-date',
+        'price': '-price',
+        'car': 'car__model',
+        'fuel_type': 'fuel_type',
+    }
+    sort_field = sort_options.get(sort_by, '-date')
+    service_history = FuelExpense.objects.filter(owner=request.user).order_by(sort_field)
+    paginator = Paginator(service_history, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
 # Avag cons. and fuel left calculation
     for car in cars:
         fuel_records = FuelExpense.objects.filter(owner=request.user, car=car)
@@ -210,11 +244,13 @@ def fuel_expense(request):
                   for item in total_costs_per_car}
 
     context = {
+        'page_obj': page_obj,
+        'sort': sort_by,
         'fuel': fuel,
         'cars': cars,
-        'total_refuels': total_refuels,
-        'total_fuel': total_fuel,
-        'total_costs': total_costs,
+        'total_refuels_all': total_refuels_all,
+        'total_fuel_all': total_fuel_all,
+        'total_costs_all': total_costs_all,
         'total_costs_per_car': total_costs_per_car,
         'costs_dict': costs_dict,
     }
@@ -270,7 +306,23 @@ def car_parts(request):
     )
     costs_dict = {item['car__id']: item['total_cost'] for item in total_costs_per_car}
 
+    # Pagination and table sorting
+    sort_by = request.GET.get('sort', 'date_purchase')
+    sort_options = {
+        'date_purchase': '-date_purchase',
+        'price': '-price',
+        'car': 'car__model',
+        'carpart_type': 'carpart_type',
+    }
+    sort_field = sort_options.get(sort_by, '-date_purchase')
+    parts = Carpart.objects.filter(owner=request.user).order_by(sort_field)
+    paginator = Paginator(parts, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
+        'page_obj': page_obj,
+        'sort': sort_by,
         'cars': cars,
         'parts': parts,
         'owner': owner,
@@ -332,12 +384,29 @@ def other_expense(request):
     )
     costs_dict = {item['car__id']: item['total_cost'] for item in total_costs_per_car}
 
+# Pagination and table sorting
+    sort_by = request.GET.get('sort', 'date')
+    sort_options = {
+        'date': '-date',
+        'price': '-price',
+        'car': 'car__model',
+        'paid_status': 'paid_status',
+        'expense_type': 'expense_type',
+    }
+    sort_field = sort_options.get(sort_by, '-date')
+    other_expenses = OtherExpense.objects.filter(owner=request.user).order_by(sort_field)
+    paginator = Paginator(other_expenses, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
         'cars': cars,
         'other_expenses': other_expenses,
         'owner': owner,
         'total_costs_per_car': total_costs_per_car,
         'costs_dict': costs_dict,
+        'sort_by': sort_by,
+        'page_obj': page_obj,
     }
 
     return render(request, 'other_expenses/other_expenses.html', context=context)
