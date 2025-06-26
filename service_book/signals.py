@@ -35,6 +35,7 @@ def update_miliage_by_fuel_expense(sender, instance, **kwargs):
 def update_miliage_by_service_record(sender, instance, **kwargs):
     update_car_miliage(instance.car)
 
+
 @receiver(post_save, sender=FuelExpense)
 def update_fuel_left_add(sender, instance, created, **kwargs):
     if created and instance.car:
