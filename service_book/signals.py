@@ -25,6 +25,7 @@ def get_cached_value(cache_key, query, ttl=60*15):
         cache.set(cache_key, value, ttl)
     return round(value, 1)
 
+
 @receiver(post_save, sender=FuelExpense)
 @receiver(post_delete, sender=FuelExpense)
 def update_miliage_by_fuel_expense(sender, instance, **kwargs):
