@@ -6,4 +6,5 @@ class ServiceBookConfig(AppConfig):
     name = 'service_book'
 
     def ready(self):
+        print('ServiceBookConfig.ready() called')
         import service_book.signals

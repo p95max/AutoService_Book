@@ -72,24 +72,29 @@ def profile(request):
     return render(request, 'profile.html', context)
 
 # Autos list
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from service_book.models import Car
+
 @login_required
 def user_autos(request):
     cars = Car.objects.filter(owner=request.user)
 
-#All user expenses
+    # Если нужны суммы расходов — оставь этот блок
+    from django.db.models import Sum
+    from service_book.models import FuelExpense, ServiceRecord, Carpart, OtherExpense
+
     total_fuel = FuelExpense.objects.filter(owner=request.user).aggregate(Sum('price'))['price__sum'] or 0
     total_service = ServiceRecord.objects.filter(owner=request.user).aggregate(Sum('price'))['price__sum'] or 0
     total_carpart = Carpart.objects.filter(owner=request.user).aggregate(Sum('price'))['price__sum'] or 0
     total_other = OtherExpense.objects.filter(owner=request.user).aggregate(Sum('price'))['price__sum'] or 0
-    total_sum = total_fuel + total_service + total_carpart + total_other
-    total_sum = round(total_sum, 1)
+    total_sum = round(total_fuel + total_service + total_carpart + total_other, 1)
 
     context = {
         'cars': cars,
         'total_sum': total_sum,
     }
-
-    return render(request, 'autos/my_autos.html', context=context)
+    return render(request, 'autos/my_autos.html', context)
 
 @login_required
 def add_auto(request):

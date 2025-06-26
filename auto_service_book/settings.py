@@ -73,8 +73,12 @@ WSGI_APPLICATION = 'auto_service_book.wsgi.application'
 # DATABASE
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('LOCAL_DB_HOST', default='localhost'),
+        'PORT': config('LOCAL_DB_PORT', default='5433'),
     }
 }
 

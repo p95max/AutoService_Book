@@ -7,7 +7,7 @@ class AddNewAuto(forms.ModelForm):
         model = Car
         fields = ['brand', 'model', 'prod_year', 'miliage', 'vin']
         widgets = {
-            'brand': forms.SelectMultiple(attrs={'class': 'form-control'}),
+            'brand': forms.Select(attrs={'class': 'form-control'}),
             'model': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter model:'}),
             'prod_year': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter year:'}),
             'miliage': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter miliage(km):'}),

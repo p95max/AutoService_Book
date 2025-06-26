@@ -17,6 +17,7 @@ def update_car_miliage(car):
     if car.miliage != max_miliage:
         car.miliage = max_miliage
         car.save(update_fields=['miliage'])
+        cache.delete(f'car_{car.id}_max_miliage')
 
 def get_cached_value(cache_key, query, ttl=60*15):
     value = cache.get(cache_key)
@@ -39,6 +40,7 @@ def update_miliage_by_service_record(sender, instance, **kwargs):
 
 @receiver(post_save, sender=FuelExpense)
 def update_fuel_left_add(sender, instance, created, **kwargs):
+    print('Signal: FUEL post_save', instance.id, created)
     if created and instance.car:
         instance.car.fuel_left += instance.fuel_amount
         instance.car.save(update_fields=['fuel_left'])
