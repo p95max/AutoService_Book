@@ -59,10 +59,10 @@
             <td>{{ part.car }}</td>
             <td>{{ part.carpart_type }}</td>
             <td>{{ part.price }}</td>
-            <td>{{ part.place_purchase }}</td>
+            <td>{{ part.date_purchase|date:"d.m.Y" }}</td>
             <td>
       {% if part.date_installation %}
-        {{ part.date_installation|date:"d.m.Y H:i" }}
+    {{ part.date_installation|date:"d.m.Y" }}
       {% else %}
         <span class="text-danger">not installed</span>
       {% endif %}

@@ -380,7 +380,7 @@ def edit_carpart(request, pk):
     return render(request, 'carparts/edit_carpart.html', {'form': form})
 
 @login_required
-def delete_car_part(request, pk):
+def delete_carpart(request, pk):
     part = get_object_or_404(Carpart, pk=pk, owner=request.user)
     if request.method == 'POST':
         part.delete()
