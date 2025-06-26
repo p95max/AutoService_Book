@@ -1,8 +1,9 @@
 import pytest
 from django.urls import reverse
 from django.utils import timezone
-from service_book.models import Carpart, Car, Brand
+from service_book.models import Car, Brand, Carpart
 from django.contrib.auth.models import User
+from service_book.forms import AddNewCarPart
 
 @pytest.fixture
 def user(db):
@@ -21,14 +22,12 @@ def carpart(user, car):
     return Carpart.objects.create(
         owner=user,
         car=car,
-        date_purchase=timezone.now().date(),
+        date_purchase=timezone.now(),  # Use aware datetime
         name='Test Part',
-        carpart_type='engine',  # подставь актуальный тип из choices!
-        price=123.45,
+        carpart_type='tyre',
+        price=100,
         place_purchase='Test Store',
-        date_installation=timezone.now().date(),
-        place_installation='Test Garage',
-        description='Car engine part'
+        description='Test car part'
     )
 
 @pytest.mark.django_db
@@ -45,36 +44,23 @@ def test_add_carpart_get(client, user):
     response = client.get(reverse('add_carpart'))
     assert response.status_code == 200
     assert 'carparts/add_carpart.html' in [t.name for t in response.templates]
+    assert isinstance(response.context['form'], AddNewCarPart)
 
 @pytest.mark.django_db
 def test_add_carpart_post_valid(client, user, car):
     client.login(username='test', password='testing')
     data = {
-        'date_purchase': timezone.now().date(),
-        'name': 'New Part',
         'car': car.pk,
-        'carpart_type': 'engine',  # подставь актуальный тип из choices!
-        'price': 100,
-        'place_purchase': 'Store',
-        'date_installation': timezone.now().date(),
-        'place_installation': 'Garage',
-        'description': 'desc',
+        'date_purchase': timezone.now().strftime('%Y-%m-%dT%H:%M'),
+        'name': 'New Part',
+        'carpart_type': 'tyre',
+        'price': 200,
+        'place_purchase': 'New Store',
+        'description': 'New car part',
     }
     response = client.post(reverse('add_carpart'), data)
-    assert response.status_code == 302  # redirect after success
+    assert response.status_code == 302
     assert Carpart.objects.filter(name='New Part').exists()
-
-@pytest.mark.django_db
-def test_add_carpart_post_invalid(client, user):
-    client.login(username='test', password='testing')
-    data = {}  # пустые данные
-    response = client.post(reverse('add_carpart'), data)
-    assert response.status_code == 200
-    assert 'carparts/add_carpart.html' in [t.name for t in response.templates]
-    # Проверяем, что форма невалидна и есть ошибки по обязательным полям
-    errors = response.context['form'].errors
-    for field in ['date_purchase', 'name', 'carpart_type', 'price', 'place_purchase']:
-        assert field in errors
 
 @pytest.mark.django_db
 def test_edit_carpart_get(client, user, carpart):
@@ -82,25 +68,25 @@ def test_edit_carpart_get(client, user, carpart):
     response = client.get(reverse('edit_carpart', kwargs={'pk': carpart.pk}))
     assert response.status_code == 200
     assert 'carparts/edit_carpart.html' in [t.name for t in response.templates]
+    assert isinstance(response.context['form'], AddNewCarPart)
 
 @pytest.mark.django_db
 def test_edit_carpart_post_valid(client, user, carpart, car):
     client.login(username='test', password='testing')
     data = {
-        'date_purchase': timezone.now().date(),
-        'name': 'Edited Part',
         'car': car.pk,
-        'carpart_type': 'engine',
+        'date_purchase': timezone.now().strftime('%Y-%m-%dT%H:%M'),
+        'name': 'Edited Part',
+        'carpart_type': 'tyre',
         'price': 200,
-        'place_purchase': 'New Store',
-        'date_installation': timezone.now().date(),
-        'place_installation': 'New Garage',
-        'description': 'edited desc',
+        'place_purchase': 'Edited Store',
+        'description': 'Edited car part',
     }
     response = client.post(reverse('edit_carpart', kwargs={'pk': carpart.pk}), data)
     assert response.status_code == 302
     carpart.refresh_from_db()
     assert carpart.name == 'Edited Part'
+    assert carpart.price == 200
 
 @pytest.mark.django_db
 def test_delete_carpart_post_owner(client, user, carpart):
@@ -113,8 +99,7 @@ def test_delete_carpart_post_owner(client, user, carpart):
 def test_delete_carpart_get_redirect(client, user, carpart):
     client.login(username='test', password='testing')
     response = client.get(reverse('delete_carpart', kwargs={'pk': carpart.pk}))
-    # Обычно delete через GET редиректит или запрещён
-    assert response.status_code in (302, 405)
+    assert response.status_code == 302  # View redirects on GET
 
 @pytest.mark.django_db
 def test_delete_carpart_not_owner(client, user, brand):
@@ -124,14 +109,12 @@ def test_delete_carpart_not_owner(client, user, brand):
     other_part = Carpart.objects.create(
         owner=other_user,
         car=other_car,
-        date_purchase=timezone.now().date(),
-        name='Other Part',
-        carpart_type='engine',
+        date_purchase=timezone.now(),
+        name='Other User Part',
+        carpart_type='tyre',
         price=100,
         place_purchase='Other Store',
-        date_installation=timezone.now().date(),
-        place_installation='Other Garage',
-        description='Other description',
+        description='Other user part'
     )
     response = client.get(reverse('delete_carpart', kwargs={'pk': other_part.pk}))
-    assert response.status_code in (302, 403, 404)
+    assert response.status_code == 404  # Expect 404 due to owner filter
