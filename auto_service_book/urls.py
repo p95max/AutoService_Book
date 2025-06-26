@@ -6,3 +6,5 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('', include('service_book.urls')),
 ]
+
+
