@@ -97,7 +97,7 @@ ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
 
 LOGIN_REDIRECT_URL = '/main'
 ACCOUNT_LOGOUT_REDIRECT_URL = '/main'
-LOGIN_URL = 'account:login'
+LOGIN_URL = 'account_login'
 
 
 
