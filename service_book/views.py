@@ -1,17 +1,15 @@
 import os
-from datetime import timezone
-
-from allauth.account.internal.userkit import user_email
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Sum, Count
-from django.http import HttpResponseRedirect
 from itertools import chain
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.conf import settings
 from service_book.forms import (AddNewAuto, AddNewServiceRecord, AddNewFuelExpense,
                                 ContactRequestForm, AddNewCarPart, AddNewOtherExpense, UserUpdateForm)
 from service_book.models import ServiceRecord, Car, FuelExpense, Carpart, OtherExpense, User
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
 
 def main(request):
 # Intro text
@@ -72,10 +70,6 @@ def profile(request):
     return render(request, 'profile.html', context)
 
 # Autos list
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
-from service_book.models import Car
-
 @login_required
 def user_autos(request):
     cars = Car.objects.filter(owner=request.user)
