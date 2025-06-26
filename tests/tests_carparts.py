@@ -134,5 +134,4 @@ def test_delete_carpart_not_owner(client, user, brand):
         description='Other description',
     )
     response = client.get(reverse('delete_carpart', kwargs={'pk': other_part.pk}))
-    # Ожидаем редирект, 403 или 404, если не владелец
     assert response.status_code in (302, 403, 404)
