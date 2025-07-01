@@ -12,8 +12,11 @@
     {{ form|crispy }}
     <button type="submit" class="btn btn-primary">➕ Add</button>
 
-      {{ form.non_field_errors }}
-      {{ form.username.errors }}
+    <ul class="non-field-errors">
+  {% for error in form.non_field_errors %}
+    <li>{{ error }}</li>
+  {% endfor %}
+</ul>
   </form>
 
 
