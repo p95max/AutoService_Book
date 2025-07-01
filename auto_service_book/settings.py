@@ -71,14 +71,21 @@ WSGI_APPLICATION = 'auto_service_book.wsgi.application'
 
 
 # DATABASE
+if config('DOCKER_ENV', default='false') == 'true':
+    DB_HOST = config('DOCKER_DB_HOST', default='db')
+    DB_PORT = config('DOCKER_DB_PORT', default='5432')
+else:
+    DB_HOST = config('LOCAL_DB_HOST', default='localhost')
+    DB_PORT = config('LOCAL_DB_PORT', default='5433')
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': config('DB_NAME'),
         'USER': config('DB_USER'),
         'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('LOCAL_DB_HOST', default='localhost'),
-        'PORT': config('LOCAL_DB_PORT', default='5433'),
+        'HOST': DB_HOST,
+        'PORT': DB_PORT,
     }
 }
 
