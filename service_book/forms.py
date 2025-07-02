@@ -200,12 +200,18 @@ class AddNewCarPart(forms.ModelForm):
             raise forms.ValidationError('Price must be greater than 0')
         return price
 
-    def clean_date(self):
-        date = self.cleaned_data['date']
+    def clean(self):
+        cleaned_data = super().clean()
+        date_purchase = cleaned_data.get('date_purchase')
+        date_installation = cleaned_data.get('date_installation')
         now = datetime.now()
-        if date > now:
-            raise forms.ValidationError('Date must not be in the future')
-        return date
+
+        if date_purchase and date_purchase > now:
+            self.add_error('date_purchase', 'Purchase date must not be in the future')
+        if date_installation and date_installation > now:
+            self.add_error('date_installation', 'Installation date must not be in the future')
+
+        return cleaned_data
 
 class AddNewOtherExpense(forms.ModelForm):
     PAID_CHOICES = (
