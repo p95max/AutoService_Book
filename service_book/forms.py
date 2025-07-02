@@ -1,3 +1,4 @@
+from datetime import datetime
 from django import forms
 from .models import Car, ServiceRecord, FuelExpense, ContactRequest, Carpart, OtherExpense, User
 
@@ -20,7 +21,34 @@ class AddNewAuto(forms.ModelForm):
             'miliage': 'Miliage',
             'vin': 'VIN',
         }
-    # Нет необходимости в __init__, если не фильтруете поля по пользователю
+
+    def clean_prod_year(self):
+        year = self.cleaned_data['prod_year']
+        current_year = datetime.now().year
+        if year <= 1920:
+            raise forms.ValidationError('Please enter a year after 1920')
+        if year > current_year:
+            raise forms.ValidationError('You cannot be in the future')
+        return year
+
+    def clean_miliage(self):
+        miliage = self.cleaned_data['miliage']
+        if miliage < 0:
+            raise forms.ValidationError('Please enter a positive number')
+        if miliage > 1000000:
+            raise forms.ValidationError('Miliage is too large, check your input or contact us')
+        return miliage
+
+    def clean_vin(self):
+        vin = self.cleaned_data.get('vin', '').strip().upper()
+        if vin:
+            if len(vin) != 17:
+                raise forms.ValidationError('VIN number must be 17 characters long')
+            if not vin.isalnum():
+                raise forms.ValidationError('VIN number must contains only letters and numbers')
+            if Car.objects.filter(vin=vin).exists():
+                raise forms.ValidationError('This VIN already exists')
+        return vin
 
 class AddNewServiceRecord(forms.ModelForm):
     class Meta:
@@ -52,6 +80,27 @@ class AddNewServiceRecord(forms.ModelForm):
             self.fields['car'].queryset = Car.objects.filter(owner=user)
         else:
             self.fields['car'].queryset = Car.objects.none()
+
+    def clean_price(self):
+        price = self.cleaned_data['price']
+        if price <= 0:
+            raise forms.ValidationError('Price must be greater than 0')
+        return price
+
+    def clean_miliage(self):
+        miliage = self.cleaned_data['miliage']
+        if miliage < 0:
+            raise forms.ValidationError('Please enter a positive number')
+        if miliage > 1000000:
+            raise forms.ValidationError('Miliage is too large, check your input or contact us')
+        return miliage
+
+    def clean_date(self):
+        date = self.cleaned_data['date']
+        now = datetime.now()
+        if date > now:
+            raise forms.ValidationError('Date must not be in the future')
+        return date
 
 class AddNewFuelExpense(forms.ModelForm):
     class Meta:
@@ -85,6 +134,19 @@ class AddNewFuelExpense(forms.ModelForm):
             self.fields['car'].queryset = Car.objects.filter(owner=user)
         else:
             self.fields['car'].queryset = Car.objects.none()
+
+    def clean_date(self):
+        date = self.cleaned_data['date']
+        now = datetime.now()
+        if date > now:
+            raise forms.ValidationError('Date must not be in the future')
+        return date
+
+    def clean_price(self):
+        price = self.cleaned_data['price']
+        if price <= 0:
+            raise forms.ValidationError('Price must be greater than 0')
+        return price
 
 class ContactRequestForm(forms.ModelForm):
     class Meta:
@@ -132,6 +194,19 @@ class AddNewCarPart(forms.ModelForm):
         else:
             self.fields['car'].queryset = Car.objects.none()
 
+    def clean_price(self):
+        price = self.cleaned_data['price']
+        if price <= 0:
+            raise forms.ValidationError('Price must be greater than 0')
+        return price
+
+    def clean_date(self):
+        date = self.cleaned_data['date']
+        now = datetime.now()
+        if date > now:
+            raise forms.ValidationError('Date must not be in the future')
+        return date
+
 class AddNewOtherExpense(forms.ModelForm):
     PAID_CHOICES = (
     ('true', 'Paid'),
@@ -169,6 +244,19 @@ class AddNewOtherExpense(forms.ModelForm):
         value = self.cleaned_data['paid_status']
         return value == 'true'
 
+    def clean_price(self):
+        price = self.cleaned_data['price']
+        if price <= 0:
+            raise forms.ValidationError('Price must be greater than 0')
+        return price
+
+    def clean_date(self):
+        date = self.cleaned_data['date']
+        now = datetime.now()
+        if date > now:
+            raise forms.ValidationError('Date must not be in the future')
+        return date
+
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
@@ -186,3 +274,13 @@ class UserUpdateForm(forms.ModelForm):
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),
         }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        first_name = cleaned_data.get('first_name', '')
+        last_name = cleaned_data.get('last_name', '')
+
+        if any(char.isdigit() for char in first_name) or any(char.isdigit() for char in last_name):
+            raise forms.ValidationError('Name and surname cannot contain numbers')
+
+        return cleaned_data
