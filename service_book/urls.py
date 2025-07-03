@@ -10,7 +10,7 @@ from .export_csv_views import (export_csv_other, export_csv_service, export_csv_
 # app_name = 'service_book'
 
 urlpatterns = [
-    path('main/', main, name='main'),
+    path('', main, name='main'),
     path('profile/', profile, name='profile'),
     path('contact_us/', contact_us, name='contact_us'),
 # Autos list

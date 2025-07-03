@@ -19,114 +19,19 @@
 </div>
 
   <div class="d-flex">
+
 {# Nav menu #}
-<nav class="vh-100 p-3 d-flex flex-column align-items-center justify-content-start text-white"
-     style="
-        width: 250px;
-        min-width: 180px;
-        max-width: 100vw;
-        text-align: center;
-        position: fixed;
-        top: 0;
-        left: 0;
-        background: #23272b;
-        border-right: 2px solid #444;
-        box-shadow: 2px 0 8px rgba(0,0,0,0.08);
-        overflow-y: auto;
-        height: 100vh;
-     ">
-
-    <div class="w-100 mb-4 text-center">
-        {% if user.is_authenticated %}
-            <div class="d-flex flex-column align-items-center gap-1">
-                <p class="fw-semibold fs-5 mb-1">👋 Hello, <span class="text-primary">{{ user.username }}</span></p>
-                <a href="{% url 'profile' %}" class="text-decoration-none mb-1">🪪 Your Profile</a>
-                <form method="post" action="{% url 'account_logout' %}">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-outline-primary btn-sm">Logout</button>
-                </form>
-            </div>
-        {% else %}
-            <div class="d-flex align-items-center justify-content-center gap-3">
-                <a href="{% url 'account_signup' %}" class="btn btn-outline-primary btn-sm">Sign up</a>
-                <span class="text-muted">or</span>
-                <a href="{% url 'account_login' %}" class="btn btn-primary btn-sm">Login</a>
-            </div>
-        {% endif %}
-    </div>
-
-    <ul class="navbar-nav flex-column w-100 align-items-center">
-        <li class="nav-item w-100">
-            <a class="nav-link mt-4" href="{% url 'main' %}">🏠 Home</a>
-        </li>
-        <li class="nav-item w-100">
-            <a class="nav-link mt-3" href="{% url 'contact_us' %}">💬 Contact us</a>
-        </li>
-        {% if user.is_authenticated %}
-        <li class="nav-item w-100">
-            <a class="nav-link mt-4" href="{% url 'autos' %}">🅿️ My Garage ({{ user_cars_count }})</a>
-        </li>
-        <li class="nav-item w-100">
-            <a class="nav-link mt-3" href="{% url 'service_history' %}">🧾 Service History</a>
-        </li>
-        <li class="nav-item w-100">
-            <a class="nav-link mt-3" href="{% url 'fuel_expense' %}">⛽ Fuel Expenses</a>
-        </li>
-        <li class="nav-item w-100">
-            <a class="nav-link mt-3" href="{% url 'my_carparts' %}">⚙️ Car Parts</a>
-        </li>
-        <li class="nav-item w-100">
-            <a class="nav-link mt-3" href="{% url 'other_expense' %}">🪙 Other Expenses</a>
-        </li>
-        {% endif %}
-    </ul>
-</nav>
-
-
+{% include 'includes/nav_menu.html' %}
 
 {# Content#}
     <div class="container p-5 my-1 flex-grow-1" style="margin-left: 250px;">
-      {% block content %}{% endblock %}
+  {% block content %}{% endblock %}
     </div>
-    </div>
 
-{% block extra_scripts %}
-    {# Bootstrap #}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    {# AOS Animate On Scroll#}
-    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-    {# AOS theme switcher #}
-    <script>
-        // AOS init
-        document.addEventListener("DOMContentLoaded", function () {
-            AOS.init({duration: 600, once: true});
+</div>
 
-            // Theme toggle
-            const toggleBtn = document.getElementById('theme-toggle');
-            const body = document.body;
+{#Extra Scripts#}
+{% include 'includes/extra_scripts.html' %}
 
-            function applyTheme(theme) {
-                body.classList.toggle('dark', theme === 'dark');
-                toggleBtn.classList.toggle('btn-dark', theme === 'dark');
-                toggleBtn.classList.toggle('btn-primary', theme === 'light');
-                localStorage.setItem('theme', theme);
-                if (theme === "dark") {
-                    toggleBtn.innerHTML = "☀️"
-                } else {
-                    toggleBtn.innerHTML = "🌙"
-                }
-            }
-
-            toggleBtn.addEventListener('click', () => {
-                const newTheme = body.classList.contains('dark') ? 'light' : 'dark';
-                applyTheme(newTheme);
-            });
-
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            applyTheme(savedTheme);
-
-        });
-        </script>
-{% endblock %}
 </body>
 </html>
