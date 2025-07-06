@@ -35,7 +35,7 @@ AutoService Book brings organization, transparency, and ease to your car ownersh
 
 - **Backend**: Django 5.2, Python 3.12
 - **Frontend**: Bootstrap 5 (via `crispy-bootstrap5`), HTML, CSS, JavaScript
-- **Database**: SQLite (with easy switch to PostgreSQL)
+- **Database**: PostgreSQL 16
 - **Authentication**: `django-allauth` for email-based login
 - **Caching**: Django Cache Framework for optimized queries
 - **Additional**: Django signals for automatic mileage and fuel updates, CSV export functionality
