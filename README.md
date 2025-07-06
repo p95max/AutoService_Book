@@ -21,6 +21,24 @@ With a clean and intuitive interface, you can easily:
 
 AutoService Book brings organization, transparency, and ease to your car ownership experience.
 
+## 🚀 Live Demo
+
+You can try **AutoService Book** right now online:  
+👉 [https://autoservice-book.onrender.com](https://autoservice-book.onrender.com)
+
+> **Note:** The demo is hosted on Render’s free tier.  
+> If the site has been inactive for a while, it may take up to 1–2 minutes to wake up.  
+> Please be patient — the app will load soon!
+
+## Deployment & Architecture
+
+- **Dockerized:** The entire project is containerized with Docker for easy deployment and reproducibility.
+- **Nginx:** Nginx is used as a reverse proxy for serving static files and handling client requests efficiently.
+- **PostgreSQL:** The production database runs as a managed cloud instance, separate from the application container.
+- **Render:** The app is deployed on [Render](https://render.com), making it accessible from anywhere.
+
+This setup reflects a real-world production architecture and demonstrates skills in modern backend deployment.
+
 ## Features
 
 - 🛠️ **Track Service History and Car Parts**: Add, edit, and delete service and part records.
@@ -33,45 +51,37 @@ AutoService Book brings organization, transparency, and ease to your car ownersh
 
 ## Tech Stack
 
-- **Backend**: Django 4.2, Python 3.13
-- **Frontend**: Bootstrap 5 (via `crispy-bootstrap5`), HTML, CSS, JavaScript
-- **Database**: SQLite (with easy switch to PostgreSQL)
-- **Authentication**: `django-allauth` for email-based login
-- **Caching**: Django Cache Framework for optimized queries
-- **Additional**: Django signals for automatic mileage and fuel updates, CSV export functionality
+- **Backend:** Django 5.2, Python 3.12
+- **Frontend:** Bootstrap 5 (via `crispy-bootstrap5`), HTML, CSS, JavaScript
+- **Database:** PostgreSQL 16 (managed cloud instance)
+- **Authentication:** `django-allauth` for email-based login
+- **Caching:** Django Cache Framework for optimized queries
+- **Additional:** Django signals for automatic mileage and fuel updates, CSV export functionality
+- **Production:** Docker, Nginx, Render.com
 
 ## Usage
 
-1. **Sign Up/Login**: Register or log in via email using `django-allauth`.
-2. **Add Vehicles**: Go to the "Autos" section to add cars (brand, model, year, mileage, VIN).
-3. **Manage Records**:
+1. **Sign Up/Login:** Register or log in via email using `django-allauth`.
+2. **Add Vehicles:** Go to the "Autos" section to add cars (brand, model, year, mileage, VIN).
+3. **Manage Records:**
    - Add service records, fuel expenses, car parts, or other expenses.
    - View detailed history and analytics for each car.
    - Export data to CSV for offline use.
-4. **Monitor Fuel**: Check remaining fuel and average consumption on the dashboard.
-5. **Toggle Themes**: Switch between dark and light themes for a better experience.
+4. **Monitor Fuel:** Check remaining fuel and average consumption on the dashboard.
+5. **Toggle Themes:** Switch between dark and light themes for a better experience.
 
-## 🚀 Live Demo
-
-You can try **AutoService Book** right now online:
-👉 [https://autoservice-book.onrender.com](https://autoservice-book.onrender.com)
-
-> **Note:** The demo is hosted on Render’s free tier. If the site has been inactive for a while, it may take up to 1–2 minutes to wake up.
-> Please be patient — the app will load soon!
-
- 
 ## Portfolio Notes
 
 This project was built to demonstrate:
 - Proficiency in Django, including models, views, forms, and signals.
-- Database design and management with SQLite.
+- Database design and management with PostgreSQL.
 - User authentication and security with `django-allauth`.
 - Responsive UI with Bootstrap 5 and `crispy-forms`.
 - Performance optimization using caching.
 - Data export functionality with CSV.
+- Modern deployment with Docker, Nginx, and cloud database.
 
 Feel free to explore the code, test the app, or provide feedback!
-
 
 ## Contributing
 
