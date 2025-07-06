@@ -33,7 +33,7 @@ AutoService Book brings organization, transparency, and ease to your car ownersh
 
 ## Tech Stack
 
-- **Backend**: Django 4.2, Python 3.13
+- **Backend**: Django 5.2, Python 3.12
 - **Frontend**: Bootstrap 5 (via `crispy-bootstrap5`), HTML, CSS, JavaScript
 - **Database**: SQLite (with easy switch to PostgreSQL)
 - **Authentication**: `django-allauth` for email-based login
