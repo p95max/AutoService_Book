@@ -51,6 +51,15 @@ AutoService Book brings organization, transparency, and ease to your car ownersh
 4. **Monitor Fuel**: Check remaining fuel and average consumption on the dashboard.
 5. **Toggle Themes**: Switch between dark and light themes for a better experience.
 
+## 🚀 Live Demo
+
+You can try **AutoService Book** right now online:
+👉 [https://autoservice-book.onrender.com](https://autoservice-book.onrender.com)
+
+> **Note:** The demo is hosted on Render’s free tier. If the site has been inactive for a while, it may take up to 1–2 minutes to wake up.
+> Please be patient — the app will load soon!
+
+ 
 ## Portfolio Notes
 
 This project was built to demonstrate:
