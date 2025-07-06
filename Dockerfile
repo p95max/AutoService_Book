@@ -18,6 +18,10 @@ COPY . /app/
 RUN poetry config virtualenvs.create false \
     && poetry install --no-interaction --no-ansi
 
+# Копируем entrypoint.sh и даём права на исполнение
+COPY entrypoint.sh /app/entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
+
 EXPOSE 8000
 
-CMD ["gunicorn", "auto_service_book.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD ["/app/entrypoint.sh"]
