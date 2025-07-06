@@ -88,7 +88,7 @@ def user_autos(request):
         'cars': cars,
         'total_sum': total_sum,
     }
-    return render(request, 'autos/my_autos.html', context)
+    return render(request, 'apps/autos/my_autos.html', context)
 
 @login_required
 def add_auto(request):
@@ -103,7 +103,7 @@ def add_auto(request):
     else:
         form = AddNewAuto()
     context = {'form': form}
-    return render(request, 'autos/add_auto.html', context=context)
+    return render(request, 'apps/autos/add_auto.html', context=context)
 
 @login_required
 def edit_auto(request, pk):
@@ -115,7 +115,7 @@ def edit_auto(request, pk):
             return redirect('autos')
     else:
         form = AddNewAuto(instance=auto)
-    return render(request, 'autos/edit_auto.html', {'form': form})
+    return render(request, 'apps/autos/edit_auto.html', {'form': form})
 
 @login_required
 def delete_auto(request, pk):
@@ -161,7 +161,7 @@ def user_service_history(request):
         'total_costs_per_car': total_costs_per_car,
         'user_total_service_costs': user_total_service_costs,
     }
-    return render(request, 'service_records/service_history.html', context)
+    return render(request, 'apps/service_records/service_history.html', context)
 
 @login_required
 def add_service_record(request):
@@ -175,7 +175,7 @@ def add_service_record(request):
     else:
         form = AddNewServiceRecord(user=request.user)
     context = {'form': form}
-    return render(request, 'service_records/add_service.html', context=context)
+    return render(request, 'apps/service_records/add_service.html', context=context)
 
 @login_required
 def edit_service_record(request, pk):
@@ -187,7 +187,7 @@ def edit_service_record(request, pk):
             return redirect('service_history')
     else:
         form = AddNewServiceRecord(user=request.user, instance=record)
-    return render(request, 'service_records/edit_service.html', {'form': form})
+    return render(request, 'apps/service_records/edit_service.html', {'form': form})
 
 @login_required
 def delete_service_record(request, pk):
@@ -271,7 +271,7 @@ def fuel_expense(request):
         'total_costs_per_car': total_costs_per_car,
         'costs_dict': costs_dict,
     }
-    return render(request, 'fuel_expense/fuel_expense.html', context=context)
+    return render(request, 'apps/fuel_expense/fuel_expense.html', context=context)
 
 @login_required
 def add_fuel_expense(request):
@@ -285,7 +285,7 @@ def add_fuel_expense(request):
     else:
         form = AddNewFuelExpense(user=request.user)
     context = {'form': form}
-    return render(request, 'fuel_expense/add_fuel_expense.html', context=context)
+    return render(request, 'apps/fuel_expense/add_fuel_expense.html', context=context)
 
 @login_required
 def edit_fuel_expense(request, pk):
@@ -299,7 +299,7 @@ def edit_fuel_expense(request, pk):
             return redirect('fuel_expense')
     else:
         form = AddNewFuelExpense(user=request.user, instance=record)
-    return render(request, 'fuel_expense/edit_fuel_expense.html', {'form': form})
+    return render(request, 'apps/fuel_expense/edit_fuel_expense.html', {'form': form})
 
 @login_required
 def delete_fuel_expense(request, pk):
@@ -347,7 +347,7 @@ def car_parts(request):
         'costs_dict': costs_dict,
     }
 
-    return render(request, 'carparts/my_carparts.html', context=context)
+    return render(request, 'apps/carparts/my_carparts.html', context=context)
 
 @login_required
 def add_carpart(request):
@@ -362,7 +362,7 @@ def add_carpart(request):
         form = AddNewCarPart(user=request.user)
     context = {'form': form}
 
-    return render(request, 'carparts/add_carpart.html', context=context)
+    return render(request, 'apps/carparts/add_carpart.html', context=context)
 
 @login_required
 def edit_carpart(request, pk):
@@ -377,7 +377,7 @@ def edit_carpart(request, pk):
     else:
         form = AddNewCarPart(user=request.user, instance=part)
 
-    return render(request, 'carparts/edit_carpart.html', {'form': form})
+    return render(request, 'apps/carparts/edit_carpart.html', {'form': form})
 
 @login_required
 def delete_carpart(request, pk):
@@ -426,7 +426,7 @@ def other_expense(request):
         'page_obj': page_obj,
     }
 
-    return render(request, 'other_expenses/other_expenses.html', context=context)
+    return render(request, 'apps/other_expenses/other_expenses.html', context=context)
 
 @login_required
 def add_other_expense(request):
@@ -441,7 +441,7 @@ def add_other_expense(request):
         form = AddNewOtherExpense(user=request.user)
     context = {'form': form}
 
-    return render(request, 'other_expenses/add_other_expense.html', context=context)
+    return render(request, 'apps/other_expenses/add_other_expense.html', context=context)
 
 @login_required
 def edit_other_expense(request, pk):
@@ -456,7 +456,7 @@ def edit_other_expense(request, pk):
     else:
         form = AddNewOtherExpense(user=request.user, instance=other_expense)
 
-    return render(request, 'other_expenses/edit_other_expense.html', {'form': form})
+    return render(request, 'apps/other_expenses/edit_other_expense.html', {'form': form})
 
 @login_required
 def delete_other_expense(request, pk):
