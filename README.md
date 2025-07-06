@@ -1,4 +1,4 @@
-# 🚗 AutoService Book
+🚗 AutoService Book
 
 **AutoService Book** is your reliable assistant for tracking and managing your car’s service history. This web application, built as a portfolio project, showcases skills in Django development, database management, and creating user-friendly interfaces.
 
