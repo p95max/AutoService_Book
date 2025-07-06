@@ -18,6 +18,12 @@ COPY . /app/
 RUN poetry config virtualenvs.create false \
     && poetry install --no-interaction --no-ansi
 
+# Собираем статику (и можно миграции, если хочешь)
+RUN python manage.py collectstatic --noinput
+
+# (опционально) Миграции:
+ RUN python manage.py migrate
+
 EXPOSE 8000
 
 CMD ["gunicorn", "auto_service_book.wsgi:application", "--bind", "0.0.0.0:8000"]
