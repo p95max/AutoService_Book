@@ -153,7 +153,7 @@ CSRF_TRUSTED_ORIGINS = [f"https://{host}" for host in ALLOWED_HOSTS if not host.
 # Admin URL (опционально)
 ADMIN_URL = config('ADMIN_URL', default='admin')
 
-
+# Logging
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
