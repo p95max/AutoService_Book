@@ -40,7 +40,7 @@ class AddNewAuto(forms.ModelForm):
         return miliage
 
     def clean_vin(self):
-        vin = self.cleaned_data.get('vin', '').strip().upper()
+        vin = (self.cleaned_data.get('vin') or '').strip().upper()
         if vin:
             if len(vin) != 17:
                 raise forms.ValidationError('VIN number must be 17 characters long')

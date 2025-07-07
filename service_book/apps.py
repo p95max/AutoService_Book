@@ -10,6 +10,7 @@ class ServiceBookConfig(AppConfig):
         print('ServiceBookConfig.ready() called')
         import service_book.signals
 
+        # create for superuser for render deploy
         User = get_user_model()
         admin_username = config('ADMIN_USERNAME')
         admin_email = config('ADMIN_EMAIL')
