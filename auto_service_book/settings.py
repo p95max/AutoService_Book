@@ -60,23 +60,36 @@ TEMPLATES = [
 WSGI_APPLICATION = 'auto_service_book.wsgi.application'
 
 # DATABASE
-if config('DOCKER_ENV', default='false') == 'true':
-    DB_HOST = config('DOCKER_DB_HOST', default='db')
-    DB_PORT = config('DOCKER_DB_PORT', default='5432')
-else:
-    DB_HOST = config('LOCAL_DB_HOST', default='localhost')
-    DB_PORT = config('LOCAL_DB_PORT', default='5433')
+DATABASES = {}
 
-DATABASES = {
-    'default': {
+if DEBUG:
+    DATABASES['default'] = {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': DB_HOST,
-        'PORT': DB_PORT,
+        'NAME': config('DB_NAME', default='service_book_db'),
+        'USER': config('DB_USER', default='serv_admin'),
+        'PASSWORD': config('DB_PASSWORD', default=''),
+        'HOST': config('LOCAL_DB_HOST', default='localhost'),
+        'PORT': config('LOCAL_DB_PORT', default='5433'),
     }
-}
+elif config('DOCKER_ENV', default='false').lower() == 'true':
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DB_NAME', default='service_book_db'),
+        'USER': config('DB_USER', default='serv_admin'),
+        'PASSWORD': config('DB_PASSWORD', default=''),
+        'HOST': config('DOCKER_DB_HOST', default='db'),
+        'PORT': config('DOCKER_DB_PORT', default='5432'),
+    }
+else:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('RENDER_DB_NAME', default='autoservice_book_db'),
+        'USER': config('RENDER_DB_USER', default='autoservice_book_db_user'),
+        'PASSWORD': config('RENDER_DB_PASSWORD', default=''),
+        'HOST': config('RENDER_DB_HOST', default='dpg-d1leq0re5dus73fkj5d0-a.frankfurt-postgres.render.com'),
+        'PORT': config('RENDER_DB_PORT', default='5432'),
+    }
+
 
 # AUTHENTICATION
 SITE_ID = 1
@@ -88,8 +101,8 @@ AUTHENTICATION_BACKENDS = [
 ACCOUNT_LOGIN_METHODS = {'email'}
 ACCOUNT_SIGNUP_FIELDS = ['email*', 'password1*', 'password2*']
 
-LOGIN_REDIRECT_URL = '/main'
-ACCOUNT_LOGOUT_REDIRECT_URL = '/main'
+LOGIN_REDIRECT_URL = '/'
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = 'account_login'
 
 # PASSWORD VALIDATION
