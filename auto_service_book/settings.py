@@ -65,29 +65,29 @@ DATABASES = {}
 if DEBUG:
     DATABASES['default'] = {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME', default='service_book_db'),
-        'USER': config('DB_USER', default='serv_admin'),
-        'PASSWORD': config('DB_PASSWORD', default=''),
-        'HOST': config('LOCAL_DB_HOST', default='localhost'),
-        'PORT': config('LOCAL_DB_PORT', default='5433'),
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('LOCAL_DB_HOST'),
+        'PORT': config('LOCAL_DB_PORT'),
     }
 elif config('DOCKER_ENV', default='false').lower() == 'true':
     DATABASES['default'] = {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME', default='service_book_db'),
-        'USER': config('DB_USER', default='serv_admin'),
-        'PASSWORD': config('DB_PASSWORD', default=''),
-        'HOST': config('DOCKER_DB_HOST', default='db'),
-        'PORT': config('DOCKER_DB_PORT', default='5432'),
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DOCKER_DB_HOST'),
+        'PORT': config('DOCKER_DB_PORT'),
     }
 else:
     DATABASES['default'] = {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('RENDER_DB_NAME', default='autoservice_book_db'),
-        'USER': config('RENDER_DB_USER', default='autoservice_book_db_user'),
-        'PASSWORD': config('RENDER_DB_PASSWORD', default=''),
-        'HOST': config('RENDER_DB_HOST', default='dpg-d1leq0re5dus73fkj5d0-a.frankfurt-postgres.render.com'),
-        'PORT': config('RENDER_DB_PORT', default='5432'),
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('RENDER_DB_HOST'),
+        'PORT': config('RENDER_DB_PORT'),
     }
 
 
