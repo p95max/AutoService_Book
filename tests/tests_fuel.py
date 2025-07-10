@@ -35,7 +35,7 @@ def test_fuel_expense_view(client, user, car, fuel_expense):
     client.login(username='test', password='testing')
     response = client.get(reverse('fuel_expense'))
     assert response.status_code == 200
-    assert 'fuel_expense/fuel_expense.html' in [t.name for t in response.templates]
+    assert any(t.name.endswith('fuel_expense/fuel_expense.html') for t in response.templates)
     assert 'cars' in response.context
     assert 'page_obj' in response.context
     assert 'total_costs_all' in response.context
@@ -44,7 +44,7 @@ def test_add_fuel_expense_get(client, user):
     client.login(username='test', password='testing')
     response = client.get(reverse('add_fuel_expense'))
     assert response.status_code == 200
-    assert 'fuel_expense/add_fuel_expense.html' in [t.name for t in response.templates]
+    assert any(t.name.endswith('fuel_expense/add_fuel_expense.html') for t in response.templates)
     assert isinstance(response.context['form'], AddNewFuelExpense)
 
 def test_add_fuel_expense_post_valid(client, user, car):
@@ -60,7 +60,6 @@ def test_add_fuel_expense_post_valid(client, user, car):
         'gas_station': 'Test Station',
     }
     response = client.post(reverse('add_fuel_expense'), data)
-    # print(response.context['form'].errors)
     assert response.status_code == 302
     assert response.url == reverse('fuel_expense')
     assert FuelExpense.objects.filter(owner=user, car=car, price=150).exists()
@@ -70,14 +69,14 @@ def test_add_fuel_expense_post_invalid(client, user):
     data = {}
     response = client.post(reverse('add_fuel_expense'), data)
     assert response.status_code == 200
-    assert 'fuel_expense/add_fuel_expense.html' in [t.name for t in response.templates]
+    assert any(t.name.endswith('fuel_expense/add_fuel_expense.html') for t in response.templates)
     assert 'car' in response.context['form'].errors
 
 def test_edit_fuel_expense_get(client, user, fuel_expense):
     client.login(username='test', password='testing')
     response = client.get(reverse('edit_fuel_expense', kwargs={'pk': fuel_expense.pk}))
     assert response.status_code == 200
-    assert 'fuel_expense/edit_fuel_expense.html' in [t.name for t in response.templates]
+    assert any(t.name.endswith('fuel_expense/edit_fuel_expense.html') for t in response.templates)
     assert isinstance(response.context['form'], AddNewFuelExpense)
 
 def test_edit_fuel_expense_post_valid(client, user, fuel_expense, car):
@@ -93,7 +92,6 @@ def test_edit_fuel_expense_post_valid(client, user, fuel_expense, car):
         'gas_station': 'Test Station',
     }
     response = client.post(reverse('edit_fuel_expense', kwargs={'pk': fuel_expense.pk}), data)
-    # print(response.context['form'].errors)
     assert response.status_code == 302
     assert response.url == reverse('fuel_expense')
     fuel_expense.refresh_from_db()
