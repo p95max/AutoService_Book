@@ -1,9 +1,7 @@
-from datetime import datetime
 from django import forms
 from django.utils import timezone
 
 from .models import Car, ServiceRecord, FuelExpense, ContactRequest, Carpart, OtherExpense, User
-
 
 class AddNewAuto(forms.ModelForm):
     class Meta:
@@ -25,7 +23,9 @@ class AddNewAuto(forms.ModelForm):
         }
 
     def clean_prod_year(self):
-        year = self.cleaned_data['prod_year']
+        year = self.cleaned_data.get('prod_year')
+        if year is None:
+            return year
         current_year = timezone.now().year
         if year <= 1920:
             raise forms.ValidationError('Please enter a year after 1920')
@@ -34,7 +34,9 @@ class AddNewAuto(forms.ModelForm):
         return year
 
     def clean_miliage(self):
-        miliage = self.cleaned_data['miliage']
+        miliage = self.cleaned_data.get('miliage')
+        if miliage is None:
+            return miliage
         if miliage < 0:
             raise forms.ValidationError('Please enter a positive number')
         if miliage > 1000000:
@@ -84,13 +86,17 @@ class AddNewServiceRecord(forms.ModelForm):
             self.fields['car'].queryset = Car.objects.none()
 
     def clean_price(self):
-        price = self.cleaned_data['price']
+        price = self.cleaned_data.get('price')
+        if price is None:
+            return price
         if price <= 0:
             raise forms.ValidationError('Price must be greater than 0')
         return price
 
     def clean_miliage(self):
-        miliage = self.cleaned_data['miliage']
+        miliage = self.cleaned_data.get('miliage')
+        if miliage is None:
+            return miliage
         if miliage < 0:
             raise forms.ValidationError('Please enter a positive number')
         if miliage > 1000000:
@@ -98,7 +104,9 @@ class AddNewServiceRecord(forms.ModelForm):
         return miliage
 
     def clean_date(self):
-        date = self.cleaned_data['date']
+        date = self.cleaned_data.get('date')
+        if date is None:
+            return date
         now = timezone.now()
         if date > now:
             raise forms.ValidationError('Date must not be in the future')
@@ -138,14 +146,18 @@ class AddNewFuelExpense(forms.ModelForm):
             self.fields['car'].queryset = Car.objects.none()
 
     def clean_date(self):
-        date = self.cleaned_data['date']
+        date = self.cleaned_data.get('date')
+        if date is None:
+            return date
         now = timezone.now()
         if date > now:
             raise forms.ValidationError('Date must not be in the future')
         return date
 
     def clean_price(self):
-        price = self.cleaned_data['price']
+        price = self.cleaned_data.get('price')
+        if price is None:
+            return price
         if price <= 0:
             raise forms.ValidationError('Price must be greater than 0')
         return price
@@ -197,7 +209,9 @@ class AddNewCarPart(forms.ModelForm):
             self.fields['car'].queryset = Car.objects.none()
 
     def clean_price(self):
-        price = self.cleaned_data['price']
+        price = self.cleaned_data.get('price')
+        if price is None:
+            return price
         if price <= 0:
             raise forms.ValidationError('Price must be greater than 0')
         return price
@@ -249,17 +263,21 @@ class AddNewOtherExpense(forms.ModelForm):
         }
 
     def clean_paid_status(self):
-        value = self.cleaned_data['paid_status']
+        value = self.cleaned_data.get('paid_status')
         return value == 'true'
 
     def clean_price(self):
-        price = self.cleaned_data['price']
+        price = self.cleaned_data.get('price')
+        if price is None:
+            return price
         if price <= 0:
             raise forms.ValidationError('Price must be greater than 0')
         return price
 
     def clean_date(self):
-        date = self.cleaned_data['date']
+        date = self.cleaned_data.get('date')
+        if date is None:
+            return date
         now = timezone.now()
         if date > now:
             raise forms.ValidationError('Date must not be in the future')

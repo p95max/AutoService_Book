@@ -31,7 +31,7 @@ def test_user_autos_view_status(client, user, car, setup_related):
     client.login(username='test', password='testing')
     response = client.get(reverse('autos'))
     assert response.status_code == 200
-    assert 'autos/my_autos.html' in [t.name for t in response.templates]
+    assert any(t.name.endswith('autos/my_autos.html') for t in response.templates)
     assert 'cars' in response.context
     assert 'total_sum' in response.context
     assert response.context['total_sum'] == 50.0
@@ -40,7 +40,7 @@ def test_add_autos_get(client, user, brand):
     client.login(username='test', password='testing')
     response = client.get(reverse('add_auto'))
     assert response.status_code == 200
-    assert 'autos/add_auto.html' in [t.name for t in response.templates]
+    assert any(t.name.endswith('autos/add_auto.html') for t in response.templates)
     assert isinstance(response.context['form'], forms.AddNewAuto)
 
 def test_add_autos_post_valid(client, user, brand):
@@ -61,14 +61,14 @@ def test_add_autos_post_invalid(client, user):
     data = {}
     response = client.post(reverse('add_auto'), data)
     assert response.status_code == 200
-    assert 'autos/add_auto.html' in [t.name for t in response.templates]
+    assert any(t.name.endswith('autos/add_auto.html') for t in response.templates)
     assert 'model' in response.context['form'].errors
 
 def test_edit_autos_get_by_owner(client, user, car):
     client.login(username='test', password='testing')
     response = client.get(reverse('edit_auto', kwargs={'pk': car.pk}))
     assert response.status_code == 200
-    assert 'autos/edit_auto.html' in [t.name for t in response.templates]
+    assert any(t.name.endswith('autos/edit_auto.html') for t in response.templates)
     assert isinstance(response.context['form'], AddNewAuto)
 
 def test_edit_autos_post_valid(client, user, car, brand):
