@@ -62,7 +62,18 @@ WSGI_APPLICATION = 'auto_service_book.wsgi.application'
 # DATABASE
 DATABASES = {}
 
-if DEBUG:
+USE_RENDER_DB = config('USE_RENDER_DB', default='false').lower() == 'true'
+
+if USE_RENDER_DB:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('RENDER_DB_HOST'),
+        'PORT': config('RENDER_DB_PORT'),
+    }
+elif DEBUG:
     DATABASES['default'] = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': config('DB_NAME'),
