@@ -5,6 +5,8 @@ from service_book.models import Car, Brand, Carpart
 from django.contrib.auth.models import User
 from service_book.forms import AddNewCarPart
 
+# --- Фикстуры ---
+
 @pytest.fixture
 def user(db):
     return User.objects.create_user(username='test', password='testing')
@@ -15,14 +17,20 @@ def brand(db):
 
 @pytest.fixture
 def car(user, brand):
-    return Car.objects.create(owner=user, model='Test car', brand=brand, prod_year=2020, miliage=10000)
+    return Car.objects.create(
+        owner=user,
+        model='Test car',
+        brand=brand,
+        prod_year=2020,
+        miliage=10000
+    )
 
 @pytest.fixture
 def carpart(user, car):
     return Carpart.objects.create(
         owner=user,
         car=car,
-        date_purchase=timezone.now(),  # Use aware datetime
+        date_purchase=timezone.now(),
         name='Test Part',
         carpart_type='tyre',
         price=100,
@@ -30,12 +38,14 @@ def carpart(user, car):
         description='Test car part'
     )
 
+# --- Тесты ---
+
 @pytest.mark.django_db
 def test_car_parts_view(client, user, car, carpart):
     client.login(username='test', password='testing')
     response = client.get(reverse('my_carparts'))
     assert response.status_code == 200
-    assert 'carparts/my_carparts.html' in [t.name for t in response.templates]
+    assert any(t.name.endswith('carparts/my_carparts.html') for t in response.templates)
     assert carpart.name in response.content.decode()
 
 @pytest.mark.django_db
@@ -43,7 +53,7 @@ def test_add_carpart_get(client, user):
     client.login(username='test', password='testing')
     response = client.get(reverse('add_carpart'))
     assert response.status_code == 200
-    assert 'carparts/add_carpart.html' in [t.name for t in response.templates]
+    assert any(t.name.endswith('carparts/add_carpart.html') for t in response.templates)
     assert isinstance(response.context['form'], AddNewCarPart)
 
 @pytest.mark.django_db
@@ -67,7 +77,7 @@ def test_edit_carpart_get(client, user, carpart):
     client.login(username='test', password='testing')
     response = client.get(reverse('edit_carpart', kwargs={'pk': carpart.pk}))
     assert response.status_code == 200
-    assert 'carparts/edit_carpart.html' in [t.name for t in response.templates]
+    assert any(t.name.endswith('carparts/edit_carpart.html') for t in response.templates)
     assert isinstance(response.context['form'], AddNewCarPart)
 
 @pytest.mark.django_db
@@ -105,7 +115,13 @@ def test_delete_carpart_get_redirect(client, user, carpart):
 def test_delete_carpart_not_owner(client, user, brand):
     client.login(username='test', password='testing')
     other_user = User.objects.create_user(username='other_user', password='other_password')
-    other_car = Car.objects.create(owner=other_user, model='Other car', brand=brand, prod_year=2015, miliage=50000)
+    other_car = Car.objects.create(
+        owner=other_user,
+        model='Other car',
+        brand=brand,
+        prod_year=2015,
+        miliage=50000
+    )
     other_part = Carpart.objects.create(
         owner=other_user,
         car=other_car,
@@ -117,4 +133,4 @@ def test_delete_carpart_not_owner(client, user, brand):
         description='Other user part'
     )
     response = client.get(reverse('delete_carpart', kwargs={'pk': other_part.pk}))
-    assert response.status_code == 404  # Expect 404 due to owner filter
+    assert response.status_code == 404  # Ожидаем 404, если не владелец
