@@ -1,5 +1,7 @@
 from datetime import datetime
 from django import forms
+from django.utils import timezone
+
 from .models import Car, ServiceRecord, FuelExpense, ContactRequest, Carpart, OtherExpense, User
 
 
@@ -24,7 +26,7 @@ class AddNewAuto(forms.ModelForm):
 
     def clean_prod_year(self):
         year = self.cleaned_data['prod_year']
-        current_year = datetime.now().year
+        current_year = timezone.now().year
         if year <= 1920:
             raise forms.ValidationError('Please enter a year after 1920')
         if year > current_year:
@@ -97,7 +99,7 @@ class AddNewServiceRecord(forms.ModelForm):
 
     def clean_date(self):
         date = self.cleaned_data['date']
-        now = datetime.now()
+        now = timezone.now()
         if date > now:
             raise forms.ValidationError('Date must not be in the future')
         return date
@@ -137,7 +139,7 @@ class AddNewFuelExpense(forms.ModelForm):
 
     def clean_date(self):
         date = self.cleaned_data['date']
-        now = datetime.now()
+        now = timezone.now()
         if date > now:
             raise forms.ValidationError('Date must not be in the future')
         return date
@@ -204,7 +206,7 @@ class AddNewCarPart(forms.ModelForm):
         cleaned_data = super().clean()
         date_purchase = cleaned_data.get('date_purchase')
         date_installation = cleaned_data.get('date_installation')
-        now = datetime.now()
+        now = timezone.now()
 
         if date_purchase and date_purchase > now:
             self.add_error('date_purchase', 'Purchase date must not be in the future')
@@ -215,7 +217,7 @@ class AddNewCarPart(forms.ModelForm):
 
 class AddNewOtherExpense(forms.ModelForm):
     PAID_CHOICES = (
-    ('true', 'Paid'),
+        ('true', 'Paid'),
         ('false', 'Not Paid'),
     )
     paid_status = forms.ChoiceField(
@@ -258,7 +260,7 @@ class AddNewOtherExpense(forms.ModelForm):
 
     def clean_date(self):
         date = self.cleaned_data['date']
-        now = datetime.now()
+        now = timezone.now()
         if date > now:
             raise forms.ValidationError('Date must not be in the future')
         return date
