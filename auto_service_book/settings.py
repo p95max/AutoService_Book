@@ -60,12 +60,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'auto_service_book.wsgi.application'
 
 # DATABASE
-DATABASES = {}
-
-USE_RENDER_DB = config('USE_RENDER_DB', default='false').lower() == 'true'
-
-if USE_RENDER_DB:
-    DATABASES['default'] = {
+DATABASES = {
+    'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': config('DB_NAME'),
         'USER': config('DB_USER'),
@@ -73,33 +69,7 @@ if USE_RENDER_DB:
         'HOST': config('RENDER_DB_HOST'),
         'PORT': config('RENDER_DB_PORT'),
     }
-elif DEBUG:
-    DATABASES['default'] = {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('LOCAL_DB_HOST'),
-        'PORT': config('LOCAL_DB_PORT'),
-    }
-elif config('DOCKER_ENV', default='false').lower() == 'true':
-    DATABASES['default'] = {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DOCKER_DB_HOST'),
-        'PORT': config('DOCKER_DB_PORT'),
-    }
-else:
-    DATABASES['default'] = {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('RENDER_DB_HOST'),
-        'PORT': config('RENDER_DB_PORT'),
-    }
+}
 
 
 # AUTHENTICATION
