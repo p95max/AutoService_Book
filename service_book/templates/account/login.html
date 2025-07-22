@@ -6,6 +6,9 @@
 {% block content %}
     <h3>User authorisation</h3>
 
+    <a href="{% provider_login_url 'google' %}">Войти через Google</a>
+
+
 <div class="container d-flex justify-content-center mt-5">
   <form method="post" class="w-50">
     {% csrf_token %}
