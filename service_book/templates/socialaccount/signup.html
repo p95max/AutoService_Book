@@ -5,8 +5,8 @@
 
 {% block content %}
 <div class="container mt-5">
-    <h2>"Complete your signup"</h2>
-    <p>"You are about to use your Google account to login to autoservice-book.onrender.com. As a final step, please complete the following form:"</p>
+    <h2>Complete your signup</h2>
+    <p>You are about to use your Google account to login. As a final step, please confirm your E-mail:</p>
     <form method="post" class="w-50 mx-auto">
         {% csrf_token %}
         {{ form|crispy }}

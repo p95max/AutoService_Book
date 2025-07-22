@@ -48,6 +48,7 @@ This setup reflects a real-world production architecture and demonstrates skills
 - 📊 **Analyze Expenses**: View all expenses and service history in one place.
 - 📥 **CSV Export**: Download service, fuel, part, and other expense data as CSV files.
 - 🌗 **Dark/Light Theme Switcher**: Toggle between light and dark themes for a comfortable experience.
+- 🔐 **Authorisation** by Google available
 
 ## Tech Stack
 
