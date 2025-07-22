@@ -47,10 +47,13 @@ class AddNewAuto(forms.ModelForm):
         vin = (self.cleaned_data.get('vin') or '').strip().upper()
         if vin:
             if len(vin) != 17:
-                raise forms.ValidationError('VIN number must be 17 characters long')
+                raise forms.ValidationError('VIN number must be exactly 17 characters long')
             if not vin.isalnum():
-                raise forms.ValidationError('VIN number must contains only letters and numbers')
-            if Car.objects.filter(vin=vin).exists():
+                raise forms.ValidationError('VIN number must contain only letters and numbers')
+            qs = Car.objects.filter(vin=vin)
+            if self.instance.pk:
+                qs = qs.exclude(pk=self.instance.pk)
+            if qs.exists():
                 raise forms.ValidationError('This VIN already exists')
         return vin
 
