@@ -64,28 +64,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'auto_service_book.wsgi.application'
 
 # DATABASE
-DATABASES = {}
-
-if DEBUG:
-    DATABASES['default'] = {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('LOCAL_DB_HOST'),
-        'PORT': config('LOCAL_DB_PORT'),
-    }
-elif config('DOCKER_ENV', default='false').lower() == 'true':
-    DATABASES['default'] = {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DOCKER_DB_HOST'),
-        'PORT': config('DOCKER_DB_PORT'),
-    }
-else:
-    DATABASES['default'] = {
+DATABASES = {
+    'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': config('DB_NAME'),
         'USER': config('DB_USER'),
@@ -93,6 +73,7 @@ else:
         'HOST': config('RENDER_DB_HOST'),
         'PORT': config('RENDER_DB_PORT'),
     }
+}
 
 
 # AUTHENTICATION

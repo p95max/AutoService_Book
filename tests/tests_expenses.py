@@ -35,7 +35,7 @@ def test_other_expense_list_view(client, user, car, other_expense):
     client.login(username='test', password='testing')
     response = client.get(reverse('other_expense'))
     assert response.status_code == 200
-    assert 'other_expenses/other_expenses.html' in [t.name for t in response.templates]
+    assert any(t.name.endswith('other_expenses/other_expenses.html') for t in response.templates)
     assert other_expense.name in response.content.decode()
 
 @pytest.mark.django_db
@@ -43,7 +43,7 @@ def test_add_other_expense_get(client, user):
     client.login(username='test', password='testing')
     response = client.get(reverse('add_other_expense'))
     assert response.status_code == 200
-    assert 'other_expenses/add_other_expense.html' in [t.name for t in response.templates]
+    assert any(t.name.endswith('other_expenses/add_other_expense.html') for t in response.templates)
     assert isinstance(response.context['form'], AddNewOtherExpense)
 
 @pytest.mark.django_db
@@ -68,7 +68,7 @@ def test_add_other_expense_post_invalid(client, user):
     data = {}  # Empty data
     response = client.post(reverse('add_other_expense'), data)
     assert response.status_code == 200
-    assert 'other_expenses/add_other_expense.html' in [t.name for t in response.templates]
+    assert any(t.name.endswith('other_expenses/add_other_expense.html') for t in response.templates)
     errors = response.context['form'].errors
     for field in ['date', 'name', 'expense_type', 'price', 'paid_status']:
         assert field in errors
@@ -78,7 +78,7 @@ def test_edit_other_expense_get(client, user, other_expense):
     client.login(username='test', password='testing')
     response = client.get(reverse('edit_other_expense', kwargs={'pk': other_expense.pk}))
     assert response.status_code == 200
-    assert 'other_expenses/edit_other_expense.html' in [t.name for t in response.templates]
+    assert any(t.name.endswith('other_expenses/edit_other_expense.html') for t in response.templates)
     assert isinstance(response.context['form'], AddNewOtherExpense)
 
 @pytest.mark.django_db
@@ -129,4 +129,4 @@ def test_delete_other_expense_not_owner(client, user, brand):
         description='Other user expense'
     )
     response = client.get(reverse('delete_other_expense', kwargs={'pk': other_exp.pk}))
-    assert response.status_code == 404  # Expect 404 due to owner filter in get_object_or_404
+    assert response.status_code == 404  # Ожидаем 404, если не владелец

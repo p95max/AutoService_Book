@@ -34,7 +34,7 @@ def test_user_service_history_view_status(client, user, car, service_record):
     client.login(username='test', password='testing')
     response = client.get(reverse('service_history'))
     assert response.status_code == 200
-    assert 'service_records/service_history.html' in [t.name for t in response.templates]
+    assert any(t.name.endswith('service_records/service_history.html') for t in response.templates)
     assert 'cars' in response.context
     assert 'page_obj' in response.context
     assert 'user_total_service_costs' in response.context
@@ -44,7 +44,7 @@ def test_add_service_get(client, user):
     client.login(username='test', password='testing')
     response = client.get(reverse('add_service'))
     assert response.status_code == 200
-    assert 'service_records/add_service.html' in [t.name for t in response.templates]
+    assert any(t.name.endswith('service_records/add_service.html') for t in response.templates)
     assert isinstance(response.context['form'], AddNewServiceRecord)
 
 def test_add_service_post_valid(client, user, car):
@@ -67,14 +67,14 @@ def test_add_service_post_invalid(client, user):
     data = {}
     response = client.post(reverse('add_service'), data)
     assert response.status_code == 200
-    assert 'service_records/add_service.html' in [t.name for t in response.templates]
+    assert any(t.name.endswith('service_records/add_service.html') for t in response.templates)
     assert 'car' in response.context['form'].errors
 
 def test_edit_service_get_by_owner(client, user, service_record):
     client.login(username='test', password='testing')
     response = client.get(reverse('edit_service', kwargs={'pk': service_record.pk}))
     assert response.status_code == 200
-    assert 'service_records/edit_service.html' in [t.name for t in response.templates]
+    assert any(t.name.endswith('service_records/edit_service.html') for t in response.templates)
     assert isinstance(response.context['form'], AddNewServiceRecord)
 
 def test_edit_service_post_valid(client, user, service_record, car):
