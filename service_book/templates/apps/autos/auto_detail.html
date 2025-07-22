@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% block title %}Car details{% endblock %}
+{% block content %}
+  <h3>🚗 {{ car.brand }} {{ car.model }} ({{ car.prod_year }})</h3>
+  <p><b>Mileage:</b> {{ car.miliage }} km</p>
+  <p><b>VIN:</b> {{ car.vin }}</p>
+  <hr>
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" id="carDetailTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="summary-tab" data-bs-toggle="tab" data-bs-target="#summary" type="button" role="tab" aria-controls="summary" aria-selected="true">
+        💸 Summary
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="service-tab" data-bs-toggle="tab" data-bs-target="#service" type="button" role="tab" aria-controls="service" aria-selected="false">
+        🛠️ Service
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="fuel-tab" data-bs-toggle="tab" data-bs-target="#fuel" type="button" role="tab" aria-controls="fuel" aria-selected="false">
+        ⛽ Fuel
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="parts-tab" data-bs-toggle="tab" data-bs-target="#parts" type="button" role="tab" aria-controls="parts" aria-selected="false">
+        🔩 Parts
+      </button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="other-tab" data-bs-toggle="tab" data-bs-target="#other" type="button" role="tab" aria-controls="other" aria-selected="false">
+        💼 Other
+      </button>
+    </li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content mt-3">
+    <div class="tab-pane fade show active" id="summary" role="tabpanel" aria-labelledby="summary-tab">
+      <ul>
+        <li>Fuel: <b>{{ total_fuel }}</b> $</li>
+        <li>Service: <b>{{ total_service }}</b> $</li>
+        <li>Parts: <b>{{ total_parts }}</b> $</li>
+        <li>Other: <b>{{ total_other }}</b> $</li>
+        <li><b>Total: {{ total_sum }} $</b></li>
+      </ul>
+    </div>
+    <div class="tab-pane fade" id="service" role="tabpanel" aria-labelledby="service-tab">
+      <h5>Last 5 services</h5>
+      {% if last_services %}
+        <ul>
+          {% for s in last_services %}
+            <li>{{ s.date }} — {{ s.service_type }} — {{ s.price }} $</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>No service records.</p>
+      {% endif %}
+    </div>
+    <div class="tab-pane fade" id="fuel" role="tabpanel" aria-labelledby="fuel-tab">
+      <h5>Last 5 refuels</h5>
+      {% if last_fuels %}
+        <ul>
+          {% for f in last_fuels %}
+            <li>{{ f.date }} — {{ f.fuel_amount }} L — {{ f.price }} $</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>No fuel records.</p>
+      {% endif %}
+    </div>
+    <div class="tab-pane fade" id="parts" role="tabpanel" aria-labelledby="parts-tab">
+      <h5>Last 5 parts</h5>
+      {% if last_parts %}
+        <ul>
+          {% for p in last_parts %}
+            <li>{{ p.date_purchase }} — {{ p.carpart_type }} — {{ p.price }} $</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>No parts records.</p>
+      {% endif %}
+    </div>
+    <div class="tab-pane fade" id="other" role="tabpanel" aria-labelledby="other-tab">
+      <h5>Last 5 other expenses</h5>
+      {% if last_other %}
+        <ul>
+          {% for o in last_other %}
+            <li>{{ o.date }} — {{ o.expense_type }} — {{ o.price }} $</li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <p>No other expenses.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <a href="{% url 'autos' %}" class="btn btn-secondary btn-sm">⬅️ Back to garage</a>
+  </div>
+{% endblock %}

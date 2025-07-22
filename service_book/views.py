@@ -91,6 +91,36 @@ def user_autos(request):
     return render(request, 'apps/autos/my_autos.html', context)
 
 @login_required
+def auto_detail(request, pk):
+    car = get_object_or_404(Car, pk=pk, owner=request.user)
+    # Суммы расходов по этой машине
+    total_fuel = FuelExpense.objects.filter(car=car).aggregate(Sum('price'))['price__sum'] or 0
+    total_service = ServiceRecord.objects.filter(car=car).aggregate(Sum('price'))['price__sum'] or 0
+    total_parts = Carpart.objects.filter(car=car).aggregate(Sum('price'))['price__sum'] or 0
+    total_other = OtherExpense.objects.filter(car=car).aggregate(Sum('price'))['price__sum'] or 0
+    total_sum = round(total_fuel + total_service + total_parts + total_other, 1)
+
+    # Последние сервисы, заправки и т.д.
+    last_services = ServiceRecord.objects.filter(car=car).order_by('-date')[:5]
+    last_fuels = FuelExpense.objects.filter(car=car).order_by('-date')[:5]
+    last_parts = Carpart.objects.filter(car=car).order_by('-date_purchase')[:5]
+    last_other = OtherExpense.objects.filter(car=car).order_by('-date')[:5]
+
+    context = {
+        'car': car,
+        'total_fuel': total_fuel,
+        'total_service': total_service,
+        'total_parts': total_parts,
+        'total_other': total_other,
+        'total_sum': total_sum,
+        'last_services': last_services,
+        'last_fuels': last_fuels,
+        'last_parts': last_parts,
+        'last_other': last_other,
+    }
+    return render(request, 'apps/autos/auto_detail.html', context)
+
+@login_required
 def add_auto(request):
     if request.method == 'POST':
         form = AddNewAuto(request.POST)
