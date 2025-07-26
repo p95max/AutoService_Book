@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
-{% block title %}My Garage — Home{% endblock %}
+{% load i18n %}
+
+{% block title %}{% trans "My Garage — Home" %}{% endblock %}
 
 {% block content %}
 <div class="row align-items-center">
@@ -11,16 +13,16 @@
       </div>
     {% endif %}
     <ul class="list-unstyled mb-4">
-      <li>🚗 Track all your cars in one place</li>
-      <li>🛠️ Log services, refuels, parts, and expenses</li>
-      <li>📊 See detailed stats and summaries</li>
-      <li>🔒 Your data is private and secure</li>
+      <li>🚗 {% trans "Track all your cars in one place" %}</li>
+      <li>🛠️ {% trans "Log services, refuels, parts, and expenses" %}</li>
+      <li>📊 {% trans "See detailed stats and summaries" %}</li>
+      <li>🔒 {% trans "Your data is private and secure" %}</li>
     </ul>
     {% if not user.is_authenticated %}
-      <a href="{% url 'account_login' %}" class="btn btn-primary btn-lg me-2">Sign In</a>
-      <a href="{% url 'account_signup' %}" class="btn btn-outline-primary btn-lg">Register</a>
+      <a href="{% url 'account_login' %}" class="btn btn-primary btn-lg me-2">{% trans "Sign In" %}</a>
+      <a href="{% url 'account_signup' %}" class="btn btn-outline-primary btn-lg">{% trans "Register" %}</a>
     {% else %}
-      <a href="{% url 'autos' %}" class="btn btn-success btn-lg">Go to My Garage</a>
+      <a href="{% url 'autos' %}" class="btn btn-success btn-lg">{% trans "Go to My Garage" %}</a>
     {% endif %}
   </div>
   <div class="col-md-6 text-center" data-aos="fade-left">
@@ -34,32 +36,32 @@
   <div class="col-md-3 mb-4" data-aos="zoom-in" data-aos-delay="100">
     <div class="card shadow-sm h-100">
       <div class="card-body">
-        <h5 class="card-title">Add Your Car</h5>
-        <p class="card-text">Store all info about your vehicles, from VIN to mileage.</p>
+        <h5 class="card-title">{% trans "Add Your Car" %}</h5>
+        <p class="card-text">{% trans "Store all info about your vehicles, from VIN to mileage." %}</p>
       </div>
     </div>
   </div>
   <div class="col-md-3 mb-4" data-aos="zoom-in" data-aos-delay="200">
     <div class="card shadow-sm h-100">
       <div class="card-body">
-        <h5 class="card-title">Log Expenses</h5>
-        <p class="card-text">Track fuel, service, parts, and other costs easily.</p>
+        <h5 class="card-title">{% trans "Log Expenses" %}</h5>
+        <p class="card-text">{% trans "Track fuel, service, parts, and other costs easily." %}</p>
       </div>
     </div>
   </div>
   <div class="col-md-3 mb-4" data-aos="zoom-in" data-aos-delay="300">
     <div class="card shadow-sm h-100">
       <div class="card-body">
-        <h5 class="card-title">See Analytics</h5>
-        <p class="card-text">Visualize your spending and car history with clear stats.</p>
+        <h5 class="card-title">{% trans "See Analytics" %}</h5>
+        <p class="card-text">{% trans "Visualize your spending and car history with clear stats." %}</p>
       </div>
     </div>
   </div>
   <div class="col-md-3 mb-4" data-aos="zoom-in" data-aos-delay="400">
     <div class="card shadow-sm h-100">
       <div class="card-body">
-        <h5 class="card-title">Stay Organized</h5>
-        <p class="card-text">Never miss a service or refuel. Your garage, always in your pocket.</p>
+        <h5 class="card-title">{% trans "Stay Organized" %}</h5>
+        <p class="card-text">{% trans "Never miss a service or refuel. Your garage, always in your pocket." %}</p>
       </div>
     </div>
   </div>

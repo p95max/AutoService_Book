@@ -1,28 +1,28 @@
 {% extends 'base.html' %}
 {% load crispy_forms_filters %}
 {% load socialaccount %}
+{% load i18n %}
 
-{% block title %}Login{% endblock %}
+{% block title %}{% trans "Login" %}{% endblock %}
 
 {% block content %}
 <div class="container mt-5">
-  <h3 class="text-center mb-4">User Authorisation</h3>
+  <h3 class="text-center mb-4">{% trans "User Authorisation" %}</h3>
 
   <div class="container d-flex justify-content-center">
     <form method="post" class="w-50">
       {% csrf_token %}
       {{ form|crispy }}
-      <button type="submit" class="btn btn-primary w-100 mt-3">Login</button>
+      <button type="submit" class="btn btn-primary w-100 mt-3">{% trans "Login" %}</button>
     </form>
   </div><br>
 
-    <span class="d-block text-center my-3">--- or ---</span>
-
+  <span class="d-block text-center my-3">--- {% trans "or" %} ---</span>
 
   <div class="d-flex justify-content-center mb-3">
     <a href="{% provider_login_url 'google' %}" class="btn btn-outline-danger">
       <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo" style="width:20px; margin-right:8px;">
-          Signup by Google
+      {% trans "Signup by Google" %}
     </a>
   </div>
 

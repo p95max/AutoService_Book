@@ -1,3 +1,4 @@
+{% load i18n %}
 <nav class="vh-100 p-3 d-flex flex-column align-items-center justify-content-start text-white"
      style="
         width: 250px;
@@ -17,45 +18,60 @@
     <div class="w-100 mb-4 text-center">
         {% if user.is_authenticated %}
             <div class="d-flex flex-column align-items-center gap-1">
-                <p class="fw-semibold fs-5 mb-1">👋 Hello, <span class="text-primary">{{ user.username }}</span></p>
-                <a href="{% url 'profile' %}" class="text-decoration-none mb-1">🪪 Your Profile</a>
+                <p class="fw-semibold fs-5 mb-1">👋 {% blocktrans %}Hello, <span class="text-primary">{{ user.username }}</span>{% endblocktrans %}</p>
+                <a href="{% url 'profile' %}" class="text-decoration-none mb-1">🪪 {% trans "Your Profile" %}</a>
                 <form method="post" action="{% url 'account_logout' %}">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-outline-primary btn-sm">Logout</button>
+                    <button type="submit" class="btn btn-outline-primary btn-sm">{% trans "Logout" %}</button>
                 </form>
             </div>
         {% else %}
             <div class="d-flex align-items-center justify-content-center gap-3">
-                <a href="{% url 'account_signup' %}" class="btn btn-outline-primary btn-sm">Sign up</a>
-                <span class="text-muted">or</span>
-                <a href="{% url 'account_login' %}" class="btn btn-primary btn-sm">Login</a>
+                <a href="{% url 'account_signup' %}" class="btn btn-outline-primary btn-sm">{% trans "Sign up" %}</a>
+                <span class="text-muted">{% trans "or" %}</span>
+                <a href="{% url 'account_login' %}" class="btn btn-primary btn-sm">{% trans "Login" %}</a>
             </div>
         {% endif %}
     </div>
 
     <ul class="navbar-nav flex-column w-100 align-items-center">
         <li class="nav-item w-100">
-            <a class="nav-link mt-4" href="{% url 'main' %}">🏠 Home</a>
+            <a class="nav-link mt-4" href="{% url 'main' %}">🏠 {% trans "Home" %}</a>
         </li>
         <li class="nav-item w-100">
-            <a class="nav-link mt-3" href="{% url 'contact_us' %}">💬 Contact us</a>
+            <a class="nav-link mt-3" href="{% url 'contact_us' %}">💬 {% trans "Contact us" %}</a>
         </li>
         {% if user.is_authenticated %}
         <li class="nav-item w-100">
-            <a class="nav-link mt-4" href="{% url 'autos' %}">🅿️ My Garage ({{ user_cars_count }})</a>
+            <a class="nav-link mt-4" href="{% url 'autos' %}">🅿️ {% blocktrans %}My Garage ({{ user_cars_count }}){% endblocktrans %}</a>
         </li>
         <li class="nav-item w-100">
-            <a class="nav-link mt-3" href="{% url 'service_history' %}">🧾 Service History</a>
+            <a class="nav-link mt-3" href="{% url 'service_history' %}">🧾 {% trans "Service History" %}</a>
         </li>
         <li class="nav-item w-100">
-            <a class="nav-link mt-3" href="{% url 'fuel_expense' %}">⛽ Fuel Expenses</a>
+            <a class="nav-link mt-3" href="{% url 'fuel_expense' %}">⛽ {% trans "Fuel Expenses" %}</a>
         </li>
         <li class="nav-item w-100">
-            <a class="nav-link mt-3" href="{% url 'my_carparts' %}">⚙️ Car Parts</a>
+            <a class="nav-link mt-3" href="{% url 'my_carparts' %}">⚙️ {% trans "Car Parts" %}</a>
         </li>
         <li class="nav-item w-100">
-            <a class="nav-link mt-3" href="{% url 'other_expense' %}">🪙 Other Expenses</a>
+            <a class="nav-link mt-3" href="{% url 'other_expense' %}">🪙 {% trans "Other Expenses" %}</a>
         </li>
         {% endif %}
     </ul>
+
+{# Language switcher#}
+<form action="{% url 'set_language' %}" method="post" style="position: fixed; top: 24px; right: 24px; z-index: 1050;">
+  {% csrf_token %}
+  <select name="language" onchange="this.form.submit()">
+    {% get_current_language as LANGUAGE_CODE %}
+    {% get_available_languages as LANGUAGES %}
+    {% for lang in LANGUAGES %}
+      <option value="{{ lang.0 }}"{% if lang.0 == LANGUAGE_CODE %} selected{% endif %}>
+        {{ lang.1_localized }}
+      </option>
+    {% endfor %}
+  </select>
+</form>
+
 </nav>

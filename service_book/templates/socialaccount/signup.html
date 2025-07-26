@@ -1,16 +1,17 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% load i18n %}
 
-{% block title %}Sign Up via Google{% endblock %}
+{% block title %}{% trans "Sign Up via Google" %}{% endblock %}
 
 {% block content %}
 <div class="container mt-5">
-    <h2>Complete your signup</h2>
-    <p>You are about to use your Google account to login. As a final step, please confirm your E-mail:</p>
+    <h2>{% trans "Complete your signup" %}</h2>
+    <p>{% trans "You are about to use your Google account to login. As a final step, please confirm your E-mail:" %}</p>
     <form method="post" class="w-50 mx-auto">
         {% csrf_token %}
         {{ form|crispy }}
-        <button type="submit" class="btn btn-primary mt-3">Sign Up</button>
+        <button type="submit" class="btn btn-primary mt-3">{% trans "Sign Up" %}</button>
     </form>
 </div>
 {% endblock %}
