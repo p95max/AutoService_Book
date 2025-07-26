@@ -1,50 +1,55 @@
 {% extends 'base.html' %}
 {% load dict_extras %}
+{% load i18n %}
 
-{% block title %} Fuel expense {% endblock %}
+{% block title %}{% trans "Fuel expense" %}{% endblock %}
 
 {% block content %}
-{#Tables#}
-<h3>📉Fuel left in tank and average consumption per car </h3>
-<a>Your total fuel amount: {{ total_fuel_all }}l || total fuel costs: {{ total_costs_all }}$ || Total refuels: {{ total_refuels_all }}</a>
+{# Tables #}
+<h3>📉{% trans "Fuel left in tank and average consumption per car" %}</h3>
+<a>
+  {% blocktrans with total=total_fuel_all costs=total_costs_all refuels=total_refuels_all %}
+    Your total fuel amount: {{ total }}l || total fuel costs: {{ costs }}$ || Total refuels: {{ refuels }}
+  {% endblocktrans %}
+</a>
 {% if cars %}
     <table class="table table-dark table-striped align-middle text-center">
         <thead>
           <tr>
-            <th>Car</th>
-            <th>Fuel left</th>
-            <th>Current average cons.(per 100km)</th>
-            <th>Total costs per auto($)</th>
+            <th>{% trans "Car" %}</th>
+            <th>{% trans "Fuel left" %}</th>
+            <th>{% trans "Current average cons.(per 100km)" %}</th>
+            <th>{% trans "Total costs per auto($)" %}</th>
           </tr>
         </thead>
         <tbody>
        {% for car in cars %}
-  <tr>
-    <td>{{ car }}</td>
-    <td>{{ car.fuel_left|default:"0.00" }}</td>
-    <td>{{ car.avg_cons|floatformat:2 }}</td>
-    <td>{{ costs_dict|get_item:car.id | floatformat:1|default:"0" }}</td>
-  </tr>
-{% endfor %}
+        <tr>
+          <td>{{ car }}</td>
+          <td>{{ car.fuel_left|default:"0.00" }}</td>
+          <td>{{ car.avg_cons|floatformat:2 }}</td>
+          <td>{{ costs_dict|get_item:car.id | floatformat:1|default:"0" }}</td>
+        </tr>
+       {% endfor %}
         </tbody>
     </table>
     {% else %}
-        <p>You haven't fuel expenses yet</p>
+        <p>{% trans "You haven't fuel expenses yet" %}</p>
     {% endif %}
 
-<h3>⛽Your fuel expenses</h3>
+<h3>⛽{% trans "Your fuel expenses" %}</h3>
 {% if page_obj %}
 <table class="table table-dark table-striped align-middle text-center">
         <thead>
           <tr>
-            <th> <a href="?sort=date">Date</a> </th>
-            <th> <a href="?sort=car">Car</a> </th>
-            <th>Mileage(km)</th>
-            <th> <a href="?sort=fuel_type">Fuel type</a> </th>
-            <th>Fuel_amount</th>
-            <th> <a href="?sort=price">Price</a> </th>
-            <th>Description</th>
-            <th>Actions</th>
+            <th><a href="?sort=date">{% trans "Date" %}</a></th>
+            <th><a href="?sort=car">{% trans "Car" %}</a></th>
+            <th>{% trans "Mileage(km)" %}</th>
+            <th><a href="?sort=fuel_type">{% trans "Fuel type" %}</a></th>
+            <th>{% trans "Fuel_amount" %}</th>
+            <th><a href="?sort=price">{% trans "Price" %}</a></th>
+            <th>{% trans "Description" %}</th>
+            <th>{% trans "Actions" %}</th>
           </tr>
         </thead>
         <tbody>
@@ -58,12 +63,12 @@
             <td>{{ item.price }}</td>
             <td>{{ item.description }}</td>
             <td>
-              <a href="{% url 'edit_fuel_expense' item.pk %}" class="btn btn-sm btn-warning">✏️Edit</a>
+              <a href="{% url 'edit_fuel_expense' item.pk %}" class="btn btn-sm btn-warning">✏️ {% trans "Edit" %}</a>
               <form action="{% url 'delete_fuel_expense' item.pk %}" method="post" style="display:inline;">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-sm btn-danger"
-                onclick="return confirm('Are you sure you want to delete this record?');">
-                🗑️Delete
+                onclick="return confirm('{% trans "Are you sure you want to delete this record?" %}');">
+                🗑️ {% trans "Delete" %}
                 </button>
               </form>
             </td>
@@ -72,14 +77,14 @@
         </tbody>
     </table>
 
-{#Pagination#}
+{# Pagination #}
 {% include 'includes/pagination_page_obj.html' %}
 
-{#Buttons#}
-<a href="{% url 'export_fuel_csv' %}" class="btn btn-outline-primary btn-sm">💾Download as CSV file</a>
+{# Buttons #}
+<a href="{% url 'export_fuel_csv' %}" class="btn btn-outline-primary btn-sm">💾 {% trans "Download as CSV file" %}</a>
 {% else %}
-<p>You haven't fuel expenses yet</p>
+<p>{% trans "You haven't fuel expenses yet" %}</p>
 {% endif %}
-<a href="{% url 'add_fuel_expense' %}" class="btn btn-primary btn-sm my-2">✏️ Add fuel expense</a>
+<a href="{% url 'add_fuel_expense' %}" class="btn btn-primary btn-sm my-2">✏️ {% trans "Add fuel expense" %}</a>
 
 {% endblock %}

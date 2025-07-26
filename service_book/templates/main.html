@@ -9,7 +9,7 @@
 
     {% if intro_text %}
       <div class="mb-3">
-        {{ intro_text|safe }}
+        {% include 'includes/intro_text.html' %}
       </div>
     {% endif %}
     <ul class="list-unstyled mb-4">

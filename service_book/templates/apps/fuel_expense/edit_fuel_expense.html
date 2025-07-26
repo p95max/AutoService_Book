@@ -1,25 +1,25 @@
 {% extends 'base.html' %}
 {% load crispy_forms_filters %}
+{% load i18n %}
 
-{% block title %} Edit fuel expense {% endblock %}
+{% block title %}{% trans "Edit fuel expense" %}{% endblock %}
 
 {% block content %}
-    <h3> Edit fuel expense record </h3>
+    <h3>{% trans "Edit fuel expense record" %}</h3>
 
 <div class="container d-flex justify-content-center mt-5">
   <form method="post" class="w-50">
     {% csrf_token %}
 
-      <ul class="non-field-errors">
-        {% for error in form.non_field_errors %}
-            <li>{{ error }}</li>
-        {% endfor %}
+    <ul class="non-field-errors">
+      {% for error in form.non_field_errors %}
+          <li>{{ error }}</li>
+      {% endfor %}
     </ul>
 
     {{ form|crispy }}
-    <button type="submit" class="btn btn-primary">✏️ Edit</button>
+    <button type="submit" class="btn btn-primary">✏️ {% trans "Edit" %}</button>
 
   </form>
-
 </div>
 {% endblock %}

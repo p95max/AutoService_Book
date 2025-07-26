@@ -1,81 +1,86 @@
 {% extends 'base.html' %}
 {% load dict_extras %}
+{% load i18n %}
 
-{% block title %} Car parts {% endblock %}
+{% block title %}{% trans "Car parts" %}{% endblock %}
 
 {% block content %}
-        <h3>📉Carparts costs per car </h3>
-    <a>Your total carparts costs: {{ user_total_parts_costs }}$</a>
+    <h3>📉{% trans "Carparts costs per car" %}</h3>
+    <a>
+      {% blocktrans with total=user_total_parts_costs %}
+        Your total carparts costs: {{ total }}$
+      {% endblocktrans %}
+    </a>
     {% if cars %}
     <table class="table table-dark table-striped align-middle text-center">
         <thead>
           <tr>
-            <th>Car</th>
-            <th>Total costs per auto($)</th>
+            <th>{% trans "Car" %}</th>
+            <th>{% trans "Total costs per auto($)" %}</th>
           </tr>
         </thead>
         <tbody>
        {% for car in cars %}
-  <tr>
-    <td>{{ car }}</td>
-    <td>{{ costs_dict|get_item:car.id | floatformat:1|default:"0" }}</td>
-  </tr>
-{% endfor %}
+        <tr>
+          <td>{{ car }}</td>
+          <td>{{ costs_dict|get_item:car.id | floatformat:1|default:"0" }}</td>
+        </tr>
+       {% endfor %}
         </tbody>
     </table>
     {% else %}
-        <p>You haven't expenses yet</p>
+        <p>{% trans "You haven't expenses yet" %}</p>
     {% endif %}
 
-    <h3> Car parts </h3>
+    <h3>{% trans "Car parts" %}</h3>
 
     {% if page_obj %}
     <table class="table table-dark table-striped align-middle text-center">
         <thead>
           <tr>
-            <th> <a href="?sort=date_purchase">Date purchase</a> </th>
-            <th>Name</th>
-            <th> <a href="?sort=car">Car</a> </th>
-            <th> <a href="?sort=carpart_type">Carpart type</a> </th>
-            <th> <a href="?sort=price">Price($)</a> </th>
-            <th>Place purchase</th>
-            <th>Date installation</th>
-            <th>Place installation</th>
-            <th>Description</th>
-            <th>Actions</th>
+            <th><a href="?sort=date_purchase">{% trans "Date purchase" %}</a></th>
+            <th>{% trans "Name" %}</th>
+            <th><a href="?sort=car">{% trans "Car" %}</a></th>
+            <th><a href="?sort=carpart_type">{% trans "Carpart type" %}</a></th>
+            <th><a href="?sort=price">{% trans "Price($)" %}</a></th>
+            <th>{% trans "Place purchase" %}</th>
+            <th>{% trans "Date installation" %}</th>
+            <th>{% trans "Place installation" %}</th>
+            <th>{% trans "Description" %}</th>
+            <th>{% trans "Actions" %}</th>
           </tr>
         </thead>
         <tbody>
         {% for part in page_obj %}
           <tr>
             <td>
-      {% if part.date_purchase %}
-        {{ part.date_purchase|date:"d.m.Y H:i" }}
-      {% else %}
-        <span class="text-danger">No date</span>
-      {% endif %}
-    </td>
+              {% if part.date_purchase %}
+                {{ part.date_purchase|date:"d.m.Y H:i" }}
+              {% else %}
+                <span class="text-danger">{% trans "No date" %}</span>
+              {% endif %}
+            </td>
             <td>{{ part.name }}</td>
             <td>{{ part.car }}</td>
             <td>{{ part.carpart_type }}</td>
             <td>{{ part.price }}</td>
             <td>{{ part.date_purchase|date:"d.m.Y" }}</td>
             <td>
-      {% if part.date_installation %}
-    {{ part.date_installation|date:"d.m.Y" }}
-      {% else %}
-        <span class="text-danger">not installed</span>
-      {% endif %}
-    </td>
+              {% if part.date_installation %}
+                {{ part.date_installation|date:"d.m.Y" }}
+              {% else %}
+                <span class="text-danger">{% trans "not installed" %}</span>
+              {% endif %}
+            </td>
             <td>{{ part.place_installation }}</td>
             <td>{{ part.description }}</td>
             <td>
-              <a href="{% url 'edit_carpart' part.pk %}" class="btn btn-sm btn-warning">✏️Edit</a>
+              <a href="{% url 'edit_carpart' part.pk %}" class="btn btn-sm btn-warning">✏️ {% trans "Edit" %}</a>
               <form action="{% url 'delete_carpart' part.pk %}" method="post" style="display:inline;">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-sm btn-danger"
-                onclick="return confirm('Are you sure you want to delete this record?');">
-                🗑️Delete
+                onclick="return confirm('{% trans "Are you sure you want to delete this record?" %}');">
+                🗑️ {% trans "Delete" %}
                 </button>
               </form>
             </td>
@@ -84,14 +89,14 @@
         </tbody>
     </table>
 
-{#Pagination#}
-{% include 'includes/pagination_page_obj.html' %}
+    {# Pagination #}
+    {% include 'includes/pagination_page_obj.html' %}
 
-{#Buttons#}
-        <a href="{% url 'export_carpart_csv' %}" class="btn btn-outline-primary btn-sm">💾Download Carparts Expenses (CSV)</a>
+    {# Buttons #}
+    <a href="{% url 'export_carpart_csv' %}" class="btn btn-outline-primary btn-sm">💾 {% trans "Download Carparts Expenses (CSV)" %}</a>
     {% else %}
-        <p>You haven't added parts yet</p>
+        <p>{% trans "You haven't added parts yet" %}</p>
     {% endif %}
-    <a href="{% url 'add_carpart' %}" class="btn btn-primary btn-sm my-2">✏️ Add car part</a>
+    <a href="{% url 'add_carpart' %}" class="btn btn-primary btn-sm my-2">✏️ {% trans "Add car part" %}</a>
 
 {% endblock %}

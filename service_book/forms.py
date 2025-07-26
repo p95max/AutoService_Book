@@ -1,5 +1,6 @@
 from django import forms
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 from .models import Car, ServiceRecord, FuelExpense, ContactRequest, Carpart, OtherExpense, User
 
@@ -9,17 +10,17 @@ class AddNewAuto(forms.ModelForm):
         fields = ['brand', 'model', 'prod_year', 'miliage', 'vin']
         widgets = {
             'brand': forms.Select(attrs={'class': 'form-control'}),
-            'model': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter model:'}),
-            'prod_year': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter year:'}),
-            'miliage': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter miliage(km):'}),
-            'vin': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter vin number:'}),
+            'model': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Enter model:')}),
+            'prod_year': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': _('Enter year:')}),
+            'miliage': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': _('Enter mileage (km):')}),
+            'vin': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Enter VIN number:')}),
         }
         labels = {
-            'brand': 'Brand',
-            'model': 'Model',
-            'prod_year': 'Prod Year',
-            'miliage': 'Miliage',
-            'vin': 'VIN',
+            'brand': _('Brand'),
+            'model': _('Model'),
+            'prod_year': _('Prod Year'),
+            'miliage': _('Mileage'),
+            'vin': _('VIN'),
         }
 
     def clean_prod_year(self):
@@ -28,9 +29,9 @@ class AddNewAuto(forms.ModelForm):
             return year
         current_year = timezone.now().year
         if year <= 1920:
-            raise forms.ValidationError('Please enter a year after 1920')
+            raise forms.ValidationError(_('Please enter a year after 1920'))
         if year > current_year:
-            raise forms.ValidationError('You cannot be in the future')
+            raise forms.ValidationError(_('You cannot be in the future'))
         return year
 
     def clean_miliage(self):
@@ -38,23 +39,23 @@ class AddNewAuto(forms.ModelForm):
         if miliage is None:
             return miliage
         if miliage < 0:
-            raise forms.ValidationError('Please enter a positive number')
+            raise forms.ValidationError(_('Please enter a positive number'))
         if miliage > 1000000:
-            raise forms.ValidationError('Miliage is too large, check your input or contact us')
+            raise forms.ValidationError(_('Mileage is too large, check your input or contact us'))
         return miliage
 
     def clean_vin(self):
         vin = (self.cleaned_data.get('vin') or '').strip().upper()
         if vin:
             if len(vin) != 17:
-                raise forms.ValidationError('VIN number must be exactly 17 characters long')
+                raise forms.ValidationError(_('VIN number must be exactly 17 characters long'))
             if not vin.isalnum():
-                raise forms.ValidationError('VIN number must contain only letters and numbers')
+                raise forms.ValidationError(_('VIN number must contain only letters and numbers'))
             qs = Car.objects.filter(vin=vin)
             if self.instance.pk:
                 qs = qs.exclude(pk=self.instance.pk)
             if qs.exists():
-                raise forms.ValidationError('This VIN already exists')
+                raise forms.ValidationError(_('This VIN already exists'))
         return vin
 
 class AddNewServiceRecord(forms.ModelForm):
@@ -71,13 +72,13 @@ class AddNewServiceRecord(forms.ModelForm):
             'description': forms.Textarea(attrs={'class': 'form-control'}),
         }
         labels = {
-            'date': 'Date',
-            'car': 'Car',
-            'place': 'Place',
-            'miliage': 'Miliage',
-            'service_type': 'Service Type',
-            'price': 'Price',
-            'description': 'Description',
+            'date': _('Date'),
+            'car': _('Car'),
+            'place': _('Place'),
+            'miliage': _('Mileage'),
+            'service_type': _('Service Type'),
+            'price': _('Price'),
+            'description': _('Description'),
         }
 
     def __init__(self, *args, **kwargs):
@@ -93,7 +94,7 @@ class AddNewServiceRecord(forms.ModelForm):
         if price is None:
             return price
         if price <= 0:
-            raise forms.ValidationError('Price must be greater than 0')
+            raise forms.ValidationError(_('Price must be greater than 0'))
         return price
 
     def clean_miliage(self):
@@ -101,9 +102,9 @@ class AddNewServiceRecord(forms.ModelForm):
         if miliage is None:
             return miliage
         if miliage < 0:
-            raise forms.ValidationError('Please enter a positive number')
+            raise forms.ValidationError(_('Please enter a positive number'))
         if miliage > 1000000:
-            raise forms.ValidationError('Miliage is too large, check your input or contact us')
+            raise forms.ValidationError(_('Mileage is too large, check your input or contact us'))
         return miliage
 
     def clean_date(self):
@@ -112,7 +113,7 @@ class AddNewServiceRecord(forms.ModelForm):
             return date
         now = timezone.now()
         if date > now:
-            raise forms.ValidationError('Date must not be in the future')
+            raise forms.ValidationError(_('Date must not be in the future'))
         return date
 
 class AddNewFuelExpense(forms.ModelForm):
@@ -130,14 +131,14 @@ class AddNewFuelExpense(forms.ModelForm):
             'description': forms.Textarea(attrs={'class': 'form-control'}),
         }
         labels = {
-            'date': 'Date',
-            'car': 'Car',
-            'miliage': 'Miliage',
-            'fuel_type': 'Fuel Type',
-            'fuel_amount': 'Fuel Amount',
-            'price': 'Price',
-            'gas_station': 'Gas Station',
-            'description': 'Description',
+            'date': _('Date'),
+            'car': _('Car'),
+            'miliage': _('Mileage'),
+            'fuel_type': _('Fuel Type'),
+            'fuel_amount': _('Fuel Amount'),
+            'price': _('Price'),
+            'gas_station': _('Gas Station'),
+            'description': _('Description'),
         }
 
     def __init__(self, *args, **kwargs):
@@ -154,7 +155,7 @@ class AddNewFuelExpense(forms.ModelForm):
             return date
         now = timezone.now()
         if date > now:
-            raise forms.ValidationError('Date must not be in the future')
+            raise forms.ValidationError(_('Date must not be in the future'))
         return date
 
     def clean_price(self):
@@ -162,7 +163,7 @@ class AddNewFuelExpense(forms.ModelForm):
         if price is None:
             return price
         if price <= 0:
-            raise forms.ValidationError('Price must be greater than 0')
+            raise forms.ValidationError(_('Price must be greater than 0'))
         return price
 
 class ContactRequestForm(forms.ModelForm):
@@ -170,9 +171,9 @@ class ContactRequestForm(forms.ModelForm):
         model = ContactRequest
         fields = ['name', 'email', 'message']
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Your Name'}),
-            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Your Email'}),
-            'message': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Your Message', 'rows': 5}),
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': _('Your Name')}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': _('Your Email')}),
+            'message': forms.Textarea(attrs={'class': 'form-control', 'placeholder': _('Your Message'), 'rows': 5}),
         }
 
 class AddNewCarPart(forms.ModelForm):
@@ -192,15 +193,15 @@ class AddNewCarPart(forms.ModelForm):
             'description': forms.Textarea(attrs={'class': 'form-control'}),
         }
         labels = {
-            'date_purchase': 'Date',
-            'name': 'Name',
-            'car': 'Car',
-            'carpart_type': 'Carpart Type',
-            'price': 'Price',
-            'place_purchase': 'Place',
-            'date_installation': 'Installation date',
-            'place_installation': 'Installation place',
-            'description': 'Description',
+            'date_purchase': _('Date'),
+            'name': _('Name'),
+            'car': _('Car'),
+            'carpart_type': _('Carpart Type'),
+            'price': _('Price'),
+            'place_purchase': _('Place'),
+            'date_installation': _('Installation date'),
+            'place_installation': _('Installation place'),
+            'description': _('Description'),
         }
 
     def __init__(self, *args, **kwargs):
@@ -216,7 +217,7 @@ class AddNewCarPart(forms.ModelForm):
         if price is None:
             return price
         if price <= 0:
-            raise forms.ValidationError('Price must be greater than 0')
+            raise forms.ValidationError(_('Price must be greater than 0'))
         return price
 
     def clean(self):
@@ -226,21 +227,21 @@ class AddNewCarPart(forms.ModelForm):
         now = timezone.now()
 
         if date_purchase and date_purchase > now:
-            self.add_error('date_purchase', 'Purchase date must not be in the future')
+            self.add_error('date_purchase', _('Purchase date must not be in the future'))
         if date_installation and date_installation > now:
-            self.add_error('date_installation', 'Installation date must not be in the future')
+            self.add_error('date_installation', _('Installation date must not be in the future'))
 
         return cleaned_data
 
 class AddNewOtherExpense(forms.ModelForm):
     PAID_CHOICES = (
-        ('true', 'Paid'),
-        ('false', 'Not Paid'),
+        ('true', _('Paid')),
+        ('false', _('Not Paid')),
     )
     paid_status = forms.ChoiceField(
         choices=PAID_CHOICES,
         widget=forms.RadioSelect,
-        label='Payment status'
+        label=_('Payment status')
     )
 
     class Meta:
@@ -252,17 +253,17 @@ class AddNewOtherExpense(forms.ModelForm):
             'car': forms.Select(attrs={'class': 'form-control'}),
             'price': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'}),
             'expense_type': forms.Select(attrs={'class': 'form-control'}),
-            'paid_status': forms.RadioSelect(choices=[(True, 'Paid'), (False, 'Not Paid')]),
+            'paid_status': forms.RadioSelect(choices=[(True, _('Paid')), (False, _('Not Paid'))]),
             'description': forms.Textarea(attrs={'class': 'form-control'}),
         }
         labels = {
-            'date': 'Date',
-            'name': 'Name',
-            'car': 'Car',
-            'price': 'Price',
-            'expense_type': 'Expense Type',
-            'paid_status': 'Paid Status',
-            'description': 'Description',
+            'date': _('Date'),
+            'name': _('Name'),
+            'car': _('Car'),
+            'price': _('Price'),
+            'expense_type': _('Expense Type'),
+            'paid_status': _('Paid Status'),
+            'description': _('Description'),
         }
 
     def clean_paid_status(self):
@@ -274,7 +275,7 @@ class AddNewOtherExpense(forms.ModelForm):
         if price is None:
             return price
         if price <= 0:
-            raise forms.ValidationError('Price must be greater than 0')
+            raise forms.ValidationError(_('Price must be greater than 0'))
         return price
 
     def clean_date(self):
@@ -283,7 +284,7 @@ class AddNewOtherExpense(forms.ModelForm):
             return date
         now = timezone.now()
         if date > now:
-            raise forms.ValidationError('Date must not be in the future')
+            raise forms.ValidationError(_('Date must not be in the future'))
         return date
 
     def __init__(self, *args, **kwargs):
@@ -310,6 +311,6 @@ class UserUpdateForm(forms.ModelForm):
         last_name = cleaned_data.get('last_name', '')
 
         if any(char.isdigit() for char in first_name) or any(char.isdigit() for char in last_name):
-            raise forms.ValidationError('Name and surname cannot contain numbers')
+            raise forms.ValidationError(_('Name and surname cannot contain numbers'))
 
         return cleaned_data

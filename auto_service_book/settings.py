@@ -105,8 +105,8 @@ LANGUAGE_CODE = 'en-us'
 USE_I18N = True
 
 LANGUAGES = [
-    ('en', 'English'),
-    ('de', 'Deutch'),
+    ('en', '🇬🇧 English'),
+    ('de', '🇩🇪 Deutsch'),
 ]
 
 LOCALE_PATHS = [
