@@ -1,0 +1,82 @@
+[
+  {
+    "model": "service_book.brand",
+    "pk": 1,
+    "fields": {
+      "name": "Volkswagen",
+      "country": "Germany"
+    }
+  },
+  {
+    "model": "service_book.brand",
+    "pk": 2,
+    "fields": {
+      "name": "Audi",
+      "country": "Germany"
+    }
+  },
+  {
+    "model": "service_book.brand",
+    "pk": 3,
+    "fields": {
+      "name": "BMW",
+      "country": "Germany"
+    }
+  },
+  {
+    "model": "service_book.brand",
+    "pk": 4,
+    "fields": {
+      "name": "Mercedes-Benz",
+      "country": "Germany"
+    }
+  },
+  {
+    "model": "service_book.brand",
+    "pk": 5,
+    "fields": {
+      "name": "Opel",
+      "country": "Germany"
+    }
+  },
+  {
+    "model": "service_book.brand",
+    "pk": 6,
+    "fields": {
+      "name": "Ford",
+      "country": "USA"
+    }
+  },
+  {
+    "model": "service_book.brand",
+    "pk": 7,
+    "fields": {
+      "name": "Toyota",
+      "country": "Japan"
+    }
+  },
+  {
+    "model": "service_book.brand",
+    "pk": 8,
+    "fields": {
+      "name": "Renault",
+      "country": "France"
+    }
+  },
+  {
+    "model": "service_book.brand",
+    "pk": 9,
+    "fields": {
+      "name": "Škoda",
+      "country": "Czech Republic"
+    }
+  },
+  {
+    "model": "service_book.brand",
+    "pk": 10,
+    "fields": {
+      "name": "Volvo",
+      "country": "Sweden"
+    }
+  }
+]
