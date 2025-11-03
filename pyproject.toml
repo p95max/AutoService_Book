@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "AutoService Book** is your reliable assistant for tracking and managing your car’s service history. This web application, built as a portfolio project, showcases skills in Django development, database management, and creating user-friendly interfaces."
 authors = ["maxx <maxpetrikin@gmail.com>"]
 readme = "README.md"
-packages = [{ include = "auto_service_book" }]
+packages = [{ include = "autoservice_book" }]
 
 [tool.poetry.dependencies]
 python = "^3.12"

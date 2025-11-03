@@ -1,5 +1,5 @@
 """
-ASGI config for auto_service_book project.
+ASGI config for autoservice_book project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'auto_service_book.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'autoservice_book.settings')
 
 application = get_asgi_application()
