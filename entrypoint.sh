@@ -1,42 +1,48 @@
 #!/bin/sh
 set -e
 
-# default env names
-DB_HOST="${DB_HOST:-db}"
-DB_PORT="${DB_PORT:-5432}"
+echo "Waiting for database..."
 
-# Wait for DB to be available (uses nc)
-echo "Waiting for database ${DB_HOST}:${DB_PORT}..."
-counter=0
-while ! nc -z "$DB_HOST" "$DB_PORT"; do
-  counter=$((counter+1))
-  if [ $counter -gt 120 ]; then
-    echo "Timeout waiting for ${DB_HOST}:${DB_PORT}"
-    exit 1
-  fi
-  sleep 1
-done
-echo "Database is up."
+if [ -n "$DATABASE_URL" ]; then
+  python - <<'PY'
+import os, time, socket
+from urllib.parse import urlparse
+d = os.environ.get('DATABASE_URL')
+u = urlparse(d)
+host = u.hostname or os.environ.get('RENDER_DB_HOST','db')
+port = int(u.port or 5432)
+for i in range(60):
+    try:
+        s = socket.create_connection((host, port), timeout=2)
+        s.close()
+        print("DB reachable")
+        raise SystemExit(0)
+    except Exception:
+        time.sleep(1)
+print("DB not reachable")
+raise SystemExit(1)
+PY
+fi
 
-# Run migrations, collectstatic
-python manage.py migrate --no-input
-python manage.py collectstatic --no-input --clear
+echo "Apply database migrations"
+python manage.py migrate --noinput
 
-# Create admin if variables present (non-interactive)
+echo "Collect static files"
+python manage.py collectstatic --noinput
+
 if [ -n "$ADMIN_USERNAME" ] && [ -n "$ADMIN_EMAIL" ] && [ -n "$ADMIN_PASSWORD" ]; then
   python - <<PY
 from django.contrib.auth import get_user_model
 User = get_user_model()
-username="${ADMIN_USERNAME}"
-email="${ADMIN_EMAIL}"
-pw="${ADMIN_PASSWORD}"
-if not User.objects.filter(username=username).exists():
-    print("Creating admin user", username)
-    User.objects.create_superuser(username=username, email=email, password=pw)
+u = "${ADMIN_USERNAME}"
+e = "${ADMIN_EMAIL}"
+p = "${ADMIN_PASSWORD}"
+if not User.objects.filter(username=u).exists():
+    User.objects.create_superuser(u, e, p)
+    print("Superuser created:", u)
 else:
-    print("Admin exists")
+    print("Superuser already exists:", u)
 PY
 fi
 
-# Exec main process
 exec "$@"
