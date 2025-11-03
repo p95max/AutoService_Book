@@ -19,6 +19,7 @@ def update_car_miliage(car):
         car.save(update_fields=['miliage'])
         cache.delete(f'car_{car.id}_max_miliage')
 
+
 def get_cached_value(cache_key, query, ttl=60*15):
     value = cache.get(cache_key)
     if value is None:
