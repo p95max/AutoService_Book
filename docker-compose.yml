@@ -1,42 +1,35 @@
-version: '3.9'
-
+version: "3.9"
 services:
   db:
-    image: postgres:15
+    image: postgres:17
     environment:
-      POSTGRES_DB: ${DB_NAME}
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME:-autoservice_book_db}
+      POSTGRES_USER: ${DB_USER:-autoservice_book_db_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-password}
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql/data
     ports:
-      - "5433:5432"
+      - "5432:5432"
 
   web:
-    build: .
-    command: gunicorn auto_service_book.wsgi:application --bind 0.0.0.0:8000
-    volumes:
-      - .:/app
-      - ./staticfiles:/app/staticfiles
-    ports:
-      - "8002:8000"
+    build:
+      context: .
+      dockerfile: Dockerfile
     env_file:
       - .env
     environment:
-      - DOCKER_ENV=true
+      - DJANGO_SETTINGS_MODULE=autoservice_book.settings
+      - DB_HOST=db
+      - DB_PORT=5432
     depends_on:
       - db
-
-  nginx:
-    image: nginx:1.25
     ports:
-      - "8000:80"
+      - "8000:8000"
+    # В режиме разработки можно раскомментировать volume, но он перезапишет /app из образа:
+    # - ./your_local_project:/app:cached
+    # Если используешь маунт, убедись, что локальная папка содержит тот же пакет (autoservice_book)
     volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./staticfiles:/static
-    depends_on:
-      - web
-
+      - .:/app:cached
 
 volumes:
-  postgres_data:
+  db_data:
