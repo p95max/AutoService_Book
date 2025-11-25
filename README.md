@@ -21,15 +21,6 @@ With a clean and intuitive interface, you can easily:
 
 AutoService Book brings organization, transparency, and ease to your car ownership experience.
 
-## 🚀 Live Demo
-
-You can try **AutoService Book** right now online:  
-👉 [https://autoservice-book.onrender.com](https://autoservice-book.onrender.com)
-
-> **Note:** The demo is hosted on Render’s free tier.  
-> If the site has been inactive for a while, it may take up to 1–2 minutes to wake up.  
-> Please be patient — the app will load soon!
-
 ## Deployment & Architecture
 
 - **Dockerized:** The entire project is containerized with Docker for easy deployment and reproducibility.
