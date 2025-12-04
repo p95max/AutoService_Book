@@ -44,7 +44,7 @@ This setup reflects a real-world production architecture and demonstrates skills
 
 ## Tech Stack
 
-- **Backend:** Django 5.2, Python 3.12
+- **Backend:** Django 5.2, Python 3.14
 - **Frontend:** Bootstrap 5 (via `crispy-bootstrap5`), HTML, CSS, JavaScript
 - **Database:** PostgreSQL 16 (managed cloud instance)
 - **Authentication:** `django-allauth` for email-based login
