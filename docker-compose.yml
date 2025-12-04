@@ -20,6 +20,7 @@ services:
       DJANGO_SETTINGS_MODULE: autoservice_book.settings
       DJANGO_WSGI_MODULE: autoservice_book.wsgi
       GUNICORN_LOGLEVEL: info
+      FIXTURE_BRANDS: /app/service_book/fixtures/brands.json
 
     command: >
       gunicorn ${DJANGO_WSGI_MODULE:-autoservice_book.wsgi}:application
