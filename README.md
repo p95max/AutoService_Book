@@ -78,6 +78,30 @@ and safe to run on every container start.
 6. **Collect static files**: `python manage.py collectstatic --noinput`.
 7. **Ensure superuser** with `manage.py createsuperuser --noinput` (idempotent).
 
+## Environment (.env)
+
+Copy `.env.example` to `.env` and adjust values.
+
+Docker Compose will pick it up if you add `env_file: .env` (or map specific `environment:` keys).
+
+**Key variables in `.env.example`:**
+- `ALLOWED_HOSTS`
+- `DJANGO_SUPERUSER_USERNAME`
+- `DJANGO_SUPERUSER_EMAIL`
+- `DJANGO_SUPERUSER_PASSWORD`
+- `GOOGLE_CLIENT_ID`
+- `GOOGLE_CLIENT_SECRET`
+
+```yaml
+services:
+  web:
+    env_file: .env
+    # or supply a subset explicitly:
+    # environment:
+    #   DATABASE_URL: ${DATABASE_URL}
+    #   DJANGO_SETTINGS_MODULE: ${DJANGO_SETTINGS_MODULE}
+```
+
 ### Environment variables
 - `DATABASE_URL`: PostgreSQL DSN, e.g. `postgres://app:pass@db:5432/app`.
 - `AUTO_MAKEMIGRATIONS` (dev): set to `1` to run `makemigrations` on start.
@@ -91,26 +115,6 @@ and safe to run on every container start.
 - `DJANGO_SUPERUSER_USERNAME`, `DJANGO_SUPERUSER_EMAIL`, `DJANGO_SUPERUSER_PASSWORD`: superuser bootstrap credentials.
 - `DJANGO_SETTINGS_MODULE`, `DJANGO_WSGI_MODULE`: Django settings and WSGI module (e.g., `autoservice_book.settings`, `autoservice_book.wsgi`).
 
-### Snippet (core logic)
-```sh
-# Wait DB (via DATABASE_URL), then:
-[ "${AUTO_MAKEMIGRATIONS:-0}" = "1" ] && python manage.py makemigrations || true
-python manage.py migrate --noinput
-
-# Load brands fixture (idempotent; can be forced)
-: "${FIXTURE_BRANDS:=/app/service_book/fixtures/brands.json}"
-# Python block checks table existence and loads with loaddata only when needed.
-
-# Optional table check (prints regclass)
-# CHECK_TABLE=public.service_book_brand
-
-python manage.py collectstatic --noinput
-
-# Ensure superuser
-if [ -n "$DJANGO_SUPERUSER_USERNAME" ] && [ -n "$DJANGO_SUPERUSER_EMAIL" ] && [ -n "$DJANGO_SUPERUSER_PASSWORD" ]; then
-  python manage.py createsuperuser --noinput || true
-fi
-```
 
 ### Google OAuth (allauth) quick note
 Create an **OAuth client (Web)** in Google Cloud and set:
