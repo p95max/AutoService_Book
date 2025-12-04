@@ -16,7 +16,19 @@ services:
 
   web:
     build: .
-    command: gunicorn autoservice_book.wsgi:application --bind 0.0.0.0:8000 --workers 3
+    environment:
+      DJANGO_SETTINGS_MODULE: autoservice_book.settings
+      DJANGO_WSGI_MODULE: autoservice_book.wsgi
+      GUNICORN_LOGLEVEL: info
+
+    command: >
+      gunicorn ${DJANGO_WSGI_MODULE:-autoservice_book.wsgi}:application
+      --bind 0.0.0.0:8000
+      --workers 3
+      --access-logfile -
+      --error-logfile -
+      --log-level ${GUNICORN_LOGLEVEL:-info}
+
     volumes:
       - ./:/app:cached
       - static_volume:/app/staticfiles
