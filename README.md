@@ -1,6 +1,8 @@
 🚗 AutoService Book
 
-**AutoService Book** is your reliable assistant for tracking and managing your car’s service history. This web application, built as a portfolio project, showcases skills in Django development, database management, and creating user-friendly interfaces.
+**AutoService Book** is your reliable assistant for tracking and managing your car’s service history.
+This web application, built as a portfolio project, showcases skills in Django development, database management,
+and creating user-friendly interfaces.
 
 ## About
 
@@ -26,7 +28,6 @@ AutoService Book brings organization, transparency, and ease to your car ownersh
 - **Dockerized:** The entire project is containerized with Docker for easy deployment and reproducibility.
 - **Nginx:** Nginx is used as a reverse proxy for serving static files and handling client requests efficiently.
 - **PostgreSQL:** The production database runs as a managed cloud instance, separate from the application container.
-- **Render:** The app is deployed on [Render](https://render.com), making it accessible from anywhere.
 
 This setup reflects a real-world production architecture and demonstrates skills in modern backend deployment.
 
@@ -61,6 +62,67 @@ This setup reflects a real-world production architecture and demonstrates skills
    - Export data to CSV for offline use.
 4. **Monitor Fuel:** Check remaining fuel and average consumption on the dashboard.
 5. **Toggle Themes:** Switch between dark and light themes for a better experience.
+
+
+## Startup & Entry Script (Docker)
+
+This project uses an entry script (`entrypoint.sh`) to bootstrap the app in containers. It’s **idempotent**
+and safe to run on every container start.
+
+### What the script does
+1. **Waits for the database** using the `DATABASE_URL` (TCP check with timeout/retries).
+2. **(Dev only) Auto generate migrations** if `AUTO_MAKEMIGRATIONS=1`.
+3. **Apply migrations**: `python manage.py migrate --noinput`.
+4. **Load fixtures (brands)** only if the table is empty (or forcibly, if requested).
+5. **Optional table sanity check** via `CHECK_TABLE` env.
+6. **Collect static files**: `python manage.py collectstatic --noinput`.
+7. **Ensure superuser** with `manage.py createsuperuser --noinput` (idempotent).
+
+### Environment variables
+- `DATABASE_URL`: PostgreSQL DSN, e.g. `postgres://app:pass@db:5432/app`.
+- `AUTO_MAKEMIGRATIONS` (dev): set to `1` to run `makemigrations` on start.
+- `FIXTURE_BRANDS`: path to the brands fixture **inside** the container. Default:
+  ```
+  /app/service_book/fixtures/brands.json
+  ```
+- `LOG_FIXTURES`: set to `1` to log fixture operations verbosely.
+- `FORCE_BRANDS_LOAD`: set to `1` to truncate and reload brands from fixture.
+- `CHECK_TABLE`: optional table name to assert existence, e.g. `public.service_book_brand`.
+- `DJANGO_SUPERUSER_USERNAME`, `DJANGO_SUPERUSER_EMAIL`, `DJANGO_SUPERUSER_PASSWORD`: superuser bootstrap credentials.
+- `DJANGO_SETTINGS_MODULE`, `DJANGO_WSGI_MODULE`: Django settings and WSGI module (e.g., `autoservice_book.settings`, `autoservice_book.wsgi`).
+
+### Snippet (core logic)
+```sh
+# Wait DB (via DATABASE_URL), then:
+[ "${AUTO_MAKEMIGRATIONS:-0}" = "1" ] && python manage.py makemigrations || true
+python manage.py migrate --noinput
+
+# Load brands fixture (idempotent; can be forced)
+: "${FIXTURE_BRANDS:=/app/service_book/fixtures/brands.json}"
+# Python block checks table existence and loads with loaddata only when needed.
+
+# Optional table check (prints regclass)
+# CHECK_TABLE=public.service_book_brand
+
+python manage.py collectstatic --noinput
+
+# Ensure superuser
+if [ -n "$DJANGO_SUPERUSER_USERNAME" ] && [ -n "$DJANGO_SUPERUSER_EMAIL" ] && [ -n "$DJANGO_SUPERUSER_PASSWORD" ]; then
+  python manage.py createsuperuser --noinput || true
+fi
+```
+
+### Google OAuth (allauth) quick note
+Create an **OAuth client (Web)** in Google Cloud and set:
+- Redirect URI (dev): `http://localhost:8000/accounts/google/login/callback/`
+- Redirect URI (prod): `https://<your-domain>/accounts/google/login/callback/`
+
+Then export:
+```
+GOOGLE_CLIENT_ID=xxxx.apps.googleusercontent.com
+GOOGLE_CLIENT_SECRET=yyyy
+```
+You can alternatively configure a **SocialApp (Google)** in Django Admin and bind it to your Site.
 
 ## Portfolio Notes
 
