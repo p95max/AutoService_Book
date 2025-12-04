@@ -1,11 +1,23 @@
 from pathlib import Path
 from decouple import config, Csv
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+def _norm_host(h: str) -> str:
+    h = h.strip()
+    if not h:
+        return ""
+    return h.split(":")[0]
+
+_raw = os.getenv("ALLOWED_HOSTS", "")
+ALLOWED_HOSTS = [h for h in {_norm_host(x) for x in _raw.split(",")} if h]
+
+DEBUG = os.getenv("DEBUG", "false").lower() == "true"
+if DEBUG:
+    ALLOWED_HOSTS += ["localhost", "127.0.0.1", "[::1]"]
+
 SECRET_KEY = config('SECRET_KEY')
-DEBUG = config('DEBUG', default=False, cast=bool)
-ALLOWED_HOSTS = config('DJANGO_ALLOWED_HOSTS', default='127.0.0.1', cast=Csv())
 
 INSTALLED_APPS = [
     'jazzmin',

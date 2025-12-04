@@ -13,10 +13,11 @@ RUN apt-get update \
        libpq-dev \
        curl \
        ca-certificates \
-       python3-distutils \
        python3-dev \
+       python3-venv \
        libffi-dev \
     && rm -rf /var/lib/apt/lists/*
+
 
 COPY pyproject.toml poetry.lock README.md /app/
 
