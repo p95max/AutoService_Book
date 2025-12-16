@@ -149,7 +149,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 - [x] One-command service startup via Docker Compose (`docker compose up --build`)
 - [x] Comprehensive container init script (`entrypoint.sh`)
 - [x] Fixture set for fast, end-to-end service testing (`fixtures/`)
-- [ ] Hide the admin URL in urls via .env
+- [x] Hide the admin URL in urls via .env
 - [x] Auth via Google (OAuth2)
 - [ ] Grafana + Prometheus + Alertmanager integration
 - [ ] Auth protected with CAPTCHA (django-turnstile)
