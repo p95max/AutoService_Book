@@ -1,77 +1,142 @@
 {% load i18n %}
-<nav class="vh-100 p-3 d-flex flex-column align-items-center justify-content-start text-white"
-     style="
-        width: 250px;
-        min-width: 180px;
-        max-width: 100vw;
-        text-align: center;
-        position: fixed;
-        top: 0;
-        left: 0;
-        background: #23272b;
-        border-right: 2px solid #444;
-        box-shadow: 2px 0 8px rgba(0,0,0,0.08);
-        overflow-y: auto;
-        height: 100vh;
-     ">
 
-    <div class="w-100 mb-4 text-center">
-        {% if user.is_authenticated %}
-            <div class="d-flex flex-column align-items-center gap-1">
-                <p class="fw-semibold fs-5 mb-1">👋 {% blocktrans %}Hello, <span class="text-primary">{{ user.username }}</span>{% endblocktrans %}</p>
-                <a href="{% url 'profile' %}" class="text-decoration-none mb-1">🪪 {% trans "Your Profile" %}</a>
-                <form method="post" action="{% url 'account_logout' %}">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-outline-primary btn-sm">{% trans "Logout" %}</button>
-                </form>
-            </div>
-        {% else %}
-            <div class="d-flex align-items-center justify-content-center gap-3">
-                <a href="{% url 'account_signup' %}" class="btn btn-outline-primary btn-sm">{% trans "Sign up" %}</a>
-                <span class="text-muted">{% trans "or" %}</span>
-                <a href="{% url 'account_login' %}" class="btn btn-primary btn-sm">{% trans "Login" %}</a>
-            </div>
-        {% endif %}
+<nav class="d-flex flex-column text-white vh-100 position-fixed top-0 start-0"
+     style="width: 280px; background: #1f2327; border-right: 1px solid rgba(255,255,255,.08);">
+
+  <div class="p-3 border-bottom" style="border-color: rgba(255,255,255,.08) !important;">
+    {% if user.is_authenticated %}
+      <div class="d-flex align-items-center gap-3">
+        <div class="rounded-circle d-flex align-items-center justify-content-center"
+             style="width: 40px; height: 40px; background: rgba(255,255,255,.08);">
+          👤
+        </div>
+        <div class="text-start">
+          <div class="small text-secondary">{% trans "Signed in as" %}</div>
+          <div class="fw-semibold text-truncate" style="max-width: 180px;">
+            {{ user.username }}
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex gap-2 mt-3">
+        <a href="{% url 'profile' %}" class="btn btn-outline-light btn-sm flex-grow-1">
+          🪪 {% trans "Profile" %}
+        </a>
+        <form method="post" action="{% url 'account_logout' %}" class="m-0">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-outline-warning btn-sm">
+            {% trans "Logout" %}
+          </button>
+        </form>
+      </div>
+    {% else %}
+      <div class="w-100 d-grid gap-2 mt-2">
+        <a href="{% url 'account_login' %}" class="btn btn-primary btn-sm rounded-pill">
+          🔐 {% trans "Login" %}
+        </a>
+        <a href="{% url 'account_signup' %}" class="btn btn-outline-light btn-sm rounded-pill">
+          ✨ {% trans "Create account" %}
+        </a>
+        <small class="text-secondary mt-1">
+          {% trans "No spam. Just your garage and expenses." %}
+        </small>
+      </div>
+    {% endif %}
+
+  </div>
+
+  {# Navigation #}
+  <div class="p-2 flex-grow-1 overflow-auto">
+    <ul class="nav nav-pills flex-column gap-1">
+      <li class="nav-item">
+        <a class="nav-link text-white" href="{% url 'main' %}">
+          🏠 <span class="ms-1">{% trans "Home" %}</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link text-white" href="{% url 'contact_us' %}">
+          💬 <span class="ms-1">{% trans "Contact us" %}</span>
+        </a>
+      </li>
+
+      {% if user.is_authenticated %}
+        <hr class="my-2" style="border-color: rgba(255,255,255,.10);">
+
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'autos' %}">
+            🅿️ <span class="ms-1">
+              {% blocktrans %}My Garage ({{ user_cars_count }}){% endblocktrans %}
+            </span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'service_history' %}">
+            🧾 <span class="ms-1">{% trans "Service History" %}</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'fuel_expense' %}">
+            ⛽ <span class="ms-1">{% trans "Fuel Expenses" %}</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'my_carparts' %}">
+            ⚙️ <span class="ms-1">{% trans "Car Parts" %}</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'other_expense' %}">
+            🪙 <span class="ms-1">{% trans "Other Expenses" %}</span>
+          </a>
+        </li>
+      {% endif %}
+    </ul>
+  </div>
+
+  {# Footer controls (Language) #}
+  <div class="p-3 border-top" style="border-color: rgba(255,255,255,.08) !important;">
+    <div class="d-flex align-items-center justify-content-between mb-2">
+      <span class="small text-secondary">{% trans "Language" %}</span>
+      <span class="small text-secondary">i18n</span>
     </div>
 
-    <ul class="navbar-nav flex-column w-100 align-items-center">
-        <li class="nav-item w-100">
-            <a class="nav-link mt-4" href="{% url 'main' %}">🏠 {% trans "Home" %}</a>
-        </li>
-        <li class="nav-item w-100">
-            <a class="nav-link mt-3" href="{% url 'contact_us' %}">💬 {% trans "Contact us" %}</a>
-        </li>
-        {% if user.is_authenticated %}
-        <li class="nav-item w-100">
-            <a class="nav-link mt-4" href="{% url 'autos' %}">🅿️ {% blocktrans %}My Garage ({{ user_cars_count }}){% endblocktrans %}</a>
-        </li>
-        <li class="nav-item w-100">
-            <a class="nav-link mt-3" href="{% url 'service_history' %}">🧾 {% trans "Service History" %}</a>
-        </li>
-        <li class="nav-item w-100">
-            <a class="nav-link mt-3" href="{% url 'fuel_expense' %}">⛽ {% trans "Fuel Expenses" %}</a>
-        </li>
-        <li class="nav-item w-100">
-            <a class="nav-link mt-3" href="{% url 'my_carparts' %}">⚙️ {% trans "Car Parts" %}</a>
-        </li>
-        <li class="nav-item w-100">
-            <a class="nav-link mt-3" href="{% url 'other_expense' %}">🪙 {% trans "Other Expenses" %}</a>
-        </li>
-        {% endif %}
-    </ul>
-
-{# Language switcher#}
-<form action="{% url 'set_language' %}" method="post" style="position: fixed; top: 24px; right: 24px; z-index: 1050;">
-  {% csrf_token %}
-  <select name="language" onchange="this.form.submit()">
     {% get_current_language as LANGUAGE_CODE %}
     {% get_available_languages as LANGUAGES %}
-    {% for lang in LANGUAGES %}
-<option value="{{ lang.0 }}"{% if lang.0 == LANGUAGE_CODE %} selected{% endif %}>
-  {{ lang.1 }}
-</option>
-    {% endfor %}
-  </select>
-</form>
 
+    <form action="{% url 'set_language' %}" method="post" class="m-0">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ request.get_full_path }}">
+      <select name="language" class="form-select form-select-sm" onchange="this.form.submit()">
+        {% for lang in LANGUAGES %}
+          <option value="{{ lang.0 }}"{% if lang.0 == LANGUAGE_CODE %} selected{% endif %}>
+            {{ lang.1 }}
+          </option>
+        {% endfor %}
+      </select>
+    </form>
+  </div>
 </nav>
+
+<script>
+  (function () {
+    const links = document.querySelectorAll("nav a.nav-link");
+    const here = window.location.pathname;
+    links.forEach(a => {
+      const href = a.getAttribute("href");
+      if (href && (here === href || (href !== "/" && here.startsWith(href)))) {
+        a.classList.add("active");
+      }
+    });
+  })();
+</script>
+
+<style>
+  nav .nav-link { border-radius: 14px; }
+  nav .nav-link:hover { background: rgba(255,255,255,.08); }
+  nav .nav-link.active { background: rgba(13,110,253,.35); }
+</style>
