@@ -45,7 +45,31 @@ Built as a portfolio project, it highlights hands-on experience with Django (for
 
 ---
 
+## Environment (.env)
+
+Copy `.env.example` to `.env` and adjust values.
+
+Docker Compose will pick it up if you add `env_file: .env` (or map specific `environment:` keys).
+
+**Key variables in `.env.example`:**
+- `ALLOWED_HOSTS`
+- `DJANGO_SUPERUSER_USERNAME`
+- `DJANGO_SUPERUSER_EMAIL`
+- `DJANGO_SUPERUSER_PASSWORD`
+- `GOOGLE_CLIENT_ID`
+- `GOOGLE_CLIENT_SECRET`
+
+---
+
 ## Startup & Entry Script (Docker)
+
+## One-command service startup via Docker Compose 
+```bash
+docker compose up --build
+# car brands test data upload
+docker compose exec web python manage.py loaddata service_book/fixtures/brands.json
+```
+---
 
 This project uses an entry script (`entrypoint.sh`) to bootstrap the app in containers. It’s **idempotent**
 and safe to run on every container start.
@@ -61,44 +85,18 @@ and safe to run on every container start.
 
 ---
 
-## Environment (.env)
+## Admin panel (Django Admin)
 
-Copy `.env.example` to `.env` and adjust values.
+The project includes `a ready-to-use Django Admin` for managing core entities (cars, service records, fuel expenses, parts, other expenses, users).  
 
-Docker Compose will pick it up if you add `env_file: .env` (or map specific `environment:` keys).
+**NOTES:**
+- Docker Compose can auto-create(`entrypoint.sh`) a superuser on startup if you provide vars in your .env
+- Entry URL is customized via `ENV` (to avoid /admin/ being a predictable target).
 
-**Key variables in `.env.example`:**
-- `ALLOWED_HOSTS`
-- `DJANGO_SUPERUSER_USERNAME`
-- `DJANGO_SUPERUSER_EMAIL`
-- `DJANGO_SUPERUSER_PASSWORD`
-- `GOOGLE_CLIENT_ID`
-- `GOOGLE_CLIENT_SECRET`
+### How to access (dev):
+**URL**: `http://localhost:8000/<ADMIN_URL>/`
 
-```yaml
-services:
-  web:
-    env_file: .env
-    # or supply a subset explicitly:
-    # environment:
-    #   DATABASE_URL: ${DATABASE_URL}
-    #   DJANGO_SETTINGS_MODULE: ${DJANGO_SETTINGS_MODULE}
-```
-
----
-
-### Environment variables
-- `DATABASE_URL`: PostgreSQL DSN, e.g. `postgres://app:pass@db:5432/app`.
-- `AUTO_MAKEMIGRATIONS` (dev): set to `1` to run `makemigrations` on start.
-- `FIXTURE_BRANDS`: path to the brands fixture **inside** the container. Default:
-  ```
-  /app/service_book/fixtures/brands.json
-  ```
-- `LOG_FIXTURES`: set to `1` to log fixture operations verbosely.
-- `FORCE_BRANDS_LOAD`: set to `1` to truncate and reload brands from fixture.
-- `CHECK_TABLE`: optional table name to assert existence, e.g. `public.service_book_brand`.
-- `DJANGO_SUPERUSER_USERNAME`, `DJANGO_SUPERUSER_EMAIL`, `DJANGO_SUPERUSER_PASSWORD`: superuser bootstrap credentials.
-- `DJANGO_SETTINGS_MODULE`, `DJANGO_WSGI_MODULE`: Django settings and WSGI module (e.g., `autoservice_book.settings`, `autoservice_book.wsgi`).
+**Example**: `http://localhost:8000/backoffice/`
 
 ---
 
