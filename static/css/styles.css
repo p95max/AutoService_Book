@@ -41,22 +41,30 @@ input, textarea, select {
   border-color: var(--app-border);
 }
 
+/* Google button */
 .btn-google-ghost{
+  background: #fff !important;
+  color: #1f2327 !important;
+  border: 1px solid rgba(0,0,0,.14) !important;
+}
+
+.btn-google-ghost:hover{
+  border-color: rgba(0,0,0,.22) !important;
+}
+
+body.dark .btn-google-ghost{
   background: transparent !important;
   color: rgba(255,255,255,.92) !important;
   border: 1px solid rgba(255,255,255,.18) !important;
 }
 
-.btn-google-ghost:hover{
+body.dark .btn-google-ghost:hover{
   background: rgba(255,255,255,.08) !important;
   border-color: rgba(255,255,255,.28) !important;
 }
 
-.btn-google-ghost:focus{
-  box-shadow: 0 0 0 .2rem rgba(13,110,253,.25);
+.my-custom-text-color{
+  color:#0B5ED7
 }
-
-
-
 
 

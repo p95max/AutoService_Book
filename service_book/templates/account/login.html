@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load crispy_forms_filters %}
+{% load widget_tweaks %}
 {% load socialaccount %}
 {% load i18n %}
 
@@ -7,23 +8,55 @@
 
 {% block content %}
 <section class="py-4" style="max-width: 520px; margin: 0 auto;" data-aos="fade-in">
-  <div class="card border-0 shadow-sm rounded-4">
+  <div class="card border-0 shadow-sm rounded-4 auth-card">
     <div class="card-body p-4 p-md-5">
 
       <div class="text-center mb-4">
         <div class="display-6">🔐</div>
-        <h1 class="h4 mb-1">{% trans "Login" %}</h1>
-        <p class="text-secondary mb-0">{% trans "Welcome back. Continue to your garage." %}</p>
+        <h1 class="my-custom-text-color">{% trans "Login" %}</h1>
+        <p class="my-custom-text-color">{% trans "Welcome back. Continue to your garage." %}</p>
       </div>
 
-      <form method="post" novalidate>
-        {% csrf_token %}
-        {{ form|crispy }}
+<form method="post" novalidate class="text-start">
+  {% csrf_token %}
 
-        <button type="submit" class="btn btn-primary w-100 rounded-pill mt-2">
-          {% trans "Login" %}
-        </button>
-      </form>
+  {% for field in form %}
+    {% if field.field.widget.input_type == "checkbox" %}
+      <div class="form-check mb-3">
+        {{ field|add_class:"form-check-input" }}
+        <label class="form-check-label my-custom-text-color" for="{{ field.id_for_label }}">
+          {{ field.label }}
+        </label>
+
+        {% if field.errors %}
+          <div class="invalid-feedback d-block mt-1">
+            {{ field.errors|striptags }}
+          </div>
+        {% endif %}
+      </div>
+    {% else %}
+      <div class="mb-3">
+        <label class="form-label my-custom-text-color mb-1" for="{{ field.id_for_label }}">
+          {{ field.label }}
+        </label>
+
+        {{ field|add_class:"form-control rounded-3" }}
+
+        {% if field.errors %}
+          <div class="invalid-feedback d-block mt-1">
+            {{ field.errors|striptags }}
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+  {% endfor %}
+
+  <button type="submit" class="btn btn-primary w-100 rounded-pill mt-2">
+    {% trans "Login" %}
+  </button>
+</form>
+
+
 
       <div class="text-center my-4 text-secondary small">
         <span class="px-2">{% trans "or" %}</span>
