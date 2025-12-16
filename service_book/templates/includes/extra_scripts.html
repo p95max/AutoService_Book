@@ -14,21 +14,23 @@
             const body = document.body;
 
             function applyTheme(theme) {
-                body.classList.toggle('dark', theme === 'dark');
-                toggleBtn.classList.toggle('btn-dark', theme === 'dark');
-                toggleBtn.classList.toggle('btn-primary', theme === 'light');
-                localStorage.setItem('theme', theme);
-                if (theme === "dark") {
-                    toggleBtn.innerHTML = "☀️"
-                } else {
-                    toggleBtn.innerHTML = "🌙"
-                }
+              document.documentElement.setAttribute('data-theme', theme);
+              document.documentElement.style.colorScheme = theme;
+
+              toggleBtn.classList.remove('btn-outline-info', 'btn-primary', 'btn-dark');
+              toggleBtn.classList.add(theme === 'dark' ? 'btn-dark' : 'btn-primary');
+
+              localStorage.setItem('theme', theme);
+              toggleBtn.innerHTML = theme === "dark" ? "☀️" : "🌙";
             }
 
+
             toggleBtn.addEventListener('click', () => {
-                const newTheme = body.classList.contains('dark') ? 'light' : 'dark';
-                applyTheme(newTheme);
+              const current = document.documentElement.getAttribute('data-theme') || 'light';
+              const newTheme = current === 'dark' ? 'light' : 'dark';
+              applyTheme(newTheme);
             });
+
 
             const savedTheme = localStorage.getItem('theme') || 'light';
             applyTheme(savedTheme);

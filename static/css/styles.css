@@ -2,25 +2,59 @@ h3, h4 {
     text-align: center;
 }
 
-
-
-/*Dark theme switcher*/
-body.dark {
-    background-color: #121212;
-    color: #ffffff;
+/* Theme tokens */
+:root {
+  --app-bg: #ffffff;
+  --app-fg: #1f2327;
+  --app-surface: #ffffff;
+  --app-border: rgba(0,0,0,.12);
+  --app-input-bg: #ffffff;
+  --app-input-fg: #1f2327;
+  --app-input-border: rgba(0,0,0,.18);
 }
 
-body.dark .btn {
-    border-color: #ffffff;
-    color: #ffffff;
+html[data-theme="dark"] {
+  --app-bg: #121212;
+  --app-fg: rgba(255,255,255,.92);
+  --app-surface: #1a1a1a;
+  --app-border: rgba(255,255,255,.14);
+  --app-input-bg: #1e1e1e;
+  --app-input-fg: rgba(255,255,255,.92);
+  --app-input-border: rgba(255,255,255,.22);
 }
 
-body.dark input,
-body.dark textarea,
-body.dark select {
-    background-color: #1e1e1e;
-    color: #fff;
-    border-color: #555;
+body {
+  background: var(--app-bg);
+  color: var(--app-fg);
+  transition: background .15s ease, color .15s ease;
+}
+
+/* inputs */
+input, textarea, select {
+  background-color: var(--app-input-bg) !important;
+  color: var(--app-input-fg) !important;
+  border-color: var(--app-input-border) !important;
+}
+
+/* optional: cards/surfaces if you use them a lot */
+.card {
+  background: var(--app-surface);
+  border-color: var(--app-border);
+}
+
+.btn-google-ghost{
+  background: transparent !important;
+  color: rgba(255,255,255,.92) !important;
+  border: 1px solid rgba(255,255,255,.18) !important;
+}
+
+.btn-google-ghost:hover{
+  background: rgba(255,255,255,.08) !important;
+  border-color: rgba(255,255,255,.28) !important;
+}
+
+.btn-google-ghost:focus{
+  box-shadow: 0 0 0 .2rem rgba(13,110,253,.25);
 }
 
 

@@ -6,25 +6,45 @@
 {% block title %}{% trans "Login" %}{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-  <h3 class="text-center mb-4">{% trans "User Authorisation" %}</h3>
+<section class="py-4" style="max-width: 520px; margin: 0 auto;" data-aos="fade-in">
+  <div class="card border-0 shadow-sm rounded-4">
+    <div class="card-body p-4 p-md-5">
 
-  <div class="container d-flex justify-content-center">
-    <form method="post" class="w-50">
-      {% csrf_token %}
-      {{ form|crispy }}
-      <button type="submit" class="btn btn-primary w-100 mt-3">{% trans "Login" %}</button>
-    </form>
-  </div><br>
+      <div class="text-center mb-4">
+        <div class="display-6">🔐</div>
+        <h1 class="h4 mb-1">{% trans "Login" %}</h1>
+        <p class="text-secondary mb-0">{% trans "Welcome back. Continue to your garage." %}</p>
+      </div>
 
-  <span class="d-block text-center my-3">--- {% trans "or" %} ---</span>
+      <form method="post" novalidate>
+        {% csrf_token %}
+        {{ form|crispy }}
 
-  <div class="d-flex justify-content-center mb-3">
-    <a href="{% provider_login_url 'google' %}" class="btn btn-outline-danger">
-      <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google logo" style="width:20px; margin-right:8px;">
-      {% trans "Signup by Google" %}
-    </a>
+        <button type="submit" class="btn btn-primary w-100 rounded-pill mt-2">
+          {% trans "Login" %}
+        </button>
+      </form>
+
+      <div class="text-center my-4 text-secondary small">
+        <span class="px-2">{% trans "or" %}</span>
+      </div>
+
+<a href="{% provider_login_url 'google' %}"
+   class="btn w-100 rounded-pill d-flex align-items-center justify-content-center gap-2 btn-google-ghost">
+  <img src="https://developers.google.com/identity/images/g-logo.png"
+       alt="Google logo" style="width:18px; height:18px;">
+  <span>{% trans "Continue with Google" %}</span>
+</a>
+
+
+
+
+      <div class="text-center mt-4">
+        <span class="text-secondary">{% trans "No account yet?" %}</span>
+        <a class="ms-1" href="{% url 'account_signup' %}">{% trans "Create one" %}</a>
+      </div>
+
+    </div>
   </div>
-
-</div>
+</section>
 {% endblock %}
