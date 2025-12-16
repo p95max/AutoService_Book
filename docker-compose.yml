@@ -31,8 +31,7 @@ services:
       --log-level ${GUNICORN_LOGLEVEL:-info}
 
     volumes:
-      - ./:/app:cached
-      - static_volume:/app/staticfiles
+      - .:/app
     ports:
       - "8000:8000"
     env_file:
