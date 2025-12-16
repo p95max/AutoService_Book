@@ -2,7 +2,7 @@ import os
 from django.contrib import admin
 from django.urls import path, include
 
-ADMIN_URL = os.getenv('ADMIN_URL', 'admin')
+ADMIN_URL = os.getenv('ADMIN_URL')
 
 urlpatterns = [
     path(f'{ADMIN_URL}/', admin.site.urls),

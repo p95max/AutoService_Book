@@ -4,6 +4,8 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+LOCALE_PATHS = [BASE_DIR / "locale"]
+
 def _norm_host(h: str) -> str:
     h = h.strip()
     if not h:
@@ -41,14 +43,18 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
+
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
 ]
+
 
 ROOT_URLCONF = 'autoservice_book.urls'
 
@@ -60,9 +66,11 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
+                'django.template.context_processors.i18n',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'service_book.context_processors.global_settings',
+
             ],
         },
     },
@@ -154,3 +162,9 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+
+LANGUAGES = [
+    ("en", "English"),
+    ("de", "Deutsch"),
+]
+
