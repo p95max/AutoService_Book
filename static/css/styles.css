@@ -36,7 +36,6 @@ input, textarea, select {
   border-color: var(--app-input-border) !important;
 }
 
-/* optional: cards/surfaces if you use them a lot */
 .card {
   background: var(--app-surface);
   border-color: var(--app-border);
