@@ -1,38 +1,7 @@
 🚗 AutoService Book
 
-AutoService Book is a Django web application designed to manage car service records, fuel logs, parts, and related expenses.
+AutoService Book is `a Django web application` designed to manage car service records, fuel logs, parts, and related expenses.
 Built as a portfolio project, it highlights hands-on experience with Django (forms, models, auth, i18n), database design, data validation, pagination, and a maintainable, user-oriented interface.
-
----
-
-## About
-
-AutoService Book is designed for car owners who want to:
-- Keep detailed records of all maintenance and repair work.
-- Store information about oil changes, inspections, repairs, and fuel expenses.
-- View complete service and expense history in one convenient place.
-- Stay on top of upcoming services and monitor costs.
-
-With a clean and intuitive interface, you can easily:
-- Add and edit service records.
-- Manage fuel expenses and track consumption.
-- Record purchased and installed car parts.
-- View service history for each vehicle.
-- Analyze average fuel consumption and remaining fuel.
-- Manage multiple cars from a personal dashboard.
-- Export data to CSV tables.
-
-AutoService Book brings organization, transparency, and ease to your car ownership experience.
-
----
-
-## Deployment & Architecture
-
-- **Dockerized:** The entire project is containerized with Docker for easy deployment and reproducibility.
-- **Nginx:** Nginx is used as a reverse proxy for serving static files and handling client requests efficiently.
-- **PostgreSQL:** The production database runs as a managed cloud instance, separate from the application container.
-
-This setup reflects a real-world production architecture and demonstrates skills in modern backend deployment.
 
 ---
 
@@ -59,7 +28,7 @@ This setup reflects a real-world production architecture and demonstrates skills
 - **Caching:** Django Cache Framework for optimized queries
 - **Additional:** Django signals for automatic mileage and fuel updates, CSV export functionality
 - **Production:** Docker
-- **Localization** i18n:
+- **Localization** i18n
 
 ---
 
