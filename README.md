@@ -41,6 +41,7 @@ This setup reflects a real-world production architecture and demonstrates skills
 - 📥 **CSV Export**: Download service, fuel, part, and other expense data as CSV files.
 - 🌗 **Dark/Light Theme Switcher**: Toggle between light and dark themes for a comfortable experience.
 - 🔐 **Authorisation** by Google available
+- 🌍 **Localization by i18n**: full German🇩🇪 UI translation added (🇬🇧 as default) with a convenient language switcher
 
 ## Tech Stack
 
