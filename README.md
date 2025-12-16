@@ -139,12 +139,28 @@ This project was built to demonstrate:
 - Data export functionality with CSV.
 - Modern deployment with Docker, Nginx, and cloud database.
 
-Feel free to explore the code, test the app, or provide feedback!
-
-## Contributing
-
-This is a portfolio project, but suggestions or feedback are welcome! Feel free to open an issue or submit a pull request.
-
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+
+---
+## Roadmap / TODO
+- [x] One-command service startup via Docker Compose (`docker compose up --build`)
+- [x] Comprehensive container init script (`entrypoint.sh`)
+- [x] Fixture set for fast, end-to-end service testing (`fixtures/`)
+- [ ] Hide the admin URL in urls via .env
+- [x] Auth via Google (OAuth2)
+- [ ] Grafana + Prometheus + Alertmanager integration
+- [ ] Auth protected with CAPTCHA (django-turnstile)
+- [ ] CI for tests/linters (flake8)
+
+- [ ] Snowfall visual effect for the UI (with switcher)
+
+- Test coverage of the service
+
+---
+
+**Author:** Maksym Petrykin  
+Email: [m.petrykin@gmx.de](mailto:m.petrykin@gmx.de)  
+Telegram: [@max_p95](https://t.me/max_p95)
