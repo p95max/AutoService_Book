@@ -21,7 +21,6 @@ services:
       DJANGO_WSGI_MODULE: autoservice_book.wsgi
       GUNICORN_LOGLEVEL: info
       FIXTURE_BRANDS: /app/service_book/fixtures/brands.json
-
     command: >
       gunicorn ${DJANGO_WSGI_MODULE:-autoservice_book.wsgi}:application
       --bind 0.0.0.0:8000
@@ -29,7 +28,6 @@ services:
       --access-logfile -
       --error-logfile -
       --log-level ${GUNICORN_LOGLEVEL:-info}
-
     volumes:
       - .:/app
     ports:
@@ -40,16 +38,5 @@ services:
       db:
         condition: service_healthy
 
-  nginx:
-    image: nginx:stable
-    ports:
-      - "80:80"
-    volumes:
-      - static_volume:/usr/share/nginx/html/static:ro
-      - ./deploy/nginx/conf.d:/etc/nginx/conf.d:ro
-    depends_on:
-      - web
-
 volumes:
   db_data:
-  static_volume:

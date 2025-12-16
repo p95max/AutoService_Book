@@ -1,18 +1,22 @@
-# German translations
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR m.petrykin, 2025.
+#
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-16 20:07+0000\n"
-"PO-Revision-Date: 2025-07-26 16:30+0200\n"
-"Last-Translator: AI Übersetzer\n"
-"Language-Team: Deutsch\n"
-"Language: de\n"
+"POT-Creation-Date: 2025-12-16 21:46+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
 #: service_book/forms.py:13
 msgid "Enter model:"
 msgstr "Modell eingeben:"
@@ -22,14 +26,12 @@ msgid "Enter year:"
 msgstr "Baujahr eingeben:"
 
 #: service_book/forms.py:15
-#, fuzzy
-#| msgid "Mileage(km)"
 msgid "Enter mileage (km):"
-msgstr "Kilometerstand (km)"
+msgstr "Kilometerstand (km) eingeben:"
 
 #: service_book/forms.py:16
 msgid "Enter VIN number:"
-msgstr "VIN-Nummer eingeben:"
+msgstr "FIN (VIN) eingeben:"
 
 #: service_book/forms.py:19 service_book/templates/apps/autos/my_autos.html:21
 msgid "Brand"
@@ -37,55 +39,47 @@ msgstr "Marke"
 
 #: service_book/forms.py:20 service_book/templates/apps/autos/my_autos.html:22
 msgid "Model"
-msgstr ""
+msgstr "Modell"
 
 #: service_book/forms.py:21
-#, fuzzy
-#| msgid "Production year"
 msgid "Prod Year"
 msgstr "Baujahr"
 
 #: service_book/forms.py:22 service_book/forms.py:78 service_book/forms.py:136
-#, fuzzy
-#| msgid "Mileage:"
 msgid "Mileage"
-msgstr "Kilometerstand:"
+msgstr "Kilometerstand"
 
 #: service_book/forms.py:23 service_book/templates/apps/autos/my_autos.html:25
-#, fuzzy
-#| msgid "VIN:"
 msgid "VIN"
-msgstr "Fahrgestellnummer:"
+msgstr "FIN/VIN"
 
 #: service_book/forms.py:32
 msgid "Please enter a year after 1920"
-msgstr "Bitte geben Sie ein Jahr nach 1920 ein"
+msgstr "Bitte ein Jahr nach 1920 eingeben"
 
 #: service_book/forms.py:34
 msgid "You cannot be in the future"
-msgstr "Das Jahr darf nicht in der Zukunft liegen"
+msgstr "Das darf nicht in der Zukunft liegen"
 
 #: service_book/forms.py:42 service_book/forms.py:105
 msgid "Please enter a positive number"
-msgstr "Bitte geben Sie eine positive Zahl ein"
+msgstr "Bitte eine positive Zahl eingeben"
 
 #: service_book/forms.py:44 service_book/forms.py:107
 msgid "Mileage is too large, check your input or contact us"
-msgstr ""
-"Der Kilometerstand ist zu hoch, bitte überprüfen Sie Ihre Eingabe oder "
-"kontaktieren Sie uns"
+msgstr "Der Kilometerstand ist zu groß – Eingabe prüfen oder Support kontaktieren"
 
 #: service_book/forms.py:51
 msgid "VIN number must be exactly 17 characters long"
-msgstr "Die Fahrgestellnummer muss genau 17 Zeichen lang sein"
+msgstr "Die FIN/VIN muss genau 17 Zeichen lang sein"
 
 #: service_book/forms.py:53
 msgid "VIN number must contain only letters and numbers"
-msgstr "Die Fahrgestellnummer darf nur Buchstaben und Zahlen enthalten"
+msgstr "Die FIN/VIN darf nur Buchstaben und Zahlen enthalten"
 
 #: service_book/forms.py:58
 msgid "This VIN already exists"
-msgstr "Diese Fahrgestellnummer existiert bereits"
+msgstr "Diese FIN/VIN existiert bereits"
 
 #: service_book/forms.py:75 service_book/forms.py:134 service_book/forms.py:196
 #: service_book/forms.py:260
@@ -109,13 +103,11 @@ msgstr "Auto"
 
 #: service_book/forms.py:77 service_book/forms.py:201
 msgid "Place"
-msgstr ""
+msgstr "Ort"
 
 #: service_book/forms.py:79
-#, fuzzy
-#| msgid "Service type"
 msgid "Service Type"
-msgstr "Servicetyp"
+msgstr "Serviceart"
 
 #: service_book/forms.py:80 service_book/forms.py:139 service_book/forms.py:200
 #: service_book/forms.py:263
@@ -136,46 +128,36 @@ msgstr "Beschreibung"
 #: service_book/forms.py:97 service_book/forms.py:166 service_book/forms.py:220
 #: service_book/forms.py:278
 msgid "Price must be greater than 0"
-msgstr ""
+msgstr "Der Preis muss größer als 0 sein"
 
 #: service_book/forms.py:116 service_book/forms.py:158
 #: service_book/forms.py:287
 msgid "Date must not be in the future"
-msgstr ""
+msgstr "Das Datum darf nicht in der Zukunft liegen"
 
 #: service_book/forms.py:137
-#, fuzzy
-#| msgid "Fuel type"
 msgid "Fuel Type"
 msgstr "Kraftstoffart"
 
 #: service_book/forms.py:138
-#, fuzzy
-#| msgid "Fuel_amount"
 msgid "Fuel Amount"
 msgstr "Kraftstoffmenge"
 
 #: service_book/forms.py:140
 msgid "Gas Station"
-msgstr ""
+msgstr "Tankstelle"
 
 #: service_book/forms.py:174
-#, fuzzy
-#| msgid "Name"
 msgid "Your Name"
-msgstr "Name"
+msgstr "Dein Name"
 
 #: service_book/forms.py:175
-#, fuzzy
-#| msgid "Your Profile"
 msgid "Your Email"
-msgstr "Dein Profil"
+msgstr "Deine E-Mail"
 
 #: service_book/forms.py:176
-#, fuzzy
-#| msgid "Send Message"
 msgid "Your Message"
-msgstr "Nachricht senden"
+msgstr "Deine Nachricht"
 
 #: service_book/forms.py:197 service_book/forms.py:261
 #: service_book/templates/apps/carparts/my_carparts.html:42
@@ -184,30 +166,24 @@ msgid "Name"
 msgstr "Name"
 
 #: service_book/forms.py:199
-#, fuzzy
-#| msgid "Carpart type"
 msgid "Carpart Type"
 msgstr "Teiletyp"
 
 #: service_book/forms.py:202
-#, fuzzy
-#| msgid "Date installation"
 msgid "Installation date"
 msgstr "Einbaudatum"
 
 #: service_book/forms.py:203
-#, fuzzy
-#| msgid "Date installation"
 msgid "Installation place"
-msgstr "Einbaudatum"
+msgstr "Einbauort"
 
 #: service_book/forms.py:230
 msgid "Purchase date must not be in the future"
-msgstr ""
+msgstr "Das Kaufdatum darf nicht in der Zukunft liegen"
 
 #: service_book/forms.py:232
 msgid "Installation date must not be in the future"
-msgstr ""
+msgstr "Das Einbaudatum darf nicht in der Zukunft liegen"
 
 #: service_book/forms.py:238 service_book/forms.py:256
 #: service_book/templates/apps/other_expenses/other_expenses.html:66
@@ -215,54 +191,55 @@ msgid "Paid"
 msgstr "Bezahlt"
 
 #: service_book/forms.py:239 service_book/forms.py:256
-#, fuzzy
-#| msgid "Not paid"
 msgid "Not Paid"
 msgstr "Nicht bezahlt"
 
 #: service_book/forms.py:244
-#, fuzzy
-#| msgid "Paid status"
 msgid "Payment status"
-msgstr "Bezahlstatus"
+msgstr "Zahlungsstatus"
 
 #: service_book/forms.py:264
-#, fuzzy
-#| msgid "Expense type"
 msgid "Expense Type"
 msgstr "Ausgabentyp"
 
 #: service_book/forms.py:265
-#, fuzzy
-#| msgid "Paid status"
 msgid "Paid Status"
-msgstr "Bezahlstatus"
+msgstr "Zahlungsstatus"
 
 #: service_book/forms.py:314
 msgid "Name and surname cannot contain numbers"
-msgstr ""
+msgstr "Vor- und Nachname dürfen keine Zahlen enthalten"
 
-# --- Ниже идут переводы ---
-#: service_book/templates/account/login.html:6
+#: service_book/templates/account/login.html:7
 #: service_book/templates/account/login.html:16
-#: service_book/templates/includes/nav_menu.html:32
+#: service_book/templates/account/login.html:55
+#: service_book/templates/account/signup.html:76
+#: service_book/templates/includes/nav_menu.html:35
 msgid "Login"
 msgstr "Anmelden"
 
-#: service_book/templates/account/login.html:10
-msgid "User Authorisation"
-msgstr "Benutzerauthentifizierung"
+#: service_book/templates/account/login.html:17
+msgid "Welcome back. Continue to your garage."
+msgstr "Willkommen zurück. Weiter zu deiner Garage."
 
-#: service_book/templates/account/login.html:20
-#: service_book/templates/account/signup.html:25
-#: service_book/templates/includes/nav_menu.html:31
+#: service_book/templates/account/login.html:62
+#: service_book/templates/account/signup.html:65
 msgid "or"
 msgstr "oder"
 
-#: service_book/templates/account/login.html:25
-#: service_book/templates/account/signup.html:30
-msgid "Signup by Google"
-msgstr "Mit Google registrieren"
+#: service_book/templates/account/login.html:69
+#: service_book/templates/account/signup.html:71
+#: service_book/templates/socialaccount/login.html:11
+msgid "Continue with Google"
+msgstr "Mit Google fortfahren"
+
+#: service_book/templates/account/login.html:76
+msgid "No account yet?"
+msgstr "Noch kein Konto?"
+
+#: service_book/templates/account/login.html:77
+msgid "Create one"
+msgstr "Jetzt registrieren"
 
 #: service_book/templates/account/password_reset.html:5
 msgid "Password reset"
@@ -270,7 +247,7 @@ msgstr "Passwort zurücksetzen"
 
 #: service_book/templates/account/password_reset.html:8
 msgid "Reset your password"
-msgstr "Setze dein Passwort zurück"
+msgstr "Passwort zurücksetzen"
 
 #: service_book/templates/account/password_reset.html:14
 msgid "Send confirmation"
@@ -283,7 +260,7 @@ msgstr "Anfrage gesendet"
 
 #: service_book/templates/account/password_reset_done.html:9
 msgid "Please, check your Email"
-msgstr "Bitte überprüfe deine E-Mail"
+msgstr "Bitte prüfe deine E-Mail"
 
 #: service_book/templates/account/password_reset_done.html:15
 msgid "Next step"
@@ -307,7 +284,7 @@ msgstr "Neues Passwort bestätigt"
 
 #: service_book/templates/account/password_reset_from_key_done.html:8
 msgid "Success! New password confirmed!"
-msgstr "Erfolg! Neues Passwort bestätigt!"
+msgstr "Erfolg! Das neue Passwort wurde bestätigt!"
 
 #: service_book/templates/account/password_reset_from_key_done.html:14
 #: service_book/templates/includes/pagination_page_obj.html:18
@@ -315,18 +292,22 @@ msgid "Next"
 msgstr "Weiter"
 
 #: service_book/templates/account/signup.html:6
-#: service_book/templates/account/signup.html:15
-#: service_book/templates/includes/nav_menu.html:30
+#: service_book/templates/account/signup.html:60
 msgid "Sign up"
 msgstr "Registrieren"
 
-#: service_book/templates/account/signup.html:9
-msgid "User registration"
-msgstr "Benutzerregistrierung"
+#: service_book/templates/account/signup.html:15
+#: service_book/templates/includes/nav_menu.html:38
+msgid "Create account"
+msgstr "Konto erstellen"
 
-#: service_book/templates/account/signup.html:18
-msgid "Already have account? Login!"
-msgstr "Schon ein Konto? Anmelden!"
+#: service_book/templates/account/signup.html:16
+msgid "Start tracking your cars and expenses."
+msgstr "Beginne, deine Autos und Ausgaben zu tracken."
+
+#: service_book/templates/account/signup.html:75
+msgid "Already have an account?"
+msgstr "Schon ein Konto?"
 
 #: service_book/templates/apps/autos/add_auto.html:5
 #: service_book/templates/apps/autos/add_auto.html:8
@@ -343,7 +324,7 @@ msgstr "Hinzufügen"
 
 #: service_book/templates/apps/autos/auto_detail.html:4
 msgid "Car details"
-msgstr "Fahrzeugdetails"
+msgstr "Autodetails"
 
 #: service_book/templates/apps/autos/auto_detail.html:7
 msgid "Mileage:"
@@ -351,11 +332,11 @@ msgstr "Kilometerstand:"
 
 #: service_book/templates/apps/autos/auto_detail.html:8
 msgid "VIN:"
-msgstr "Fahrgestellnummer:"
+msgstr "FIN/VIN:"
 
 #: service_book/templates/apps/autos/auto_detail.html:15
 msgid "Summary"
-msgstr "Zusammenfassung"
+msgstr "Übersicht"
 
 #: service_book/templates/apps/autos/auto_detail.html:20
 #: service_book/templates/apps/autos/auto_detail.html:45
@@ -395,7 +376,7 @@ msgstr "Letzte 5 Tankvorgänge"
 
 #: service_book/templates/apps/autos/auto_detail.html:72
 msgid "No fuel records."
-msgstr "Keine Kraftstoffeinträge."
+msgstr "Keine Tankeinträge."
 
 #: service_book/templates/apps/autos/auto_detail.html:76
 msgid "Last 5 parts"
@@ -441,7 +422,7 @@ msgstr "Meine Garage"
 
 #: service_book/templates/apps/autos/my_autos.html:6
 msgid "Your current autos"
-msgstr "Deine aktuellen Fahrzeuge"
+msgstr "Deine aktuellen Autos"
 
 #: service_book/templates/apps/autos/my_autos.html:8
 #, python-format
@@ -451,6 +432,10 @@ msgid ""
 "garage\n"
 "      "
 msgstr ""
+"\n"
+"        Du hast: <a style=\"color: maroon\">%(count)s</a> Auto(s) in deiner "
+"garage\n"
+"      "
 
 #: service_book/templates/apps/autos/my_autos.html:13
 #, python-format
@@ -460,6 +445,10 @@ msgid ""
 "maroon\">%(total)s</a>$\n"
 "      "
 msgstr ""
+"\n"
+"        Deine Gesamtausgaben für alle Autos: <a style=\"color: "
+"maroon\">%(total)s</a>$\n"
+"      "
 
 #: service_book/templates/apps/autos/my_autos.html:23
 msgid "Production year"
@@ -498,7 +487,7 @@ msgstr "Löschen"
 
 #: service_book/templates/apps/autos/my_autos.html:51
 msgid "You haven't added autos"
-msgstr "Du hast noch keine Fahrzeuge hinzugefügt"
+msgstr "Du hast noch keine Autos hinzugefügt"
 
 #: service_book/templates/apps/autos/my_autos.html:53
 msgid "Add another car"
@@ -533,13 +522,16 @@ msgid ""
 "        Your total carparts costs: %(total)s$\n"
 "      "
 msgstr ""
+"\n"
+"        Deine Gesamtkosten für Autoteile: %(total)s$"
+"      "
 
 #: service_book/templates/apps/carparts/my_carparts.html:19
 #: service_book/templates/apps/fuel_expense/fuel_expense.html:22
 #: service_book/templates/apps/other_expenses/other_expenses.html:19
 #: service_book/templates/apps/service_records/service_history.html:22
 msgid "Total costs per auto($)"
-msgstr "Gesamtkosten pro Auto($)"
+msgstr "Gesamtkosten pro Auto ($)"
 
 #: service_book/templates/apps/carparts/my_carparts.html:32
 #: service_book/templates/apps/other_expenses/other_expenses.html:32
@@ -559,11 +551,11 @@ msgstr "Teiletyp"
 #: service_book/templates/apps/carparts/my_carparts.html:45
 #: service_book/templates/apps/service_records/service_history.html:50
 msgid "Price($)"
-msgstr "Preis($)"
+msgstr "Preis ($)"
 
 #: service_book/templates/apps/carparts/my_carparts.html:46
 msgid "Place purchase"
-msgstr "Kaufstelle"
+msgstr "Kaufort"
 
 #: service_book/templates/apps/carparts/my_carparts.html:47
 msgid "Date installation"
@@ -581,7 +573,7 @@ msgstr "Kein Datum"
 
 #: service_book/templates/apps/carparts/my_carparts.html:72
 msgid "not installed"
-msgstr "nicht installiert"
+msgstr "nicht eingebaut"
 
 #: service_book/templates/apps/carparts/my_carparts.html:82
 #: service_book/templates/apps/fuel_expense/fuel_expense.html:70
@@ -592,12 +584,12 @@ msgstr "Bist du sicher, dass du diesen Eintrag löschen möchtest?"
 
 #: service_book/templates/apps/carparts/my_carparts.html:96
 msgid "Download Carparts Expenses (CSV)"
-msgstr "Autoteile-Ausgaben herunterladen (CSV)"
+msgstr "Teileausgaben herunterladen (CSV)"
 
 #: service_book/templates/apps/carparts/my_carparts.html:98
 #: service_book/templates/apps/other_expenses/other_expenses.html:93
 msgid "You haven't added parts yet"
-msgstr "Du hast noch keine Teile hinzugefügt"
+msgstr "Du hast noch keine Einträge hinzugefügt"
 
 #: service_book/templates/apps/carparts/my_carparts.html:100
 msgid "Add car part"
@@ -606,27 +598,27 @@ msgstr "Autoteil hinzufügen"
 #: service_book/templates/apps/fuel_expense/add_fuel_expense.html:5
 #: service_book/templates/apps/fuel_expense/fuel_expense.html:88
 msgid "Add fuel expense"
-msgstr "Kraftstoffausgabe hinzufügen"
+msgstr "Tankausgabe hinzufügen"
 
 #: service_book/templates/apps/fuel_expense/add_fuel_expense.html:8
 msgid "Add a new fuel expense"
-msgstr "Neue Kraftstoffausgabe hinzufügen"
+msgstr "Neue Tankausgabe hinzufügen"
 
 #: service_book/templates/apps/fuel_expense/edit_fuel_expense.html:5
 msgid "Edit fuel expense"
-msgstr "Kraftstoffausgabe bearbeiten"
+msgstr "Tankausgabe bearbeiten"
 
 #: service_book/templates/apps/fuel_expense/edit_fuel_expense.html:8
 msgid "Edit fuel expense record"
-msgstr "Kraftstoffausgabe bearbeiten"
+msgstr "Tankausgaben-Eintrag bearbeiten"
 
 #: service_book/templates/apps/fuel_expense/fuel_expense.html:5
 msgid "Fuel expense"
-msgstr "Kraftstoffausgabe"
+msgstr "Tankausgaben"
 
 #: service_book/templates/apps/fuel_expense/fuel_expense.html:9
 msgid "Fuel left in tank and average consumption per car"
-msgstr "Restkraftstoff im Tank und durchschnittlicher Verbrauch pro Auto"
+msgstr "Restkraftstoff im Tank und Durchschnittsverbrauch pro Auto"
 
 #: service_book/templates/apps/fuel_expense/fuel_expense.html:11
 #, python-format
@@ -636,6 +628,10 @@ msgid ""
 "Total refuels: %(refuels)s\n"
 "  "
 msgstr ""
+"\n"
+"    Gesamte Tankmenge: %(total)sl || Gesamtkosten Kraftstoff: %(costs)s$ || "
+"Tankvorgänge gesamt: %(refuels)s"
+"  "
 
 #: service_book/templates/apps/fuel_expense/fuel_expense.html:20
 msgid "Fuel left"
@@ -643,16 +639,16 @@ msgstr "Restkraftstoff"
 
 #: service_book/templates/apps/fuel_expense/fuel_expense.html:21
 msgid "Current average cons.(per 100km)"
-msgstr "Aktueller Durchschnittsverbrauch (pro 100km)"
+msgstr "Aktueller Ø-Verbrauch (pro 100 km)"
 
 #: service_book/templates/apps/fuel_expense/fuel_expense.html:37
 #: service_book/templates/apps/fuel_expense/fuel_expense.html:86
 msgid "You haven't fuel expenses yet"
-msgstr "Du hast noch keine Kraftstoffausgaben"
+msgstr ""
 
 #: service_book/templates/apps/fuel_expense/fuel_expense.html:40
 msgid "Your fuel expenses"
-msgstr "Deine Kraftstoffausgaben"
+msgstr "Deine Tankausgaben"
 
 #: service_book/templates/apps/fuel_expense/fuel_expense.html:48
 msgid "Fuel type"
@@ -683,7 +679,7 @@ msgstr "Sonstige Ausgaben"
 
 #: service_book/templates/apps/other_expenses/other_expenses.html:8
 msgid "Other expenses costs per car"
-msgstr "Sonstige Ausgaben pro Auto"
+msgstr "Sonstige Kosten pro Auto"
 
 #: service_book/templates/apps/other_expenses/other_expenses.html:10
 #, python-format
@@ -692,10 +688,13 @@ msgid ""
 "        Your total other expenses: %(total)s$\n"
 "      "
 msgstr ""
+"\n"
+"        Deine gesamten sonstigen Ausgaben: %(total)s$\n"
+"      "
 
 #: service_book/templates/apps/other_expenses/other_expenses.html:35
 msgid "Car other expenses"
-msgstr "Sonstige Ausgaben für das Auto"
+msgstr "Sonstige Ausgaben je Auto"
 
 #: service_book/templates/apps/other_expenses/other_expenses.html:43
 msgid "Expense type"
@@ -703,7 +702,7 @@ msgstr "Ausgabentyp"
 
 #: service_book/templates/apps/other_expenses/other_expenses.html:45
 msgid "Paid status"
-msgstr "Bezahlstatus"
+msgstr "Zahlungsstatus"
 
 #: service_book/templates/apps/other_expenses/other_expenses.html:68
 msgid "Not paid"
@@ -745,6 +744,9 @@ msgid ""
 "    Your total service costs: %(total)s$\n"
 "  "
 msgstr ""
+"\n"
+"    Deine gesamten Servicekosten: %(total)s$"
+"  "
 
 #: service_book/templates/apps/service_records/service_history.html:20
 msgid "Next service date"
@@ -764,7 +766,7 @@ msgstr "Werkstatt"
 
 #: service_book/templates/apps/service_records/service_history.html:49
 msgid "Service type"
-msgstr "Servicetyp"
+msgstr "Serviceart"
 
 #: service_book/templates/apps/service_records/service_history.html:90
 msgid "Download service data(.csv)"
@@ -776,22 +778,30 @@ msgstr "Du hast noch keine Serviceeinträge"
 
 #: service_book/templates/base.html:7
 msgid "Title test"
-msgstr "Titel Test"
+msgstr "Titel-Test"
 
 #: service_book/templates/base.html:18
 msgid "Theme"
-msgstr "Thema"
+msgstr "Theme"
 
 #: service_book/templates/contact_us.html:5
-#: service_book/templates/contact_us.html:9
+#: service_book/templates/contact_us.html:14
 msgid "Contact Us"
 msgstr "Kontakt"
 
-#: service_book/templates/contact_us.html:12
-msgid "Thank you for your message! We will get back to you soon."
-msgstr "Danke für deine Nachricht! Wir melden uns bald bei dir."
+#: service_book/templates/contact_us.html:16
+msgid "Have a question or suggestion? Send a message — we’ll reply soon."
+msgstr ""
 
-#: service_book/templates/contact_us.html:25
+#: service_book/templates/contact_us.html:22
+msgid "Thank you for your message! We will get back to you soon."
+msgstr "Danke für deine Nachricht! Wir melden uns bald."
+
+#: service_book/templates/contact_us.html:82
+msgid "We usually respond within 1–2 business days."
+msgstr "Wir antworten in der Regel innerhalb von 1–2 Werktagen."
+
+#: service_book/templates/contact_us.html:85
 msgid "Send Message"
 msgstr "Nachricht senden"
 
@@ -806,6 +816,10 @@ msgid ""
 "service history.\n"
 "    "
 msgstr ""
+"\n"
+"      AutoService Book ist Ihr zuverlässiger Begleiter für die Verwaltung der Wartungshistorie Ihres Autos.\n "
+
+"    "
 
 #: service_book/templates/includes/intro_text.html:10
 msgid ""
@@ -813,32 +827,29 @@ msgid ""
 "    Designed for car owners, this portfolio project helps you:\n"
 "  "
 msgstr ""
+"\n"
+"    Dieses Portfolio-Projekt unterstützt dich dabei:\n "
+"  "
 
 #: service_book/templates/includes/intro_text.html:16
 msgid "Track all maintenance and repair work with detailed records."
-msgstr ""
-"Verfolgen Sie alle Wartungs- und Reparaturarbeiten mit detaillierten "
-"Aufzeichnungen."
+msgstr "Alle Wartungs- und Reparaturarbeiten mit detaillierten Einträgen nachverfolgen."
 
 #: service_book/templates/includes/intro_text.html:17
 msgid "Store data on oil changes, inspections, and services."
-msgstr "Speichern Sie Daten zu Ölwechseln, Inspektionen und Services."
+msgstr "Daten zu Ölwechseln, Inspektionen und Services speichern."
 
 #: service_book/templates/includes/intro_text.html:18
 msgid "Access your complete service and fuel expense history in one place."
-msgstr ""
-"Greifen Sie an einem Ort auf Ihre gesamte Service- und "
-"Kraftstoffkostenhistorie zu."
+msgstr "Deine komplette Service- und Kraftstoffhistorie an einem Ort einsehen."
 
 #: service_book/templates/includes/intro_text.html:19
 msgid "Stay informed about upcoming services and monitor costs."
-msgstr ""
-"Bleiben Sie über anstehende Services informiert und überwachen Sie die "
-"Kosten."
+msgstr "Über anstehende Services informiert bleiben und Kosten im Blick behalten."
 
 #: service_book/templates/includes/intro_text.html:20
 msgid "Export your data to CSV for easy analysis."
-msgstr "Exportieren Sie Ihre Daten als CSV für eine einfache Analyse."
+msgstr "Daten als CSV exportieren – für einfache Analyse."
 
 #: service_book/templates/includes/intro_text.html:25
 msgid ""
@@ -846,28 +857,29 @@ msgid ""
 "      With a clean, user-friendly interface, you can effortlessly:\n"
 "    "
 msgstr ""
+"\n"
+"      Mit einer klaren, benutzerfreundlichen Oberfläche kannst du ganz einfach:\n"
+"    "
 
 #: service_book/templates/includes/intro_text.html:32
-#, fuzzy
-#| msgid "Edit fuel expense record"
 msgid "Add and edit service and fuel expense records."
-msgstr "Kraftstoffausgabe bearbeiten"
+msgstr "Service- und Tankausgaben-Einträge hinzufügen und bearbeiten."
 
 #: service_book/templates/includes/intro_text.html:33
 msgid "Manage car parts for your vehicles."
-msgstr ""
+msgstr "Autoteile für deine Fahrzeuge verwalten."
 
 #: service_book/templates/includes/intro_text.html:34
 msgid "View detailed service history for each car."
-msgstr ""
+msgstr "Detaillierten Serviceverlauf pro Auto ansehen."
 
 #: service_book/templates/includes/intro_text.html:35
 msgid "Monitor average fuel consumption and remaining fuel levels."
-msgstr ""
+msgstr "Durchschnittsverbrauch und verbleibenden Kraftstoffstand überwachen."
 
 #: service_book/templates/includes/intro_text.html:36
 msgid "Manage multiple cars from a personal dashboard."
-msgstr ""
+msgstr "Mehrere Autos über ein persönliches Dashboard verwalten."
 
 #: service_book/templates/includes/intro_text.html:41
 msgid ""
@@ -876,48 +888,58 @@ msgid ""
 "your car ownership journey.\n"
 "    "
 msgstr ""
+"\n"
+"       AutoService Book bringt Ordnung, Klarheit und ein gutes Gefühl in deinen Auto-Alltag.\n "
+"    "
 
-#: service_book/templates/includes/nav_menu.html:21
-#, python-format
-msgid "Hello, <span class=\"text-primary\">%(user.username)s</span>"
-msgstr "Hallo, <span class=\"text-primary\">%(user.username)s</span>"
+#: service_book/templates/includes/nav_menu.html:14
+msgid "Signed in as"
+msgstr "Angemeldet als"
 
-#: service_book/templates/includes/nav_menu.html:22
-msgid "Your Profile"
-msgstr "Dein Profil"
+#: service_book/templates/includes/nav_menu.html:23
+msgid "Profile"
+msgstr "Profil"
 
-#: service_book/templates/includes/nav_menu.html:25
+#: service_book/templates/includes/nav_menu.html:28
 msgid "Logout"
 msgstr "Abmelden"
 
-#: service_book/templates/includes/nav_menu.html:39
-msgid "Home"
-msgstr "Startseite"
+#: service_book/templates/includes/nav_menu.html:41
+msgid "No spam. Just your garage and expenses."
+msgstr "Kein Spam. Nur deine Garage und Ausgaben."
 
-#: service_book/templates/includes/nav_menu.html:42
+#: service_book/templates/includes/nav_menu.html:53
+msgid "Home"
+msgstr "Start"
+
+#: service_book/templates/includes/nav_menu.html:59
 msgid "Contact us"
 msgstr "Kontakt"
 
-#: service_book/templates/includes/nav_menu.html:46
+#: service_book/templates/includes/nav_menu.html:69
 #, python-format
 msgid "My Garage (%(user_cars_count)s)"
 msgstr "Meine Garage (%(user_cars_count)s)"
 
-#: service_book/templates/includes/nav_menu.html:49
+#: service_book/templates/includes/nav_menu.html:76
 msgid "Service History"
 msgstr "Serviceverlauf"
 
-#: service_book/templates/includes/nav_menu.html:52
+#: service_book/templates/includes/nav_menu.html:82
 msgid "Fuel Expenses"
-msgstr "Kraftstoffausgaben"
+msgstr "Tankausgaben"
 
-#: service_book/templates/includes/nav_menu.html:55
+#: service_book/templates/includes/nav_menu.html:88
 msgid "Car Parts"
 msgstr "Autoteile"
 
-#: service_book/templates/includes/nav_menu.html:58
+#: service_book/templates/includes/nav_menu.html:94
 msgid "Other Expenses"
 msgstr "Sonstige Ausgaben"
+
+#: service_book/templates/includes/nav_menu.html:104
+msgid "Language"
+msgstr "Sprache"
 
 #: service_book/templates/includes/pagination_page_obj.html:6
 msgid "Previous"
@@ -930,22 +952,26 @@ msgid ""
 "            Page %(current)s of %(total)s\n"
 "          "
 msgstr ""
+"\n"
+"            Seite %(current)s von %(total)s"
+""
+"          "
 
 #: service_book/templates/main.html:4
 msgid "My Garage — Home"
-msgstr "Meine Garage — Startseite"
+msgstr ""
 
 #: service_book/templates/main.html:16
 msgid "Track all your cars in one place"
-msgstr "Verwalte alle deine Autos an einem Ort"
+msgstr "Alle deine Autos an einem Ort verwalten"
 
 #: service_book/templates/main.html:17
 msgid "Log services, refuels, parts, and expenses"
-msgstr "Erfasse Services, Tankvorgänge, Teile und Ausgaben"
+msgstr "Services, Tankvorgänge, Teile und Ausgaben erfassen"
 
 #: service_book/templates/main.html:18
 msgid "See detailed stats and summaries"
-msgstr "Sieh dir detaillierte Statistiken und Zusammenfassungen an"
+msgstr "Detaillierte Statistiken und Übersichten ansehen"
 
 #: service_book/templates/main.html:19
 msgid "Your data is private and secure"
@@ -969,9 +995,7 @@ msgstr "Auto hinzufügen"
 
 #: service_book/templates/main.html:40
 msgid "Store all info about your vehicles, from VIN to mileage."
-msgstr ""
-"Speichere alle Infos zu deinen Fahrzeugen, von der VIN bis zum "
-"Kilometerstand."
+msgstr "Alle Infos zu deinen Fahrzeugen speichern – von der FIN bis zum Kilometerstand."
 
 #: service_book/templates/main.html:47
 msgid "Log Expenses"
@@ -979,24 +1003,23 @@ msgstr "Ausgaben erfassen"
 
 #: service_book/templates/main.html:48
 msgid "Track fuel, service, parts, and other costs easily."
-msgstr "Verfolge Kraftstoff-, Service-, Teile- und andere Kosten einfach."
+msgstr "Kraftstoff, Service, Teile und sonstige Kosten einfach tracken."
 
 #: service_book/templates/main.html:55
 msgid "See Analytics"
-msgstr "Analysen anzeigen"
+msgstr "Analysen ansehen"
 
 #: service_book/templates/main.html:56
 msgid "Visualize your spending and car history with clear stats."
-msgstr ""
-"Visualisiere deine Ausgaben und Fahrzeughistorie mit klaren Statistiken."
+msgstr "Ausgaben und Fahrzeughistorie mit klaren Statistiken visualisieren."
 
 #: service_book/templates/main.html:63
 msgid "Stay Organized"
-msgstr "Bleib organisiert"
+msgstr "Alles im Griff"
 
 #: service_book/templates/main.html:64
 msgid "Never miss a service or refuel. Your garage, always in your pocket."
-msgstr "Verpasse nie einen Service oder Tankvorgang. Deine Garage immer dabei."
+msgstr "Keinen Service und keinen Tankstopp mehr verpassen. Deine Garage – immer dabei."
 
 #: service_book/templates/profile.html:5 service_book/templates/profile.html:9
 msgid "My Profile"
@@ -1016,7 +1039,7 @@ msgstr "Benutzername:"
 
 #: service_book/templates/profile.html:28
 msgid "Last seen:"
-msgstr "Zuletzt online:"
+msgstr "Zuletzt gesehen:"
 
 #: service_book/templates/profile.html:29
 msgid "Joined:"
@@ -1050,10 +1073,6 @@ msgstr "Mit Google anmelden"
 msgid "You are about to sign in using your Google account."
 msgstr "Du bist dabei, dich mit deinem Google-Konto anzumelden."
 
-#: service_book/templates/socialaccount/login.html:11
-msgid "Continue with Google"
-msgstr "Mit Google fortfahren"
-
 #: service_book/templates/socialaccount/signup.html:5
 msgid "Sign Up via Google"
 msgstr "Mit Google registrieren"
@@ -1066,7 +1085,7 @@ msgstr "Registrierung abschließen"
 msgid ""
 "You are about to use your Google account to login. As a final step, please "
 "confirm your E-mail:"
-msgstr ""
+msgstr "Du bist dabei, dich mit deinem Google-Konto anzumelden. Als letzten Schritt bestätige bitte deine E-Mail:"
 
 #: service_book/templates/socialaccount/signup.html:14
 msgid "Sign Up"

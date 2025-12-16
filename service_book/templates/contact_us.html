@@ -1,20 +1,20 @@
 {% extends 'base.html' %}
 {% load i18n %}
+{% load widget_tweaks %}
 
 {% block title %}{% trans "Contact Us" %}{% endblock %}
 
 {% block content %}
-<section class="py-4" data-aos="fade-in" style="max-width: 760px; margin: 0 auto;">
-  <div class="card border-0 shadow-sm rounded-4">
+<section class="py-4" style="max-width: 760px; margin: 0 auto;" data-aos="fade-in">
+  <div class="card border-0 shadow-sm rounded-4 auth-card">
     <div class="card-body p-4 p-md-5">
 
-      <div class="d-flex align-items-start justify-content-between gap-3 mb-4">
-        <div>
-          <h1 class="h4 mb-1">🛎️ {% trans "Contact Us" %}</h1>
-          <p class="text-secondary mb-0">
-            {% trans "Have a question or suggestion? Send a message — we’ll reply soon." %}
-          </p>
-        </div>
+      <div class="text-center mb-4">
+        <div class="display-6">🛎️</div>
+        <h1 class="h4 mb-1 my-custom-text-color">{% trans "Contact Us" %}</h1>
+        <p class="text-secondary mb-0">
+          {% trans "Have a question or suggestion? Send a message — we’ll reply soon." %}
+        </p>
       </div>
 
       {% if success %}
@@ -29,33 +29,55 @@
           </div>
         {% endif %}
 
-        <form method="post" novalidate class="mt-3">
+        <form method="post" novalidate class="text-start">
           {% csrf_token %}
 
           {% for field in form %}
-            <div class="mb-3">
-              <label class="form-label" for="{{ field.id_for_label }}">
-                {{ field.label }}
-                {% if field.field.required %}
-                  <span class="text-danger">*</span>
+            {% if field.field.widget.input_type == "checkbox" %}
+              <div class="form-check mb-3">
+                {{ field|add_class:"form-check-input" }}
+                <label class="form-check-label my-custom-text-color" for="{{ field.id_for_label }}">
+                  {{ field.label }}
+                  {% if field.field.required %}<span class="text-danger">*</span>{% endif %}
+                </label>
+
+                {% if field.help_text %}
+                  <div class="form-text">{{ field.help_text }}</div>
                 {% endif %}
-              </label>
 
-              {{ field }}
+                {% if field.errors %}
+                  <div class="invalid-feedback d-block mt-1">
+                    {{ field.errors|striptags }}
+                  </div>
+                {% endif %}
+              </div>
+            {% else %}
+              <div class="mb-3">
+                <label class="form-label my-custom-text-color mb-1" for="{{ field.id_for_label }}">
+                  {{ field.label }}
+                  {% if field.field.required %}<span class="text-danger">*</span>{% endif %}
+                </label>
 
-              {% if field.help_text %}
-                <div class="form-text">{{ field.help_text }}</div>
-              {% endif %}
+                {% if field.field.widget.input_type == "textarea" %}
+                  {{ field|add_class:"form-control rounded-3" }}
+                {% else %}
+                  {{ field|add_class:"form-control rounded-3" }}
+                {% endif %}
 
-              {% if field.errors %}
-                <div class="invalid-feedback d-block">
-                  {{ field.errors|striptags }}
-                </div>
-              {% endif %}
-            </div>
+                {% if field.help_text %}
+                  <div class="form-text">{{ field.help_text }}</div>
+                {% endif %}
+
+                {% if field.errors %}
+                  <div class="invalid-feedback d-block mt-1">
+                    {{ field.errors|striptags }}
+                  </div>
+                {% endif %}
+              </div>
+            {% endif %}
           {% endfor %}
 
-          <div class="d-flex align-items-center justify-content-between mt-4">
+          <div class="d-flex align-items-center justify-content-between mt-4 gap-3">
             <small class="text-secondary">
               {% trans "We usually respond within 1–2 business days." %}
             </small>
@@ -68,16 +90,4 @@
     </div>
   </div>
 </section>
-
-<script>
-  (function () {
-    const controls = document.querySelectorAll(
-      "form input:not([type='checkbox']):not([type='radio']), form textarea, form select"
-    );
-    controls.forEach(el => {
-      el.classList.add("form-control");
-      if (el.tagName === "SELECT") el.classList.add("form-select");
-    });
-  })();
-</script>
 {% endblock %}

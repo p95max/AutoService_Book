@@ -9,3 +9,8 @@ docker compose build --no-cache
 docker compose up -d --force-recreate 
 docker compose logs -f
 
+python manage.py makemessages -l de
+docker compose exec web python manage.py makemessages -l de
+
+python manage.py compilemessages
+docker compose exec web python manage.py compilemessages
