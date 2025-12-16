@@ -1,8 +1,7 @@
 🚗 AutoService Book
 
-**AutoService Book** is your reliable assistant for tracking and managing your car’s service history.
-This web application, built as a portfolio project, showcases skills in Django development, database management,
-and creating user-friendly interfaces.
+AutoService Book is a Django web application designed to manage car service records, fuel logs, parts, and related expenses.
+Built as a portfolio project, it highlights hands-on experience with Django (forms, models, auth, i18n), database design, data validation, pagination, and a maintainable, user-oriented interface.
 
 ---
 
