@@ -4,6 +4,8 @@
 This web application, built as a portfolio project, showcases skills in Django development, database management,
 and creating user-friendly interfaces.
 
+---
+
 ## About
 
 AutoService Book is designed for car owners who want to:
@@ -23,6 +25,8 @@ With a clean and intuitive interface, you can easily:
 
 AutoService Book brings organization, transparency, and ease to your car ownership experience.
 
+---
+
 ## Deployment & Architecture
 
 - **Dockerized:** The entire project is containerized with Docker for easy deployment and reproducibility.
@@ -30,6 +34,8 @@ AutoService Book brings organization, transparency, and ease to your car ownersh
 - **PostgreSQL:** The production database runs as a managed cloud instance, separate from the application container.
 
 This setup reflects a real-world production architecture and demonstrates skills in modern backend deployment.
+
+---
 
 ## Features
 
@@ -43,6 +49,8 @@ This setup reflects a real-world production architecture and demonstrates skills
 - 🔐 **Authorisation** by Google available
 - 🌍 **Localization by i18n**: full German🇩🇪 UI translation added (🇬🇧 as default) with a convenient language switcher
 
+---
+
 ## Tech Stack
 
 - **Backend:** Django 5.2, Python 3.14
@@ -51,7 +59,10 @@ This setup reflects a real-world production architecture and demonstrates skills
 - **Authentication:** `django-allauth` for email-based login
 - **Caching:** Django Cache Framework for optimized queries
 - **Additional:** Django signals for automatic mileage and fuel updates, CSV export functionality
-- **Production:** Docker, Nginx, Render.com
+- **Production:** Docker
+- **Localization** i18n:
+
+---
 
 ## Usage
 
@@ -64,6 +75,7 @@ This setup reflects a real-world production architecture and demonstrates skills
 4. **Monitor Fuel:** Check remaining fuel and average consumption on the dashboard.
 5. **Toggle Themes:** Switch between dark and light themes for a better experience.
 
+---
 
 ## Startup & Entry Script (Docker)
 
@@ -78,6 +90,8 @@ and safe to run on every container start.
 5. **Optional table sanity check** via `CHECK_TABLE` env.
 6. **Collect static files**: `python manage.py collectstatic --noinput`.
 7. **Ensure superuser** with `manage.py createsuperuser --noinput` (idempotent).
+
+---
 
 ## Environment (.env)
 
@@ -103,6 +117,8 @@ services:
     #   DJANGO_SETTINGS_MODULE: ${DJANGO_SETTINGS_MODULE}
 ```
 
+---
+
 ### Environment variables
 - `DATABASE_URL`: PostgreSQL DSN, e.g. `postgres://app:pass@db:5432/app`.
 - `AUTO_MAKEMIGRATIONS` (dev): set to `1` to run `makemigrations` on start.
@@ -116,6 +132,7 @@ services:
 - `DJANGO_SUPERUSER_USERNAME`, `DJANGO_SUPERUSER_EMAIL`, `DJANGO_SUPERUSER_PASSWORD`: superuser bootstrap credentials.
 - `DJANGO_SETTINGS_MODULE`, `DJANGO_WSGI_MODULE`: Django settings and WSGI module (e.g., `autoservice_book.settings`, `autoservice_book.wsgi`).
 
+---
 
 ### Google OAuth (allauth) quick note
 Create an **OAuth client (Web)** in Google Cloud and set:
@@ -129,21 +146,51 @@ GOOGLE_CLIENT_SECRET=yyyy
 ```
 You can alternatively configure a **SocialApp (Google)** in Django Admin and bind it to your Site.
 
-## Portfolio Notes
+---
 
-This project was built to demonstrate:
-- Proficiency in Django, including models, views, forms, and signals.
-- Database design and management with PostgreSQL.
-- User authentication and security with `django-allauth`.
-- Responsive UI with Bootstrap 5 and `crispy-forms`.
-- Performance optimization using caching.
-- Data export functionality with CSV.
-- Modern deployment with Docker, Nginx, and cloud database.
+### Localization (EN / DE)
+
+The application ships with full German localization 🇩🇪 while English remains the default language 🇬🇧.
+- All UI texts are translated via Django i18n (.po/.mo)
+- Language switcher is available in the navigation bar
+- User language preference is stored in session
+- Seamless switching without page reload issues
+
+#### Quick dev guide
+
+Make sure the following `settings` are enabled:
+```
+USE_I18N = True
+USE_L10N = True
+
+LANGUAGES = [
+    ("en", "English"),
+    ("de", "Deutsch"),
+]
+
+LOCALE_PATHS = [BASE_DIR / "locale"]
+```
+
+1. To update translations:
+```bash
+python manage.py makemessages -l de
+```
+2. Edit `locale/de/LC_MESSAGES/django.po`
+3. To compile(save) translations:
+```bash
+django-admin compilemessages
+```
+4. (Optional) Recreate docker container
+```bash
+docker compose down -v
+docker compose up --build
+```
+
+---
 
 ## License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
 
 ---
 
