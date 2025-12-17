@@ -16,6 +16,7 @@ Built as a portfolio project, it highlights hands-on experience with Django (for
 - 🌗 **Dark/Light Theme Switcher**: Toggle between light and dark themes for a comfortable experience.
 - 🔐 **Authorisation** by Google available
 - 🌍 **Localization by i18n**: full German🇩🇪 UI translation added (🇬🇧 as default) with a convenient language switcher
+- 🧊 **Snowfall Effect**: Modern snowfall animation rendered on a full-page canvas with automatically adapts to the active UI theme (`light/dark`) for optimal contrast
 
 ---
 
@@ -121,6 +122,8 @@ The application ships with full German localization 🇩🇪 while English remai
 - Language switcher is available in the navigation bar
 - User language preference is stored in session
 - Seamless switching without page reload issues
+
+---
 
 #### Quick dev guide
 
