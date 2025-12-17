@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'service_book',
     'widget_tweaks',
+    "turnstile",
 ]
 
 MIDDLEWARE = [
@@ -70,7 +71,9 @@ TEMPLATES = [
                 'django.template.context_processors.i18n',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
                 'service_book.context_processors.global_settings',
+                'service_book.context_processors.turnstile',
 
             ],
         },
@@ -168,4 +171,14 @@ LANGUAGES = [
     ("en", "English"),
     ("de", "Deutsch"),
 ]
+
+# Turnstile (django-turnstile)
+try:
+    import turnstile
+except Exception:
+    TURNSTILE_ENABLED = False
+
+TURNSTILE_ENABLED = os.getenv("TURNSTILE_ENABLED", "1") == "1"
+TURNSTILE_SITEKEY = os.getenv("TURNSTILE_SITEKEY", "")
+TURNSTILE_SECRET  = os.getenv("TURNSTILE_SECRET", "")
 

@@ -1,5 +1,6 @@
 from django.core.cache import cache
 from django.db.models import Sum
+from django.conf import settings
 
 from service_book.models import Car, ServiceRecord, Carpart, OtherExpense
 
@@ -51,4 +52,9 @@ def global_settings(request):
         context['user_total_other_expenses'] = 0
 
     return context
+
+
+
+def turnstile(request):
+    return {"TURNSTILE_SITEKEY": settings.TURNSTILE_SITEKEY}
 

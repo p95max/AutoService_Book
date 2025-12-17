@@ -509,6 +509,18 @@ files = [
 django = ">=4.2"
 
 [[package]]
+name = "django-turnstile"
+version = "0.1.2"
+description = "Add Cloudflare Turnstile validator widget to the forms of your django project"
+optional = false
+python-versions = "*"
+groups = ["main"]
+files = [
+    {file = "django_turnstile-0.1.2-py3-none-any.whl", hash = "sha256:e671222e89ef24117768fbc7311da21f9bc60be6bc975e942cd3eff95a4e2b2c"},
+    {file = "django_turnstile-0.1.2.tar.gz", hash = "sha256:7eb4ec8452ff6799792233eddc037578ca465134d1409b385c05bdec911a5154"},
+]
+
+[[package]]
 name = "django-widget-tweaks"
 version = "1.5.0"
 description = "Tweak the form field rendering in templates, not in python-level form definitions."
@@ -976,4 +988,4 @@ brotli = ["brotli"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.12"
-content-hash = "7e8f132c83118de902ff0b9764241e27d0e1097f47f4fcd41ef3ce295c09d806"
+content-hash = "3a076f1f3ad53e43574807d7ca0650f9c14789aca78664432b9449a92f3035cc"

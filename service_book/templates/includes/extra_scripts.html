@@ -41,4 +41,18 @@
 
       <script src="{% static 'js/snow.js' %}" defer></script>
 
+
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script>
+(function () {
+  const btn = document.getElementById('login-submit');
+  if (!btn) return;
+
+  btn.disabled = true;
+  window.tsOk = () => btn.disabled = false;
+  window.tsReset = () => btn.disabled = true;
+})();
+</script>
+
+
 {% endblock %}

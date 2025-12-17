@@ -56,9 +56,18 @@
           {% endif %}
         {% endfor %}
 
-        <button type="submit" class="btn btn-primary w-100 rounded-pill mt-2">
-          {% trans "Sign up" %}
-        </button>
+    <div class="cf-turnstile mt-3"
+         data-sitekey="{{ TURNSTILE_SITEKEY }}"
+         data-callback="tsOk"
+         data-expired-callback="tsReset"
+         data-error-callback="tsReset">
+    </div>
+
+    <button id="login-submit" type="submit"
+            class="btn btn-primary w-100 rounded-pill mt-2" disabled>
+      {% trans "Sign up" %}
+    </button>
+
       </form>
 
       <div class="text-center my-4 text-secondary small">
@@ -80,3 +89,5 @@
   </div>
 </section>
 {% endblock %}
+
+
