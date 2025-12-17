@@ -7,7 +7,15 @@
 
   <form method="post" action="">
     {% csrf_token %}
-    <button type="submit" class="btn btn-danger mt-3">
+
+    <div class="cf-turnstile mt-3"
+         data-sitekey="{{ TURNSTILE_SITEKEY }}"
+         data-callback="tsOk"
+         data-expired-callback="tsReset"
+         data-error-callback="tsReset">
+    </div>
+
+    <button id="login-submit" type="submit" class="btn btn-danger mt-3">
       <i class="bi bi-google"></i>{% trans "Continue with Google" %}
     </button>
   </form>
