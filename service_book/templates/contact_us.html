@@ -78,10 +78,15 @@
           {% endfor %}
 
           <div class="d-flex align-items-center justify-content-between mt-4 gap-3">
-            <small class="text-secondary">
-              {% trans "We usually respond within 1–2 business days." %}
-            </small>
-            <button type="submit" class="btn btn-primary px-4 rounded-pill">
+
+            <div class="cf-turnstile mt-3"
+             data-sitekey="{{ TURNSTILE_SITEKEY }}"
+             data-callback="tsOk"
+             data-expired-callback="tsReset"
+             data-error-callback="tsReset">
+           </div>
+
+            <button id="login-submit" type="submit" class="btn btn-primary px-4 rounded-pill">
               💬 {% trans "Send Message" %}
             </button>
           </div>
