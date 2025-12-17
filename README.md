@@ -12,7 +12,8 @@ Built as a portfolio project, it highlights hands-on experience with Django (for
 - 🔋 **Monitor Fuel Expenses**: Record fuel purchases, calculate distances, and track costs.
 - ⛽ **Check Fuel Levels and Consumption**: Automatically calculate remaining fuel and average consumption.
 - 📊 **Analyze Expenses**: View all expenses and service history in one place.
-- 🛡️ Authentication protected with CAPTCHA: Login & registration are protected with **Cloudflare Turnstile CAPTCHA** (Implemented via `django-turnstile`)
+- 🛡️ **Authentication**: protected with CAPTCHA: Login & registration are protected with **Cloudflare Turnstile CAPTCHA** (Implemented via `django-turnstile`)
+- 📊 **Monitoring Stack**: This project includes an **optional monitoring module** located in `/monitoring`. It can be started alongside the main application using a merged Docker Compose setup, without modifying the core stack.
 - 📥 **CSV Export**: Download service, fuel, part, and other expense data as CSV files.
 - 🌗 **Dark/Light Theme Switcher**: Toggle between light and dark themes for a comfortable experience.
 - 🔐 **Authorisation** by Google available
@@ -28,6 +29,7 @@ Built as a portfolio project, it highlights hands-on experience with Django (for
 - **Database:** PostgreSQL 16 (managed cloud instance)
 - **Authentication:** `django-allauth` for email-based login
 - **Security Features**: Integrated Cloudflare Turnstile `CAPTCHA` on all authentication forms to prevent brute-force and automated attacks.
+- **Monitoring**: Grafana · Prometheus · Alertmanager
 - **Caching**: Django Cache Framework for optimized queries
 - **Additional**: Django `signals` for automatic mileage and fuel updates, CSV export functionality
 - **Production**: Docker, Django Admin panel, safe admin URL
@@ -103,6 +105,33 @@ The project includes `a ready-to-use Django Admin` for managing core entities (c
 
 ---
 
+## 📊 Monitoring Stack (Grafana · Prometheus · Alertmanager)
+
+This project ships with an **optional monitoring module** located in `/monitoring`.
+Run it alongside the main app using a merged Docker Compose setup.
+
+### 🚀 Start with monitoring
+
+```bash
+# clean run
+docker compose -f docker-compose.yml -f monitoring/docker-compose.monitoring.yml down --remove-orphans \
+  && docker network prune -f \
+  && docker compose -f docker-compose.yml -f monitoring/docker-compose.monitoring.yml up --build
+```
+### 🔗 Monitoring URLs (local)
+| Tool             | URL                                            | What it’s for                          |
+| ---------------- | ---------------------------------------------- | -------------------------------------- |
+| **Grafana**      | [http://localhost:3000](http://localhost:3000) | Dashboards & visualization             |
+| **Prometheus**   | [http://localhost:9090](http://localhost:9090) | Metrics, queries, targets, alerts      |
+| **Alertmanager** | [http://localhost:9093](http://localhost:9093) | Alert routing, silences, notifications |
+`Grafana default credentials: admin / admin (change via .env if needed)`
+
+### ✅ Quick health check
+Prometheus targets: http://localhost:9090/targets
+Alert rules (if configured): http://localhost:9090/alerts
+
+---
+
 ### Google OAuth (allauth) quick note
 Create an **OAuth client (Web)** in Google Cloud and set:
 - Redirect URI (dev): `http://localhost:8000/accounts/google/login/callback/`
@@ -171,7 +200,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 - [x] Fixture set for fast, end-to-end service testing (`fixtures/`)
 - [x] Hide the admin URL in urls via .env
 - [x] Auth via Google (OAuth2)
-- [ ] Grafana + Prometheus + Alertmanager integration
+- [x] Grafana + Prometheus + Alertmanager integration
 - [x] Auth protected with CAPTCHA (django-turnstile)
 - [ ] CI for tests/linters (flake8)
 

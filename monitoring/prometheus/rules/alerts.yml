@@ -1,0 +1,29 @@
+groups:
+  - name: infra-alerts
+    rules:
+      - alert: InstanceDown
+        expr: up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Target down: {{ $labels.job }} / {{ $labels.instance }}"
+          description: "Prometheus target is not responding for > 1 minute."
+
+      - alert: HighContainerCPU
+        expr: rate(container_cpu_usage_seconds_total{image!=""}[2m]) > 0.8
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High container CPU"
+          description: "CPU usage is high for 5 minutes."
+
+      - alert: PostgresExporterDown
+        expr: up{job="postgres-exporter"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Postgres exporter is down"
+          description: "postgres-exporter not reachable."

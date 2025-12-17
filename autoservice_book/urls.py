@@ -10,6 +10,9 @@ urlpatterns = [
     path('i18n/', include('django.conf.urls.i18n')),
     path('', include('service_book.urls')),
 
+    path("", include("django_prometheus.urls")),
+
+
 ]
 
 

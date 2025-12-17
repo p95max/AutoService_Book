@@ -14,3 +14,8 @@ docker compose exec web python manage.py makemessages -l de
 
 python manage.py compilemessages
 docker compose exec web python manage.py compilemessages
+
+docker compose -f docker-compose.yml -f monitoring/docker-compose.monitoring.yml down --remove-orphans \
+  && docker network prune -f \
+  && docker compose -f docker-compose.yml -f monitoring/docker-compose.monitoring.yml up --build
+
