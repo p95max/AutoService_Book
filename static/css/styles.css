@@ -67,4 +67,9 @@ body.dark .btn-google-ghost:hover{
   color:#0B5ED7
 }
 
-
+#snow-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+}

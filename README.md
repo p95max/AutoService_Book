@@ -170,7 +170,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 - [ ] Auth protected with CAPTCHA (django-turnstile)
 - [ ] CI for tests/linters (flake8)
 
-- [ ] Snowfall visual effect for the UI (with switcher)
+- [x] Snowfall visual effect for the UI 
 
 - Test coverage of the service
 
