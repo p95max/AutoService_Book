@@ -128,6 +128,7 @@ docker compose -f docker-compose.yml -f monitoring/docker-compose.monitoring.yml
 
 ### ✅ Quick health check
 Prometheus targets: http://localhost:9090/targets
+
 Alert rules (if configured): http://localhost:9090/alerts
 
 ---
