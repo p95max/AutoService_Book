@@ -12,6 +12,7 @@ Built as a portfolio project, it highlights hands-on experience with Django (for
 - 🔋 **Monitor Fuel Expenses**: Record fuel purchases, calculate distances, and track costs.
 - ⛽ **Check Fuel Levels and Consumption**: Automatically calculate remaining fuel and average consumption.
 - 📊 **Analyze Expenses**: View all expenses and service history in one place.
+- 🛡️ Authentication protected with CAPTCHA: Login & registration are protected with **Cloudflare Turnstile CAPTCHA** (Implemented via `django-turnstile`)
 - 📥 **CSV Export**: Download service, fuel, part, and other expense data as CSV files.
 - 🌗 **Dark/Light Theme Switcher**: Toggle between light and dark themes for a comfortable experience.
 - 🔐 **Authorisation** by Google available
@@ -26,10 +27,11 @@ Built as a portfolio project, it highlights hands-on experience with Django (for
 - **Frontend:** Bootstrap 5 (via `crispy-bootstrap5`), HTML, CSS, JavaScript
 - **Database:** PostgreSQL 16 (managed cloud instance)
 - **Authentication:** `django-allauth` for email-based login
-- **Caching:** Django Cache Framework for optimized queries
-- **Additional:** Django signals for automatic mileage and fuel updates, CSV export functionality
-- **Production:** Docker
-- **Localization** i18n
+- **Security Features**: Integrated Cloudflare Turnstile `CAPTCHA` on all authentication forms to prevent brute-force and automated attacks.
+- **Caching**: Django Cache Framework for optimized queries
+- **Additional**: Django `signals` for automatic mileage and fuel updates, CSV export functionality
+- **Production**: Docker, Django Admin panel, safe admin URL
+- **Localization**: 🇩🇪/🇬🇧 by i18n
 
 ---
 
@@ -170,7 +172,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 - [x] Hide the admin URL in urls via .env
 - [x] Auth via Google (OAuth2)
 - [ ] Grafana + Prometheus + Alertmanager integration
-- [ ] Auth protected with CAPTCHA (django-turnstile)
+- [x] Auth protected with CAPTCHA (django-turnstile)
 - [ ] CI for tests/linters (flake8)
 
 - [x] Snowfall visual effect for the UI 
