@@ -24,7 +24,7 @@ COPY pyproject.toml poetry.lock README.md /app/
 RUN pip install --upgrade pip \
     && pip install "poetry==1.4.2" setuptools wheel
 
-RUN poetry install --no-interaction --no-ansi --no-root --no-dev
+RUN poetry install --no-interaction --no-ansi --no-root --with dev
 
 COPY . /app
 

@@ -34,6 +34,7 @@ Built as a portfolio project, it highlights hands-on experience with Django (for
 - **Additional**: Django `signals` for automatic mileage and fuel updates, CSV export functionality
 - **Production**: Docker, Django Admin panel, safe admin URL
 - **Localization**: 🇩🇪/🇬🇧 by i18n
+- **Testing**: Pytest
 
 ---
 
@@ -186,6 +187,24 @@ django-admin compilemessages
 docker compose down -v
 docker compose up --build
 ```
+
+---
+
+## Testing (Pytest)
+
+The project uses Pytest and runs tests inside Docker to ensure a consistent environment (Python, dependencies, and PostgreSQL).
+
+```bash
+# clean start (app only) + run tests
+docker compose down --remove-orphans -v \
+  && docker network prune -f \
+  && docker compose up -d --build \
+  && docker compose exec web poetry run python -m pytest -q
+```
+
+**Note:**
+- Tests are executed inside the web container.
+- Volumes are removed (-v), so the database is reset (expected for tests).
 
 ---
 
